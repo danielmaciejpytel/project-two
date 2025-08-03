@@ -1,0 +1,117 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &5689460221629676120
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7911118921417346494}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc6428f8c3b301b4891722fbf0b1a7c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _armorBonus: 1
+  _effectDescription: Covered (Reduce received damage by 1)
+--- !u!1001 &1952971101205101660
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 8562372451011211745, guid: 95ae773d2ec3a8345aa1cea4e55b2bd1,
+        type: 3}
+      propertyPath: _tile
+      value: 
+      objectReference: {fileID: 11400000, guid: be33e781ee3fbc24192437d3c6ae6c4d,
+        type: 2}
+    - target: {fileID: 8562372451011211745, guid: 95ae773d2ec3a8345aa1cea4e55b2bd1,
+        type: 3}
+      propertyPath: _hoverColor.a
+      value: 0.09803922
+      objectReference: {fileID: 0}
+    - target: {fileID: 8562372451011211745, guid: 95ae773d2ec3a8345aa1cea4e55b2bd1,
+        type: 3}
+      propertyPath: _hoverColor.b
+      value: 0.24705882
+      objectReference: {fileID: 0}
+    - target: {fileID: 8562372451011211745, guid: 95ae773d2ec3a8345aa1cea4e55b2bd1,
+        type: 3}
+      propertyPath: _hoverColor.g
+      value: 0.08627451
+      objectReference: {fileID: 0}
+    - target: {fileID: 8562372451011211745, guid: 95ae773d2ec3a8345aa1cea4e55b2bd1,
+        type: 3}
+      propertyPath: _hoverColor.r
+      value: 0.98039216
+      objectReference: {fileID: 0}
+    - target: {fileID: 8562372451011211746, guid: 95ae773d2ec3a8345aa1cea4e55b2bd1,
+        type: 3}
+      propertyPath: m_Name
+      value: tilePrefabArmorer
+      objectReference: {fileID: 0}
+    - target: {fileID: 8562372451011211751, guid: 95ae773d2ec3a8345aa1cea4e55b2bd1,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8562372451011211751, guid: 95ae773d2ec3a8345aa1cea4e55b2bd1,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8562372451011211751, guid: 95ae773d2ec3a8345aa1cea4e55b2bd1,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8562372451011211751, guid: 95ae773d2ec3a8345aa1cea4e55b2bd1,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8562372451011211751, guid: 95ae773d2ec3a8345aa1cea4e55b2bd1,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8562372451011211751, guid: 95ae773d2ec3a8345aa1cea4e55b2bd1,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8562372451011211751, guid: 95ae773d2ec3a8345aa1cea4e55b2bd1,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8562372451011211751, guid: 95ae773d2ec3a8345aa1cea4e55b2bd1,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8562372451011211751, guid: 95ae773d2ec3a8345aa1cea4e55b2bd1,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8562372451011211751, guid: 95ae773d2ec3a8345aa1cea4e55b2bd1,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8562372451011211751, guid: 95ae773d2ec3a8345aa1cea4e55b2bd1,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 95ae773d2ec3a8345aa1cea4e55b2bd1, type: 3}
+--- !u!1 &7911118921417346494 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8562372451011211746, guid: 95ae773d2ec3a8345aa1cea4e55b2bd1,
+    type: 3}
+  m_PrefabInstance: {fileID: 1952971101205101660}
+  m_PrefabAsset: {fileID: 0}

@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7999c2d43aea1174c80db7c1e5e3bc1b, type: 3}
+  m_Name: TileObstacle
+  m_EditorClassIdentifier: 
+  letter: O
+  tileSprite: {fileID: 21300000, guid: 06783537e1d2a494fba39f7e9e9fc134, type: 3}
+  tileDesignerSprite: {fileID: 21300000, guid: 6899eca2fb85f0b4aabc3b78feff9ef3, type: 3}
+  isWalkable: 0
+  tileName: Obstacle
+  tileDescription: Impassable

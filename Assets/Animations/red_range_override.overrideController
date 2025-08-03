@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: red_range_override
+  m_Controller: {fileID: 9100000, guid: 4e65102597b276c41a37844393536096, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: 8aba3bf7dab1baf4eb73c224d1de0016, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 3367a92edad2325468e625a081303b14, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 4e7fbf5d91cdfa344b30dd22f839eb45, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: d11bae51b919bf2429f3c103b2e97d56, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 0cec68064c6aecd4ea4452e07dd36794, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 997615e2feb7bbc4bbab33b493912a9a, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: e63a07ecee226b647a1baa329ce1ba91, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 33adb71e745189f4abdaf378a2a152f4, type: 2}

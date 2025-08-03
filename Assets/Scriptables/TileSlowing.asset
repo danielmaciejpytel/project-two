@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7999c2d43aea1174c80db7c1e5e3bc1b, type: 3}
+  m_Name: TileSlowing
+  m_EditorClassIdentifier: 
+  letter: S
+  tileSprite: {fileID: 21300000, guid: 278ff4699cd49434e917c436e3dd265b, type: 3}
+  tileDesignerSprite: {fileID: 21300000, guid: 6e9d6bf17e2d56e408ac9ee4850ba4a4, type: 3}
+  isWalkable: 1
+  tileName: Restriction Area
+  tileDescription: -1 Move Range
