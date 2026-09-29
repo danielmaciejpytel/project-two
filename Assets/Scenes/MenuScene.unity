@@ -186,8 +186,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Options
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 0aa3f05f38ab87941a21c1717ede9874, type: 2}
-  m_sharedMaterial: {fileID: 848374922052071493, guid: 0aa3f05f38ab87941a21c1717ede9874,
+  m_fontAsset: {fileID: 11400000, guid: 27b4ba54acb2c2246bf05e805a213f83, type: 2}
+  m_sharedMaterial: {fileID: -3559136528966462981, guid: 27b4ba54acb2c2246bf05e805a213f83,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -324,8 +324,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Music
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 0aa3f05f38ab87941a21c1717ede9874, type: 2}
-  m_sharedMaterial: {fileID: 848374922052071493, guid: 0aa3f05f38ab87941a21c1717ede9874,
+  m_fontAsset: {fileID: 11400000, guid: 27b4ba54acb2c2246bf05e805a213f83, type: 2}
+  m_sharedMaterial: {fileID: -3559136528966462981, guid: 27b4ba54acb2c2246bf05e805a213f83,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -2120,8 +2120,8 @@ MonoBehaviour:
     Which
     side will you fight for? Super Hot or Super Cold?'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 0aa3f05f38ab87941a21c1717ede9874, type: 2}
-  m_sharedMaterial: {fileID: 848374922052071493, guid: 0aa3f05f38ab87941a21c1717ede9874,
+  m_fontAsset: {fileID: 11400000, guid: 27b4ba54acb2c2246bf05e805a213f83, type: 2}
+  m_sharedMaterial: {fileID: -3559136528966462981, guid: 27b4ba54acb2c2246bf05e805a213f83,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -2625,8 +2625,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Sound
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 0aa3f05f38ab87941a21c1717ede9874, type: 2}
-  m_sharedMaterial: {fileID: 848374922052071493, guid: 0aa3f05f38ab87941a21c1717ede9874,
+  m_fontAsset: {fileID: 11400000, guid: 27b4ba54acb2c2246bf05e805a213f83, type: 2}
+  m_sharedMaterial: {fileID: -3559136528966462981, guid: 27b4ba54acb2c2246bf05e805a213f83,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
