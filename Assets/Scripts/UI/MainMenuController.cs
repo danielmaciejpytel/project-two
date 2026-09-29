@@ -108,13 +108,13 @@ public class MainMenuController : MonoBehaviour
         _barImage.transform.position = new Vector3(-1920.0f, myButton.transform.position.y, 0.0f);
         // Only stop the highlight bar tween, KillAll also stopped every other running tween in the menu.
         _barImage.transform.DOKill();
-        _barImage.transform.DOLocalMoveX(0.0f, 1.0f).SetEase(Ease.OutExpo);
+        _barImage.transform.DOLocalMoveX(0.0f, 1.0f).SetEase(Ease.OutExpo).SetLink(_barImage.gameObject);
     }
 
     public void OnMybuttonExit(Button myButton)
     {
         _barImage.transform.DOKill();
-        _barImage.transform.DOLocalMoveX(-1920.0f, 1.0f).SetEase(Ease.OutExpo);
+        _barImage.transform.DOLocalMoveX(-1920.0f, 1.0f).SetEase(Ease.OutExpo).SetLink(_barImage.gameObject);
     }
 
     public void SoundToggleClicked()

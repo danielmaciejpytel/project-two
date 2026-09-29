@@ -39,11 +39,11 @@ public class ButtonUnitController : MonoBehaviour
     {
         if(unit == _myUnit)
         {
-            transform.DOScale(1.0f, 0.3f).SetEase(Ease.InOutBack);
+            transform.DOScale(1.0f, 0.3f).SetEase(Ease.InOutBack).SetLink(gameObject);
         }
         else
         {
-            transform.DOScale(0.8f, 0.3f).SetEase(Ease.InOutBack);
+            transform.DOScale(0.8f, 0.3f).SetEase(Ease.InOutBack).SetLink(gameObject);
         }
     }
 
@@ -52,7 +52,7 @@ public class ButtonUnitController : MonoBehaviour
         if (unit == _myUnit)
         {
             _killedImage.enabled = true;
-            transform.DOScale(0.6f, 0.3f).SetEase(Ease.InOutBack);
+            transform.DOScale(0.6f, 0.3f).SetEase(Ease.InOutBack).SetLink(gameObject);
         }
     }
 

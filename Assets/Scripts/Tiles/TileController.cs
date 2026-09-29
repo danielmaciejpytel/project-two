@@ -185,7 +185,7 @@ public class TileController : MonoBehaviour, IClickable, IHoverable
         if (!_isDesignerMode && _overlayMarkerSpriteRenderer.sprite != null)
         {
             StopAnimatingHighlight();
-            _overlayMarkerSpriteRenderer.transform.DOScale(0.8f, 0.5f).SetEase(Ease.OutQuart).SetLoops(-1, LoopType.Yoyo);
+            _overlayMarkerSpriteRenderer.transform.DOScale(0.8f, 0.5f).SetEase(Ease.OutQuart).SetLoops(-1, LoopType.Yoyo).SetLink(_overlayMarkerSpriteRenderer.gameObject);
         }
     }
 

@@ -50,7 +50,7 @@ public class UIController : MonoBehaviour
         // The game is over, the timer would otherwise keep ending turns (and clicking) in the background.
         if (_turnTimer != null) StopCoroutine(_turnTimer);
         _turnTimer = null;
-        _winnerImage.transform.DOPunchScale(new Vector3(0.2f, 0.2f, 0.0f), 0.5f);
+        _winnerImage.transform.DOPunchScale(new Vector3(0.2f, 0.2f, 0.0f), 0.5f).SetLink(_winnerImage.gameObject);
         if (winnerId == 1) _winnerText.text = "Winner: Super Hot";
         else _winnerText.text = "Winner: Super Cold";
     }
@@ -101,7 +101,7 @@ public class UIController : MonoBehaviour
             _deployMinionButton.transform.Translate(new Vector3(1420.0f, 0.0f, 0.0f));
             _abilityButton.transform.Translate(new Vector3(1092.0f, 0.0f, 0.0f));
         }
-        _winnerImage.transform.DOPunchScale(new Vector3(0.2f, 0.2f, 0.0f), 0.5f);
+        _winnerImage.transform.DOPunchScale(new Vector3(0.2f, 0.2f, 0.0f), 0.5f).SetLink(_winnerImage.gameObject);
         SoundController.Instance.PlayEndTurn();
     }
 
