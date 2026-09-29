@@ -26,11 +26,6 @@ public class MainMenuController : MonoBehaviour
     [SerializeField] private Toggle _soundToggle;
     [SerializeField] private Toggle _musicToggle;
     [SerializeField] private TMP_Text _difficultyLabel;
-    [Header("Loading screen")]
-    [SerializeField] private GameObject _loadingOverlay;
-    [SerializeField] private TMP_Text _loadingText;
-
-    private bool _isLoading;
 
     private const float HiddenBarX = -1920.0f;
 
@@ -98,30 +93,8 @@ public class MainMenuController : MonoBehaviour
 
     private void LoadGame()
     {
-        if (_isLoading) return;
-        _isLoading = true;
-        StartCoroutine(LoadGameAsync());
-    }
-
-    // The game scene holds thousands of unit animation frames, so loading it takes a moment.
-    // Load it in the background behind a loading screen instead of freezing the menu.
-    private IEnumerator LoadGameAsync()
-    {
-        if (_loadingOverlay != null) _loadingOverlay.SetActive(true);
-        // Let the loading screen render before the heavy work starts.
-        yield return null;
-        yield return null;
         DOTween.KillAll(false);
-        // The loading screen hides the work, so let it use the full frame time.
-        Application.backgroundLoadingPriority = ThreadPriority.High;
-        AsyncOperation load = SceneManager.LoadSceneAsync("MainScene");
-        float elapsed = 0.0f;
-        while (!load.isDone)
-        {
-            elapsed += Time.unscaledDeltaTime;
-            if (_loadingText != null) _loadingText.text = "LOADING" + new string('.', (int)(elapsed * 3.0f) % 4);
-            yield return null;
-        }
+        SceneManager.LoadScene("MainScene");
     }
 
     public void DisplayCredits()
