@@ -308,6 +308,8 @@ public class GameController : MonoBehaviour
 
     public void AddUnitPrefab(GameObject unitPrefab, int playerId)
     {
+        // Load the animations of picked units in the background while the draft goes on.
+        UnitAnimators.Preload(unitPrefab.GetComponent<UnitController>().AnimatorName);
         if (playerId == 1) _unitPrefabsPlayer1.Add(unitPrefab);
         else _unitPrefabsPlayer2.Add(unitPrefab);
     }
@@ -376,6 +378,7 @@ public class GameController : MonoBehaviour
     {
         SoundController.Instance.PlayClick();
         DOTween.KillAll(false);
+        UnitAnimators.Release();
         SceneManager.LoadScene(MenuSceneName);
     }
 

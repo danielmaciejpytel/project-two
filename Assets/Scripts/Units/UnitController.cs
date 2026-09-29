@@ -32,12 +32,19 @@ public class UnitController : MonoBehaviour, IClickable, IHoverable, IEndturnabl
     private UnitController _myTarget;
     private AudioSource _myAudioSource;
 
+    [Tooltip("Name of the Animator controller in Resources/UnitAnimators, loaded when the unit is created.")]
+    [SerializeField] private string _animatorName;
+
+    public string AnimatorName => _animatorName;
+
     private void Awake()
     {
         _mySpriteRenderer = GetComponent<SpriteRenderer>();
         _myCollider = GetComponent<CapsuleCollider2D>();
         _myDesignerCollider = GetComponent<BoxCollider2D>();
         _myAnimator = GetComponent<Animator>();
+        // The prefab holds only the controller's name, see UnitAnimators.
+        if (_myAnimator.runtimeAnimatorController == null) _myAnimator.runtimeAnimatorController = UnitAnimators.Get(_animatorName);
         _myAudioSource = GetComponent<AudioSource>();
     }
 
