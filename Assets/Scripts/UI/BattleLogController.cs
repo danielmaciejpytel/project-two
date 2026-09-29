@@ -112,7 +112,7 @@ public class BattleLogController : MonoBehaviour
         _body.SetActive(expanded);
         _rect.sizeDelta = new Vector2(_rect.sizeDelta.x, expanded ? _expandedHeight : _collapsedHeight);
         _buttonRect.anchoredPosition = expanded ? _expandedButtonPosition : _collapsedButtonPosition;
-        _toggleLabel.text = expanded ? "Hide" : "Show";
+        _toggleLabel.text = Loc.T(expanded ? "Hide" : "Show");
     }
 
     private void OnTurnStarted(int playerId)
@@ -127,48 +127,49 @@ public class BattleLogController : MonoBehaviour
     private void OnUnitDeployed(UnitController unit)
     {
         UnitController commander = GameController.Instance != null ? GameController.Instance.GetCommander(unit.GetPlayerId()) : null;
-        string caller = commander != null ? Name(commander) + " called " : "Called ";
-        Add(unit.GetPlayerId(), caller + Name(unit));
+        Add(unit.GetPlayerId(), commander != null ? Loc.F("{0} called {1}", Name(commander), Name(unit)) : Loc.F("Called {0}", Name(unit)));
     }
 
     private void OnUnitMoved(UnitController unit, TileController tile)
     {
-        string tileName = tile.GetTileName();
-        Add(unit.GetPlayerId(), string.IsNullOrEmpty(tileName) ? Name(unit) + " moved" : $"{Name(unit)} moved to {tileName}");
+        string tileName = Loc.T(tile.GetTileName());
+        Add(unit.GetPlayerId(), string.IsNullOrEmpty(tileName) ? Loc.F("{0} moved", Name(unit)) : Loc.F("{0} moved to {1}", Name(unit), tileName));
     }
 
     private void OnUnitAttacked(UnitController attacker, UnitController target, int attackPower, int damageTaken)
     {
         int blocked = attackPower - damageTaken;
-        string text = $"{Name(attacker)} hit {Name(target)}";
-        if (blocked > 0) text += $" <alpha=#AA>({blocked} blocked)<alpha=#FF>";
+        string text = Loc.F("{0} hit {1}", Name(attacker), Name(target));
+        if (blocked > 0) text += " <alpha=#AA>" + Loc.F("({0} blocked)", blocked) + "<alpha=#FF>";
         Add(attacker.GetPlayerId(), text, Colored($"-{damageTaken}", _hotNameColor));
     }
 
     private void OnUnitDamaged(UnitController unit, int damageTaken, string source)
     {
-        Add(0, $"{source} hurt {Name(unit)}", Colored($"-{damageTaken}", _hotNameColor));
+        Add(0, Loc.F("{0} hurt {1}", Loc.T(source), Name(unit)), Colored($"-{damageTaken}", _hotNameColor));
     }
 
     private void OnUnitHealed(UnitController unit, int amount, string source)
     {
-        Add(0, $"{source} healed {Name(unit)}", Colored($"+{amount}", _healColor));
+        Add(0, Loc.F("{0} healed {1}", Loc.T(source), Name(unit)), Colored($"+{amount}", _healColor));
     }
 
     private void OnEffectApplied(UnitController unit, string effectName, UnitController source)
     {
-        string text = source != null ? $"{Name(unit)} {effectName.ToLowerInvariant()} by {Name(source)}" : $"{Name(unit)} {effectName.ToLowerInvariant()}";
+        string effect = Loc.T(effectName).ToLowerInvariant();
+        string text = source != null ? Loc.F("{0} {1} by {2}", Name(unit), effect, Name(source)) : Loc.F("{0} {1}", Name(unit), effect);
         Add(0, text);
     }
 
     private void OnAbilityUsed(UnitController user, string abilityName, UnitController target)
     {
-        Add(user.GetPlayerId(), target != null ? $"{Name(user)} used {abilityName} on {Name(target)}" : $"{Name(user)} used {abilityName}");
+        string ability = Loc.T(abilityName, "used");
+        Add(user.GetPlayerId(), target != null ? Loc.F("{0} used {1} on {2}", Name(user), ability, Name(target)) : Loc.F("{0} used {1}", Name(user), ability));
     }
 
     private void OnUnitKilled(UnitController unit)
     {
-        Add(GameController.GetOpponent(unit.GetPlayerId()), $"{Name(unit)} was killed", "x", EntryKind.Kill);
+        Add(GameController.GetOpponent(unit.GetPlayerId()), Loc.F("{0} was killed", Name(unit)), "x", EntryKind.Kill);
     }
 
     private void Add(int actorPlayer, string text, string value = "", EntryKind kind = EntryKind.Normal)
@@ -202,7 +203,7 @@ public class BattleLogController : MonoBehaviour
     {
         if (_builder.Length > 0) _builder.Append('\n');
         _builder.Append(isOld ? "<alpha=#8C>" : "<alpha=#FF>");
-        _builder.Append("<size=85%>Turn ").Append(turn).Append(" - ").Append(PlayerName(playerId)).Append("</size>\n");
+        _builder.Append("<size=85%>").Append(Loc.F("Turn {0} - {1}", turn, PlayerName(playerId))).Append("</size>\n");
     }
 
     private void AppendEntry(Entry entry, bool isOld, bool isNewest)

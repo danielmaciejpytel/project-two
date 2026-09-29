@@ -2328,6 +2328,7 @@ GameObject:
   - component: {fileID: 305948301}
   - component: {fileID: 305948303}
   - component: {fileID: 305948304}
+  - component: {fileID: 305948305}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -2455,6 +2456,21 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &305948305
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 305948300}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eacdd1db2a40c2645a294b579933469c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LocalizedText
+  _key: Mode
+  _fitButtonWidth: 0
+  _fitPadding: 6
 --- !u!1 &333518461
 GameObject:
   m_ObjectHideFlags: 0
@@ -2466,6 +2482,7 @@ GameObject:
   - component: {fileID: 333518462}
   - component: {fileID: 333518464}
   - component: {fileID: 333518465}
+  - component: {fileID: 333518466}
   m_Layer: 5
   m_Name: MoveRangeText
   m_TagString: Untagged
@@ -2593,6 +2610,21 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &333518466
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 333518461}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eacdd1db2a40c2645a294b579933469c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LocalizedText
+  _key: 'Move Range:'
+  _fitButtonWidth: 0
+  _fitPadding: 6
 --- !u!1 &340385982
 GameObject:
   m_ObjectHideFlags: 0
@@ -3185,6 +3217,7 @@ GameObject:
   - component: {fileID: 452442504}
   - component: {fileID: 452442506}
   - component: {fileID: 452442507}
+  - component: {fileID: 452442508}
   m_Layer: 5
   m_Name: Unit6Name (1)
   m_TagString: Untagged
@@ -3312,6 +3345,21 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &452442508
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 452442503}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eacdd1db2a40c2645a294b579933469c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LocalizedText
+  _key: Player 2
+  _fitButtonWidth: 0
+  _fitPadding: 6
 --- !u!1 &496844344
 GameObject:
   m_ObjectHideFlags: 0
@@ -3936,6 +3984,7 @@ GameObject:
   - component: {fileID: 558597059}
   - component: {fileID: 558597061}
   - component: {fileID: 558597062}
+  - component: {fileID: 558597063}
   m_Layer: 5
   m_Name: SkillsText
   m_TagString: Untagged
@@ -4063,6 +4112,21 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &558597063
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 558597058}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eacdd1db2a40c2645a294b579933469c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LocalizedText
+  _key: 'Tags:'
+  _fitButtonWidth: 0
+  _fitPadding: 6
 --- !u!1 &558671997
 GameObject:
   m_ObjectHideFlags: 0
@@ -4165,6 +4229,7 @@ GameObject:
   - component: {fileID: 579810360}
   - component: {fileID: 579810362}
   - component: {fileID: 579810363}
+  - component: {fileID: 579810364}
   m_Layer: 5
   m_Name: MoveRangeText
   m_TagString: Untagged
@@ -4292,6 +4357,21 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &579810364
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 579810359}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eacdd1db2a40c2645a294b579933469c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LocalizedText
+  _key: 'Move Range:'
+  _fitButtonWidth: 0
+  _fitPadding: 6
 --- !u!1 &592576986
 GameObject:
   m_ObjectHideFlags: 0
@@ -4441,6 +4521,7 @@ GameObject:
   - component: {fileID: 606587870}
   - component: {fileID: 606587872}
   - component: {fileID: 606587873}
+  - component: {fileID: 606587874}
   m_Layer: 5
   m_Name: AttackStrengthText
   m_TagString: Untagged
@@ -4568,6 +4649,21 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &606587874
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 606587869}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eacdd1db2a40c2645a294b579933469c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LocalizedText
+  _key: 'Attack Strength:'
+  _fitButtonWidth: 0
+  _fitPadding: 6
 --- !u!1 &614814087
 GameObject:
   m_ObjectHideFlags: 0
@@ -4602,7 +4698,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -1.5195}
+  m_AnchoredPosition: {x: 0, y: -1.5195007}
   m_SizeDelta: {x: 0, y: -3.0391}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &614814089
@@ -4717,6 +4813,7 @@ GameObject:
   - component: {fileID: 649258942}
   - component: {fileID: 649258944}
   - component: {fileID: 649258943}
+  - component: {fileID: 649258945}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -4844,6 +4941,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 649258941}
   m_CullTransparentMesh: 0
+--- !u!114 &649258945
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 649258941}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eacdd1db2a40c2645a294b579933469c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LocalizedText
+  _key: Back
+  _fitButtonWidth: 0
+  _fitPadding: 6
 --- !u!1 &665725476
 GameObject:
   m_ObjectHideFlags: 0
@@ -5635,6 +5747,7 @@ GameObject:
   - component: {fileID: 710027193}
   - component: {fileID: 710027195}
   - component: {fileID: 710027196}
+  - component: {fileID: 710027197}
   m_Layer: 5
   m_Name: StatsText
   m_TagString: Untagged
@@ -5762,6 +5875,21 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &710027197
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 710027192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eacdd1db2a40c2645a294b579933469c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LocalizedText
+  _key: 'Stats:'
+  _fitButtonWidth: 0
+  _fitPadding: 6
 --- !u!1 &757276439
 GameObject:
   m_ObjectHideFlags: 0
@@ -5773,6 +5901,7 @@ GameObject:
   - component: {fileID: 757276440}
   - component: {fileID: 757276442}
   - component: {fileID: 757276443}
+  - component: {fileID: 757276444}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -5900,6 +6029,21 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &757276444
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 757276439}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eacdd1db2a40c2645a294b579933469c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LocalizedText
+  _key: Quit
+  _fitButtonWidth: 0
+  _fitPadding: 6
 --- !u!1 &768324589
 GameObject:
   m_ObjectHideFlags: 0
@@ -6181,6 +6325,7 @@ GameObject:
   - component: {fileID: 795745438}
   - component: {fileID: 795745440}
   - component: {fileID: 795745441}
+  - component: {fileID: 795745442}
   m_Layer: 5
   m_Name: HPText
   m_TagString: Untagged
@@ -6308,6 +6453,21 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &795745442
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 795745437}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eacdd1db2a40c2645a294b579933469c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LocalizedText
+  _key: 'Health Points:'
+  _fitButtonWidth: 0
+  _fitPadding: 6
 --- !u!1 &805482286
 GameObject:
   m_ObjectHideFlags: 0
@@ -8657,6 +8817,7 @@ GameObject:
   - component: {fileID: 1094004672}
   - component: {fileID: 1094004674}
   - component: {fileID: 1094004675}
+  - component: {fileID: 1094004676}
   m_Layer: 5
   m_Name: MoveRangeText
   m_TagString: Untagged
@@ -8784,6 +8945,21 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &1094004676
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1094004671}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eacdd1db2a40c2645a294b579933469c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LocalizedText
+  _key: 'Move Range:'
+  _fitButtonWidth: 0
+  _fitPadding: 6
 --- !u!1 &1098491324
 GameObject:
   m_ObjectHideFlags: 0
@@ -8934,6 +9110,7 @@ GameObject:
   - component: {fileID: 1102544228}
   - component: {fileID: 1102544230}
   - component: {fileID: 1102544231}
+  - component: {fileID: 1102544232}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -9061,6 +9238,21 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &1102544232
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1102544227}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eacdd1db2a40c2645a294b579933469c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LocalizedText
+  _key: End Turn
+  _fitButtonWidth: 0
+  _fitPadding: 6
 --- !u!1 &1110711619
 GameObject:
   m_ObjectHideFlags: 0
@@ -9348,6 +9540,7 @@ GameObject:
   - component: {fileID: 1139493671}
   - component: {fileID: 1139493673}
   - component: {fileID: 1139493674}
+  - component: {fileID: 1139493675}
   m_Layer: 5
   m_Name: SkillsText
   m_TagString: Untagged
@@ -9475,6 +9668,21 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &1139493675
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1139493670}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eacdd1db2a40c2645a294b579933469c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LocalizedText
+  _key: 'Tags:'
+  _fitButtonWidth: 0
+  _fitPadding: 6
 --- !u!1 &1147148987
 GameObject:
   m_ObjectHideFlags: 0
@@ -11143,6 +11351,7 @@ GameObject:
   - component: {fileID: 1396252408}
   - component: {fileID: 1396252410}
   - component: {fileID: 1396252411}
+  - component: {fileID: 1396252412}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -11270,6 +11479,21 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &1396252412
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1396252407}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eacdd1db2a40c2645a294b579933469c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LocalizedText
+  _key: Call
+  _fitButtonWidth: 0
+  _fitPadding: 6
 --- !u!1 &1400461476
 GameObject:
   m_ObjectHideFlags: 0
@@ -11966,6 +12190,7 @@ GameObject:
   - component: {fileID: 1490523493}
   - component: {fileID: 1490523495}
   - component: {fileID: 1490523496}
+  - component: {fileID: 1490523497}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -12093,6 +12318,21 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &1490523497
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1490523492}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eacdd1db2a40c2645a294b579933469c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LocalizedText
+  _key: Next
+  _fitButtonWidth: 0
+  _fitPadding: 6
 --- !u!1 &1507999259
 GameObject:
   m_ObjectHideFlags: 0
@@ -12104,6 +12344,7 @@ GameObject:
   - component: {fileID: 1507999260}
   - component: {fileID: 1507999262}
   - component: {fileID: 1507999263}
+  - component: {fileID: 1507999264}
   m_Layer: 5
   m_Name: StatsText
   m_TagString: Untagged
@@ -12231,6 +12472,21 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &1507999264
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1507999259}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eacdd1db2a40c2645a294b579933469c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LocalizedText
+  _key: 'Stats:'
+  _fitButtonWidth: 0
+  _fitPadding: 6
 --- !u!1 &1526269157
 GameObject:
   m_ObjectHideFlags: 0
@@ -12242,6 +12498,7 @@ GameObject:
   - component: {fileID: 1526269158}
   - component: {fileID: 1526269160}
   - component: {fileID: 1526269161}
+  - component: {fileID: 1526269162}
   m_Layer: 5
   m_Name: HPText
   m_TagString: Untagged
@@ -12369,6 +12626,21 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &1526269162
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1526269157}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eacdd1db2a40c2645a294b579933469c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LocalizedText
+  _key: 'Health Points:'
+  _fitButtonWidth: 0
+  _fitPadding: 6
 --- !u!1 &1540363599
 GameObject:
   m_ObjectHideFlags: 0
@@ -13583,6 +13855,7 @@ GameObject:
   - component: {fileID: 1735508421}
   - component: {fileID: 1735508423}
   - component: {fileID: 1735508424}
+  - component: {fileID: 1735508425}
   m_Layer: 5
   m_Name: TimerDescriptionText
   m_TagString: Untagged
@@ -13710,6 +13983,21 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &1735508425
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1735508420}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eacdd1db2a40c2645a294b579933469c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LocalizedText
+  _key: 'Turn ends in:'
+  _fitButtonWidth: 0
+  _fitPadding: 6
 --- !u!1 &1742863148
 GameObject:
   m_ObjectHideFlags: 0
@@ -14322,6 +14610,7 @@ GameObject:
   - component: {fileID: 1776042343}
   - component: {fileID: 1776042345}
   - component: {fileID: 1776042346}
+  - component: {fileID: 1776042347}
   m_Layer: 5
   m_Name: AttackStrengthText
   m_TagString: Untagged
@@ -14449,6 +14738,21 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &1776042347
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1776042342}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eacdd1db2a40c2645a294b579933469c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LocalizedText
+  _key: 'Attack Strength:'
+  _fitButtonWidth: 0
+  _fitPadding: 6
 --- !u!1 &1801415084
 GameObject:
   m_ObjectHideFlags: 0
@@ -14826,6 +15130,7 @@ GameObject:
   - component: {fileID: 1854353747}
   - component: {fileID: 1854353749}
   - component: {fileID: 1854353750}
+  - component: {fileID: 1854353751}
   m_Layer: 5
   m_Name: EffectsText
   m_TagString: Untagged
@@ -14953,6 +15258,21 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &1854353751
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1854353746}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eacdd1db2a40c2645a294b579933469c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LocalizedText
+  _key: 'Effects:'
+  _fitButtonWidth: 0
+  _fitPadding: 6
 --- !u!1 &1860324232
 GameObject:
   m_ObjectHideFlags: 0
@@ -15397,6 +15717,7 @@ GameObject:
   - component: {fileID: 1989491058}
   - component: {fileID: 1989491060}
   - component: {fileID: 1989491061}
+  - component: {fileID: 1989491062}
   m_Layer: 5
   m_Name: SkillsText
   m_TagString: Untagged
@@ -15524,6 +15845,21 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &1989491062
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1989491057}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eacdd1db2a40c2645a294b579933469c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LocalizedText
+  _key: 'Tags:'
+  _fitButtonWidth: 0
+  _fitPadding: 6
 --- !u!1 &1992395897
 GameObject:
   m_ObjectHideFlags: 0
@@ -15667,6 +16003,7 @@ GameObject:
   - component: {fileID: 1994996234}
   - component: {fileID: 1994996236}
   - component: {fileID: 1994996235}
+  - component: {fileID: 1994996237}
   m_Layer: 5
   m_Name: Title
   m_TagString: Untagged
@@ -15794,6 +16131,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1994996233}
   m_CullTransparentMesh: 1
+--- !u!114 &1994996237
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1994996233}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eacdd1db2a40c2645a294b579933469c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LocalizedText
+  _key: Battle log
+  _fitButtonWidth: 0
+  _fitPadding: 6
 --- !u!1 &2006230708
 GameObject:
   m_ObjectHideFlags: 0
@@ -15805,6 +16157,7 @@ GameObject:
   - component: {fileID: 2006230709}
   - component: {fileID: 2006230711}
   - component: {fileID: 2006230712}
+  - component: {fileID: 2006230713}
   m_Layer: 5
   m_Name: AttackStrengthText
   m_TagString: Untagged
@@ -15932,6 +16285,21 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &2006230713
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2006230708}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eacdd1db2a40c2645a294b579933469c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LocalizedText
+  _key: 'Attack Strength:'
+  _fitButtonWidth: 0
+  _fitPadding: 6
 --- !u!1 &2048771892
 GameObject:
   m_ObjectHideFlags: 0
@@ -16076,6 +16444,7 @@ GameObject:
   - component: {fileID: 2058788539}
   - component: {fileID: 2058788541}
   - component: {fileID: 2058788542}
+  - component: {fileID: 2058788543}
   m_Layer: 5
   m_Name: HPText
   m_TagString: Untagged
@@ -16203,6 +16572,21 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &2058788543
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2058788538}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eacdd1db2a40c2645a294b579933469c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LocalizedText
+  _key: 'Health Points:'
+  _fitButtonWidth: 0
+  _fitPadding: 6
 --- !u!1 &2060501876
 GameObject:
   m_ObjectHideFlags: 0
@@ -16415,6 +16799,7 @@ GameObject:
   - component: {fileID: 2065802333}
   - component: {fileID: 2065802335}
   - component: {fileID: 2065802336}
+  - component: {fileID: 2065802337}
   m_Layer: 5
   m_Name: Unit1Name (1)
   m_TagString: Untagged
@@ -16542,6 +16927,21 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &2065802337
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2065802332}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eacdd1db2a40c2645a294b579933469c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LocalizedText
+  _key: Player 1
+  _fitButtonWidth: 0
+  _fitPadding: 6
 --- !u!1 &2086458283
 GameObject:
   m_ObjectHideFlags: 0
@@ -16827,6 +17227,7 @@ GameObject:
   - component: {fileID: 2109146429}
   - component: {fileID: 2109146431}
   - component: {fileID: 2109146432}
+  - component: {fileID: 2109146433}
   m_Layer: 5
   m_Name: DescriptionText
   m_TagString: Untagged
@@ -16955,6 +17356,22 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &2109146433
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2109146428}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eacdd1db2a40c2645a294b579933469c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LocalizedText
+  _key: "Super Hot: Choose doppelganger. \nBy choosing one, you also make a choice
+    for your enemy."
+  _fitButtonWidth: 0
+  _fitPadding: 6
 --- !u!1 &2141831366
 GameObject:
   m_ObjectHideFlags: 0

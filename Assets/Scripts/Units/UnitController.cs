@@ -385,7 +385,7 @@ public class UnitController : MonoBehaviour, IClickable, IHoverable, IEndturnabl
 
     public string GetUnitName()
     {
-        return _unit.unitName;
+        return Loc.T(_unit.unitName);
     }
 
     public int GetHP()

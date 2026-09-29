@@ -41,8 +41,8 @@ public class UnitTilePanelController : MonoBehaviour
     public void DisplayTile(TileController myTile)
     {
         _hasContent = true;
-        _name.text = myTile.GetTileName();
-        _description.text = myTile.GetDescription();
+        _name.text = Loc.T(myTile.GetTileName());
+        _description.text = Loc.T(myTile.GetDescription());
         _hpText.enabled = false;
         _moveRangeText.enabled = false;
         _attackStrengthText.enabled = false;
@@ -71,8 +71,8 @@ public class UnitTilePanelController : MonoBehaviour
         _skillsText.enabled = true;
         if (_effectsText != null) _effectsText.enabled = true;
         _name.text = myUnit.GetUnitName();
-        if (myUnit.IsKing()) _description.text = "Superior";
-        else _description.text = "Doppelganger";
+        if (myUnit.IsKing()) _description.text = Loc.T("Superior");
+        else _description.text = Loc.T("Doppelganger");
         if(myUnit.IsDeployed) _hp.text = myUnit.GetHP().ToString() + "/" + myUnit.GetMaxHP().ToString();
         else _hp.text = myUnit.GetMaxHP().ToString();
         _moveRange.text = myUnit.GetBaseMoveRange().ToString();
@@ -84,43 +84,43 @@ public class UnitTilePanelController : MonoBehaviour
         foreach(ISkill skill in unitSkills)
         {
             if (counter > 0) description += "\n\n";
-            description += skill.GetDescription();
+            description += Loc.T(skill.GetDescription());
             counter++;
         }
         if(unitAbility != null)
         {
             if (counter > 0) description += "\n\n";
-            description += unitAbility.GetDescription();
+            description += Loc.T(unitAbility.GetDescription());
             counter++;
         }
         if (myUnit.IsKing())
         {
             if (counter > 0) description += "\n\n";
-            description += "Caller [can call Doppelgangers]";
+            description += Loc.T("Caller [can call Doppelgangers]");
             counter++;
         }
         if (myUnit.GetArmor() > 0)
         {
             if (counter > 0) description += "\n\n";
-            description += "TOUGH [reduce received damage by 1]";
+            description += Loc.T("TOUGH [reduce received damage by 1]");
             counter++;
         }
         if (myUnit.GetAttackRange() > 1)
         {
             if (counter > 0) description += "\n\n";
-            description += "GUNMAN [range of attack extended by 2 tiles in a straight line]";
+            description += Loc.T("GUNMAN [range of attack extended by 2 tiles in a straight line]");
             counter++;
         }
         if (myUnit.GetBaseAttacksCount() > 1)
         {
             if (counter > 0) description += "\n\n";
-            description += "BINARY [can attack twice in turn]";
+            description += Loc.T("BINARY [can attack twice in turn]");
             counter++;
         }
         if (!myUnit.SummoningSickness())
         {
             if (counter > 0) description += "\n\n";
-            description += "SWIFT [can move in the turn it was called]";
+            description += Loc.T("SWIFT [can move in the turn it was called]");
             counter++;
         }
         _skills.text = description;
@@ -130,7 +130,7 @@ public class UnitTilePanelController : MonoBehaviour
         foreach (IEffect effect in unitEffects)
         {
             if(counter > 0) description += "\n\n";
-            description += effect.GetDescription();
+            description += Loc.T(effect.GetDescription());
             counter++;
         }
         if (_effectsText != null) _effects.text = description;

@@ -23,7 +23,7 @@ public class SkillBurn : MonoBehaviour, IAddEffect, ISkill
         {
             myBurnEffect = target.gameObject.AddComponent<EffectBurn>();
             myBurnEffect.InitializeEffect(_burnAmount, _burnTurns, _effectDescription);
-            EventManager.Instance.EffectApplied(target, $"Burning for {_burnTurns} turns", _myUnitController);
+            EventManager.Instance.EffectApplied(target, Loc.F("Burning for {0} turns", _burnTurns), _myUnitController);
         }
     }
 

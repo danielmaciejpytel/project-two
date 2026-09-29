@@ -27,8 +27,19 @@ public class MainMenuController : MonoBehaviour
     [SerializeField] private Slider _musicSlider;
     [SerializeField] private TMP_Text _difficultyLabel;
     [SerializeField] private TMP_Text _resolutionLabel;
+    [SerializeField] private TMP_Text _languageLabel;
 
     private const float HiddenBarX = -1920.0f;
+
+    private void OnEnable()
+    {
+        Loc.Changed += RefreshOptionTexts;
+    }
+
+    private void OnDisable()
+    {
+        Loc.Changed -= RefreshOptionTexts;
+    }
 
     private void Start()
     {
@@ -125,8 +136,7 @@ public class MainMenuController : MonoBehaviour
         HideBar();
         _soundSlider.SetValueWithoutNotify(SoundController.Instance.SoundVolume);
         _musicSlider.SetValueWithoutNotify(SoundController.Instance.MusicVolume);
-        UpdateDifficultyLabel();
-        UpdateResolutionLabel();
+        RefreshOptionTexts();
     }
 
     public void HideOptions()
@@ -180,12 +190,12 @@ public class MainMenuController : MonoBehaviour
     {
         SoundController.Instance.PlayClick();
         GameSession.Difficulty = (AiDifficulty)(((int)GameSession.Difficulty + 1) % 3);
-        UpdateDifficultyLabel();
+        RefreshOptionTexts();
     }
 
     private void UpdateDifficultyLabel()
     {
-        if (_difficultyLabel != null) _difficultyLabel.text = "Difficulty: " + GameSession.Difficulty;
+        if (_difficultyLabel != null) _difficultyLabel.text = Loc.F("Difficulty: {0}", Loc.T(GameSession.Difficulty.ToString()));
     }
 
     // Options: cycles through the resolutions the monitor supports (native first).
@@ -195,14 +205,41 @@ public class MainMenuController : MonoBehaviour
         List<Vector2Int> resolutions = DisplaySettings.Available();
         int next = (resolutions.IndexOf(DisplaySettings.Current) + 1) % resolutions.Count;
         DisplaySettings.Set(resolutions[next]);
-        UpdateResolutionLabel();
+        RefreshOptionTexts();
     }
 
     private void UpdateResolutionLabel()
     {
         if (_resolutionLabel == null) return;
         Vector2Int current = DisplaySettings.Current;
-        _resolutionLabel.text = "Resolution: " + current.x + "x" + current.y + (DisplaySettings.IsNative(current) ? " (native)" : "");
+        string size = current.x + "x" + current.y + (DisplaySettings.IsNative(current) ? " " + Loc.T("(native)") : "");
+        _resolutionLabel.text = Loc.F("Resolution: {0}", size);
+    }
+
+    // Options: switches between the available languages; every text follows at once.
+    public void CycleLanguage()
+    {
+        SoundController.Instance.PlayClick();
+        Loc.Current = Loc.Current == Language.English ? Language.Polish : Language.English;
+    }
+
+    private void UpdateLanguageLabel()
+    {
+        if (_languageLabel != null) _languageLabel.text = Loc.F("Language: {0}", Loc.LanguageName(Loc.Current));
+    }
+
+    // The option texts are built in code; the buttons around them follow the text width (left edge fixed).
+    private void RefreshOptionTexts()
+    {
+        UpdateDifficultyLabel();
+        UpdateResolutionLabel();
+        UpdateLanguageLabel();
+        foreach (TMP_Text label in new[] { _difficultyLabel, _resolutionLabel, _languageLabel })
+        {
+            if (label == null) continue;
+            label.ForceMeshUpdate();
+            ((RectTransform)label.transform.parent).SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, label.preferredWidth + 6.0f);
+        }
     }
 
     // Sliders: the volume is applied and saved while dragging.

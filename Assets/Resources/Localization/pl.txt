@@ -1,0 +1,123 @@
+# Polish translations. One entry per line: English text, a tab, the translation.
+# "\n" is a line break. Texts without an entry are shown in English.
+PLAY	GRAJ
+PLAYER VS PLAYER	GRACZ KONTRA GRACZ
+PLAY VS <color=#D72E66>AI</color>	GRACZ KONTRA <color=#D72E66>AI</color>
+INSTRUCTIONS	INSTRUKCJA
+OPTIONS	OPCJE
+CREDITS	TWÓRCY
+EXIT	WYJŚCIE
+BACK	POWRÓT
+Back	Powrót
+Next	Dalej
+Done	Gotowe
+Effects	Efekty
+Music	Muzyka
+Difficulty: {0}	Poziom trudności: {0}
+Easy	Łatwy
+Normal	Normalny
+Hard	Trudny
+Resolution: {0}	Rozdzielczość: {0}
+(native)	(natywna)
+Language: {0}	Język: {0}
+Choose Doppelgangers and build a team to defeat the opposing Superior.\n\nPLAYER VS PLAYER - two players on one screen.\nPLAY VS AI - you lead Super Hot, the computer leads Super Cold.\n\nClick a unit to see where it can move and attack, then click a tile or an enemy. Use Call to bring a Doppelganger next to your Superior. Hover over a tile to read its effect. The Battle log shows the latest actions.\n\nWhich side will you fight for? Super Hot or Super Cold?	Wybierz sobowtóry i zbuduj drużynę, która pokona dowódcę przeciwnika.\n\nGRACZ KONTRA GRACZ - dwie osoby przy jednym ekranie.\nGRACZ KONTRA AI - prowadzisz Super Hot, a komputer prowadzi Super Cold.\n\nKliknij jednostkę, aby zobaczyć, gdzie może się ruszyć i atakować, a potem kliknij pole lub wroga. Przyciskiem Wezwij sprowadzisz sobowtóra obok swojego dowódcy. Najedź na pole, aby przeczytać jego efekt. Dziennik walki pokazuje ostatnie akcje.\n\nPo której stronie staniesz do walki? Super Hot czy Super Cold?
+<line-height=2.375em>CODE<pos=3.125em><color=#D72E66>KAROL ŁAWICKI</color>\nART<pos=3.125em><color=#D72E66>DANIEL PYTEL</color>\nDESIGN<pos=4.0625em><color=#D72E66>MATT MATUSZEWSKI</color><line-height=1.1875em>\n<pos=4.0625em><color=#D72E66>MATEUSZ NIZIOŁEK</color>	<line-height=2.375em>KOD<pos=5em><color=#D72E66>KAROL ŁAWICKI</color>\nGRAFIKA<pos=5em><color=#D72E66>DANIEL PYTEL</color>\nPROJEKT<pos=5em><color=#D72E66>MATT MATUSZEWSKI</color><line-height=1.1875em>\n<pos=5em><color=#D72E66>MATEUSZ NIZIOŁEK</color>
+End Turn	Zakończ
+Call	Wezwij
+Mode	Tryb
+Quit	Wyjdź
+Turn ends in:	Koniec tury za:
+Turn: {0}	Tura: {0}
+Winner: {0}	Zwycięzca: {0}
+Health Points:	Punkty życia:
+Move Range:	Zasięg ruchu:
+Attack Strength:	Siła ataku:
+Tags:	Cechy:
+Effects:	Efekty:
+Stats:	Statystyki:
+Player 1	Gracz 1
+Player 2	Gracz 2
+Player 2: Choose your commander	Gracz 2: Wybierz swojego dowódcę
+Super Hot: Choose doppelganger.	Super Hot: Wybierz sobowtóra.
+Super Cold: Choose doppelganger.	Super Cold: Wybierz sobowtóra.
+By choosing one, you also make a choice for your enemy.	Wybierając jednego, wybierasz też dla przeciwnika.
+Super Hot: Choose doppelganger. \nBy choosing one, you also make a choice for your enemy.	Super Hot: Wybierz sobowtóra. \nWybierając jednego, wybierasz też dla przeciwnika.
+Superior	Dowódca
+Doppelganger	Sobowtór
+Battle log	Dziennik walki
+Hide	Ukryj
+Show	Pokaż
+{0} called {1}	{0} przyzywa {1}
+Called {0}	Przyzwano: {0}
+{0} moved	{0} rusza się
+{0} moved to {1}	{0} idzie na: {1}
+{0} hit {1}	{0} uderza {1}
+({0} blocked)	(zablokowano {0})
+{0} hurt {1}	{0} rani {1}
+{0} healed {1}	{0} leczy {1}
+{0} {1} by {2}	{0} {1} przez {2}
+{0} {1}	{0} {1}
+{0} used {1} on {2}	{0} używa {1} na {2}
+{0} used {1}	{0} używa {1}
+{0} was killed	{0} ginie
+Turn {0} - {1}	Tura {0} - {1}
+Burning for {0} turns	Podpalony (tury: {0})
+Poisoned for {0} turns	Osłabiony (tury: {0})
+Provoked	Sprowokowany
+Burn	Podpalenie
+Recovery	Regeneracja
+Confuse	Dezorientacja
+Teleport	Teleportacja
+Confuse@used	Dezorientacji
+Teleport@used	Teleportacji
+Cover	Osłona
+Dead Zone	Strefa śmierci
+High Ground	Wzniesienie
+Obstacle	Przeszkoda
+Reinforcement Field	Pole wzmocnienia
+Restriction Area	Strefa ograniczenia
+Safe Zone	Bezpieczna strefa
++1 Attack Range	+1 do zasięgu ataku
++1 Attack Strength	+1 do siły ataku
++1 HP/Turn	+1 HP na turę
+-1 HP/Turn	-1 HP na turę
+-1 Move Range	-1 do zasięgu ruchu
+Impassable	Nie do przejścia
+Reduce received damage by 1	Zmniejsza otrzymywane obrażenia o 1
+Assailant	Napastnik
+Bodyguard	Ochroniarz
+Infiltrator	Infiltrator
+Operative	Agent
+Oppressor	Ciemiężca
+Protector	Obrońca
+Repeater	Powtarzacz
+Stinger	Żądłak
+Striker	Szermierz
+Tormentor	Oprawca
+Super Hot	Super Hot
+Super Cold	Super Cold
+PIERCING [damage dealt cannot be reduced]	PRZEBICIE [zadawane obrażenia nie mogą być zmniejszone]
+RECOVERY [heals 1 HP/Turn]	REGENERACJA [leczy 1 HP na turę]
+RECOVERY [heals 1 HP/turn]	REGENERACJA [leczy 1 HP na turę]
+IMPAIR [attacked units takes additional +1 damage for 2 turns]	OSŁABIENIE [zaatakowane jednostki dostają dodatkowo +1 obrażeń przez 2 tury]
+ZEAL [+1 attack strength and +1 HP when adjacent to Superior]	GORLIWOŚĆ [+1 do siły ataku i +1 HP, gdy stoi obok dowódcy]
+SPY [+1 attack strength and +2 HP when on opponent's starting side of the battlefield]	SZPIEG [+1 do siły ataku i +2 HP po stronie startowej przeciwnika]
+IMPALE (gives enemy 1 damage for 2 turns)	PRZEBODZENIE (zadaje wrogowi 1 obrażenie przez 2 tury)
+PROVOKE [nearby enemies can select only this unit as an attack target and cannot move]	PROWOKACJA [pobliscy wrogowie mogą atakować tylko tę jednostkę i nie mogą się ruszać]
+BACKSTAB [+2 attack strength when attacking from behind]	CIOS W PLECY [+2 do siły ataku przy ataku od tyłu]
+Teleporter (can move friendly unit up to 2 tiles)	Teleporter (może przenieść sojuszniczą jednostkę o maksymalnie 2 pola)
+Confuser (selected enemy has one attack fewer until your next turn, every other turn)	Dezorientator (wybrany wróg ma o jeden atak mniej do Twojej następnej tury, co drugą turę)
+Caller [can call Doppelgangers]	Przywoływacz [może przywoływać sobowtóry]
+TOUGH [reduce received damage by 1]	TWARDY [zmniejsza otrzymywane obrażenia o 1]
+GUNMAN [range of attack extended by 2 tiles in a straight line]	STRZELEC [zasięg ataku większy o 2 pola w linii prostej]
+BINARY [can attack twice in turn]	PODWÓJNY [może atakować dwa razy w turze]
+SWIFT [can move in the turn it was called]	SZYBKI [może się ruszać w turze, w której został przyzwany]
+Impaired (+1 damage when attacked)	Osłabiony (+1 obrażeń przy ataku)
+Provoked [cannot move and can only attack Provoker]	Sprowokowany [nie może się ruszać i może atakować tylko prowokatora]
+Confused (one attack fewer this turn)	Zdezorientowany (o jeden atak mniej w tej turze)
+Under restriction (-1 move range)	Ograniczony (-1 do zasięgu ruchu)
+Reinforced (+1 attack strength)	Wzmocniony (+1 do siły ataku)
+Long reach (+1 attack range in a straight line)	Daleki zasięg (+1 do zasięgu ataku w linii prostej)
+Implaled (1 damage/turn)	Przebity (1 obrażenie na turę)
+Impaled (1 damage/turn)	Przebity (1 obrażenie na turę)
+Covered (Reduce received damage by 1)	Osłonięty (zmniejsza otrzymywane obrażenia o 1)

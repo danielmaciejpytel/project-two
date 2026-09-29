@@ -92,6 +92,9 @@ public class UnitChoiceController : MonoBehaviour
         StartAiPickIfNeeded();
     }
 
+    // Both lines stay visible during the whole draft.
+    private static string ChoicePrompt(string firstLine) => Loc.T(firstLine) + " \n" + Loc.T("By choosing one, you also make a choice for your enemy.");
+
     private GameObject GetOpposingUnit(int lookForType, string unitName)
     {
         UnitController myUnitController;    
@@ -181,7 +184,7 @@ public class UnitChoiceController : MonoBehaviour
             _player2Panels[0].gameObject.SetActive(true);
             _player2InfoPanel.gameObject.SetActive(true);
             _player2InfoPanel.DisplayUnit(_player2UnitPrefabs[0].GetComponent<UnitController>());
-            _myDescription.text = "Player 2: Choose your commander";
+            _myDescription.text = Loc.T("Player 2: Choose your commander");
         }*/
         if (_currentPlayer == 2 && _currentPanelIndex >= _player1Panels.Length-1)
         {
@@ -209,7 +212,7 @@ public class UnitChoiceController : MonoBehaviour
                 opposingUnit = GetOpposingUnit(currentUnitController.GetUnitType(), currentUnitController.GetUnitName());
                 _currentOpponentUnitPanel.SetUnit(opposingUnit);
                 _player1InfoPanel.DisplayUnit(opposingUnit.GetComponent<UnitController>());
-                _myDescription.text = "Super Cold: Choose doppelganger.";
+                _myDescription.text = ChoicePrompt("Super Cold: Choose doppelganger.");
                 _currentUnitPanel = _player2Panels[_currentPanelIndex];
                 _currentUnitPanel.SetUnit(_player2UnitPrefabs[_currentUnitIndex]);
                 _player2InfoPanel.DisplayUnit(currentUnitController);
@@ -243,12 +246,12 @@ public class UnitChoiceController : MonoBehaviour
             _currentUnitPanel.SetUnit(_player1UnitPrefabs[_currentUnitIndex]);
             _player2InfoPanel.DisplayUnit(opposingUnit.GetComponent<UnitController>());
             _player1InfoPanel.DisplayUnit(currentUnitController);
-            _myDescription.text = "Super Hot: Choose doppelganger.";
+            _myDescription.text = ChoicePrompt("Super Hot: Choose doppelganger.");
         }
         if (_currentPlayer == 2 && _currentPanelIndex + 1 == _player2Panels.Length)
         {
             buttonText = _nextButton.GetComponentInChildren<TMP_Text>();
-            buttonText.text = "Done";
+            buttonText.text = Loc.T("Done");
         }
         _currentUnitPanel.EnableMe();
         if (GameSession.IsAiPlayer(_currentPlayer)) _currentUnitPanel.DisableButtons();

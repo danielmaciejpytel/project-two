@@ -29,7 +29,7 @@ public class UIController : MonoBehaviour
         _abilityButton.gameObject.SetActive(false);
         _myTimer = 0;
         _unitDeployedThisTurn = false;
-        _winnerText.text = "Turn: " + PlayerLabel(2);
+        _winnerText.text = Loc.F("Turn: {0}", PlayerLabel(2));
     }
 
     private IEnumerator TurnTimer(int timeLimit, GameController myGameController)
@@ -54,7 +54,7 @@ public class UIController : MonoBehaviour
         if (_turnTimer != null) StopCoroutine(_turnTimer);
         _turnTimer = null;
         _winnerImage.transform.DOPunchScale(new Vector3(0.2f, 0.2f, 0.0f), 0.5f).SetLink(_winnerImage.gameObject);
-        _winnerText.text = "Winner: " + PlayerLabel(winnerId);
+        _winnerText.text = Loc.F("Winner: {0}", PlayerLabel(winnerId));
     }
 
     public void InitializeUnitsPanel(List<UnitController> units, int startingPlayer, GameController myGameController, int timeLimit)
@@ -62,7 +62,7 @@ public class UIController : MonoBehaviour
         _myUnitsPanel.InitializePanel(units, startingPlayer);
         // The scene is laid out for Super Cold; move the turn controls if Super Hot starts.
         MoveActivePlayerControls(startingPlayer == 1 ? -1.0f : 1.0f);
-        _winnerText.text = "Turn: " + PlayerLabel(startingPlayer);
+        _winnerText.text = Loc.F("Turn: {0}", PlayerLabel(startingPlayer));
         if (_turnTimer != null) StopCoroutine(_turnTimer);
         _turnTimer = StartCoroutine(TurnTimer(timeLimit, myGameController));
     }
@@ -92,12 +92,12 @@ public class UIController : MonoBehaviour
         _abilityButton.gameObject.SetActive(false);
         if (playerId == 1)
         {
-            _winnerText.text = "Turn: " + PlayerLabel(1);
+            _winnerText.text = Loc.F("Turn: {0}", PlayerLabel(1));
             MoveActivePlayerControls(-1.0f);
         }
         else
         {
-            _winnerText.text = "Turn: " + PlayerLabel(2);
+            _winnerText.text = Loc.F("Turn: {0}", PlayerLabel(2));
             MoveActivePlayerControls(1.0f);
         }
         _winnerImage.transform.DOPunchScale(new Vector3(0.2f, 0.2f, 0.0f), 0.5f).SetLink(_winnerImage.gameObject);
@@ -136,7 +136,7 @@ public class UIController : MonoBehaviour
         unitAbility = unit.gameObject.GetComponent<IAbility>();
         if (unitAbility != null && unitAbility.IsAvailableThisTurn())
         {
-            _abilityButton.GetComponentInChildren<TMP_Text>().text = unitAbility.GetButtonDescription();
+            _abilityButton.GetComponentInChildren<TMP_Text>().text = Loc.T(unitAbility.GetButtonDescription());
             _abilityButton.gameObject.SetActive(true);
         }
         else _abilityButton.gameObject.SetActive(false);
