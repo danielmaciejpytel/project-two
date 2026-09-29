@@ -5,14 +5,17 @@ using UnityEngine;
 /// <summary>
 /// Computer opponent. It plays through the same game states as a human (clicks on units and tiles,
 /// Call and End Turn), so every rule, effect and animation works exactly as in hot-seat.
-/// Strategy per turn: call one Doppelganger, then each unit moves to the best tile and attacks
-/// the most valuable target; the commander stays back and only attacks what is next to it.
+/// Strategy per turn: call one Doppelganger, sometimes use the commander's ability (Confuse or
+/// Teleport), then each unit moves to the best tile and attacks the most valuable target;
+/// the commander stays back and only attacks what is next to it.
 /// </summary>
 public class AIController : MonoBehaviour
 {
     private const float ThinkDelay = 0.8f;
     private const float StepDelay = 0.45f;
     private const float ExecutionTimeout = 10.0f;
+    // Abilities are used only now and then, even when there is a good opportunity.
+    private const float AbilityChance = 0.35f;
 
     private GameController _game;
     private int _playerId;
@@ -43,6 +46,7 @@ public class AIController : MonoBehaviour
     {
         yield return new WaitForSeconds(ThinkDelay);
         if (IsMyTurn) yield return TryDeploy();
+        if (IsMyTurn) yield return TryUseAbilities();
 
         foreach (UnitController unit in GetActingOrder())
         {
@@ -84,6 +88,66 @@ public class AIController : MonoBehaviour
         _game.RunWithoutInputLock(() => EventManager.Instance.UnitClicked(unitToCall));
         yield return new WaitForSeconds(StepDelay);
         _game.RunWithoutInputLock(() => EventManager.Instance.TileClicked(tile));
+        yield return new WaitForSeconds(StepDelay);
+    }
+
+    private IEnumerator TryUseAbilities()
+    {
+        foreach (UnitController unit in GetActingOrder())
+        {
+            if (!IsMyTurn) yield break;
+            IAbility ability = unit.GetComponent<IAbility>();
+            if (ability == null || !ability.IsAvailableThisTurn() || !unit.IsAvailable || unit.HasMoved) continue;
+            if (Random.value > AbilityChance) continue;
+
+            if (ability is AbilityConfuse)
+            {
+                UnitController target = ChooseConfuseTarget();
+                if (target == null) continue;
+                yield return Select(unit);
+                _game.RunWithoutInputLock(_game.AbilityAction);
+                yield return new WaitForSeconds(StepDelay);
+                _game.RunWithoutInputLock(() => EventManager.Instance.UnitClicked(target));
+                yield return new WaitForSeconds(StepDelay);
+            }
+            else if (ability is AbilityTeleport)
+            {
+                if (!ChooseTeleport(unit, out UnitController ally, out TileController tile)) continue;
+                yield return Select(unit);
+                _game.RunWithoutInputLock(_game.AbilityAction);
+                yield return new WaitForSeconds(StepDelay);
+                _game.RunWithoutInputLock(() => EventManager.Instance.UnitClicked(ally));
+                yield return new WaitForSeconds(StepDelay);
+                _game.RunWithoutInputLock(() => EventManager.Instance.TileClicked(tile));
+                yield return new WaitForSeconds(StepDelay);
+            }
+            yield return Deselect(unit);
+        }
+    }
+
+    // After an ability the caster stays selected; clicking a tile it can't reach returns to the turn start.
+    private IEnumerator Deselect(UnitController unit)
+    {
+        if (!(_game.CurrentState is UnitSelectedState)) yield break;
+        BoardGrid grid = _game.GetGrid();
+        TileController far = null;
+        float farthest = -1.0f;
+        for (int y = 0; y < grid.GetBoardHeight(); y++)
+        {
+            for (int x = 0; x < grid.GetBoardWidth(); x++)
+            {
+                TileController tile = grid.GetTile(x, y);
+                if (tile == null || tile.IsOccupied) continue;
+                float distance = Distance(unit.GetGridPosition(), tile.GetGridPosition());
+                if (distance > farthest && !grid.IsTileInMoveRange(unit, tile))
+                {
+                    farthest = distance;
+                    far = tile;
+                }
+            }
+        }
+        if (far == null) yield break;
+        _game.RunWithoutInputLock(() => EventManager.Instance.TileClicked(far));
         yield return new WaitForSeconds(StepDelay);
     }
 
@@ -161,6 +225,67 @@ public class AIController : MonoBehaviour
         {
             if (unit.GetPlayerId() != _playerId && unit.IsDeployed && !unit.IsKilled && unit.CurrentTile != null) yield return unit;
         }
+    }
+
+    // Confuse takes one attack from an enemy that is close enough to strike one of our units next turn.
+    private UnitController ChooseConfuseTarget()
+    {
+        List<UnitController> mine = new List<UnitController>();
+        foreach (UnitController unit in _game.Units)
+        {
+            if (unit.GetPlayerId() == _playerId && unit.IsDeployed && !unit.IsKilled && unit.CurrentTile != null) mine.Add(unit);
+        }
+
+        UnitController best = null;
+        float bestValue = 0.0f;
+        foreach (UnitController enemy in Enemies())
+        {
+            if (enemy.FreeAttacksCount < 1 || enemy.GetComponent<EffectConfused>() != null) continue;
+            int reach = enemy.GetMoveRange() + enemy.GetAttackRange() + 1;
+            float value = 0.0f;
+            foreach (UnitController unit in mine)
+            {
+                if (Distance(enemy.GetGridPosition(), unit.GetGridPosition()) > reach) continue;
+                value = Mathf.Max(value, enemy.GetAttackStrength() * 2.0f + (unit.IsKing() ? 10.0f : 0.0f));
+            }
+            if (value > bestValue)
+            {
+                bestValue = value;
+                best = enemy;
+            }
+        }
+        return best;
+    }
+
+    // Teleport shifts an ally by one tile; used when it puts the ally in a clearly better spot.
+    private bool ChooseTeleport(UnitController caster, out UnitController bestAlly, out TileController bestTile)
+    {
+        bestAlly = null;
+        bestTile = null;
+        float bestGain = 5.0f;
+        BoardGrid grid = _game.GetGrid();
+        foreach (UnitController ally in _game.Units)
+        {
+            if (ally == caster || ally.GetPlayerId() != _playerId || !ally.IsDeployed || ally.IsKilled || ally.CurrentTile == null) continue;
+            float current = ScorePosition(ally, ally.CurrentTile);
+            GridPosition center = ally.GetGridPosition();
+            for (int dy = -1; dy <= 1; dy++)
+            {
+                for (int dx = -1; dx <= 1; dx++)
+                {
+                    TileController tile = grid.GetTile(center.x + dx, center.y + dy);
+                    if (tile == null || tile.IsOccupied || !tile.isWalkable()) continue;
+                    float gain = ScorePosition(ally, tile) - current;
+                    if (gain > bestGain)
+                    {
+                        bestGain = gain;
+                        bestAlly = ally;
+                        bestTile = tile;
+                    }
+                }
+            }
+        }
+        return bestAlly != null;
     }
 
     private TileController ChooseDeploymentTile(UnitController commander)
