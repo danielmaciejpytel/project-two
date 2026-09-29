@@ -2,7 +2,7 @@
 
 [English](README.md) | **Polski**
 
-Gra stworzona przez Team 13 w Game Dev School.
+Zaktualizowana i ulepszona wersja projektu stworzonego pierwotnie przez Team 13 podczas Game Dev School w 2021 roku.
 
 Turowy pojedynek taktyczny na izometrycznej planszy. Dwaj Superiorzy, Super Hot i Super Cold,
 dowodzą drużynami Doppelgangerów. Przed bitwą gracze wybierają jednostki parami. W trakcie bitwy
@@ -22,7 +22,7 @@ W grę mogą grać dwie osoby przy jednym ekranie albo jedna osoba przeciwko kom
 
 ## Co zmieniło się od pierwszego wydania
 
-Pierwsze wydanie było prototypem na Unity 2019.4 do gry na jednym ekranie. Od tego czasu:
+Pierwsze wydanie było prototypem z Game Dev School 2021 na Unity 2019.4, do gry we dwoje na jednym ekranie. Od tego czasu:
 
 - **Unity 6.** Projekt działa na Unity 6000.3.23f1. Sterowanie obsługuje wyłącznie pakiet Input
   System, więc działa zarówno mysz, jak i dotyk. Usunięto nieużywaną wtyczkę GitHub for Unity.
