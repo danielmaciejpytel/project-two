@@ -15,19 +15,19 @@ public class SkillZeal : MonoBehaviour, IAttackModifier, IEnterTile, ISkill
     {
         _myUnitController = GetComponent<UnitController>();
         _isAdjacentToKing = false;
-        EventManager._instance.OnExecutionEnd += OnExecutionEnded;
+        EventManager.Instance.OnExecutionEnd += OnExecutionEnded;
     }
 
     private void OnDestroy()
     {
-        EventManager._instance.OnExecutionEnd -= OnExecutionEnded;
+        EventManager.Instance.OnExecutionEnd -= OnExecutionEnded;
     }
 
     private void OnExecutionEnded(UnitController unit)
     {
-        if(_myUnitController._isDeployed && unit.GetPlayerId() == _myUnitController.GetPlayerId() && unit.IsKing())
+        if(_myUnitController.IsDeployed && unit.GetPlayerId() == _myUnitController.GetPlayerId() && unit.IsKing())
         {
-            EnterTileAction(_myUnitController._myTile);
+            EnterTileAction(_myUnitController.CurrentTile);
         }
     }
 
@@ -37,21 +37,21 @@ public class SkillZeal : MonoBehaviour, IAttackModifier, IEnterTile, ISkill
         TileController neighbourTile;
 
         neighbourTile = newTile.GetAnotherTile(_myUnitController.GetGridPosition().x - 1, _myUnitController.GetGridPosition().y -1);
-        if (neighbourTile != null && neighbourTile._isOccupied && neighbourTile._myUnit.IsKing() && neighbourTile._myUnit.GetPlayerId() == _myUnitController.GetPlayerId()) isKingClose = true;
+        if (neighbourTile != null && neighbourTile.IsOccupied && neighbourTile.Unit.IsKing() && neighbourTile.Unit.GetPlayerId() == _myUnitController.GetPlayerId()) isKingClose = true;
         neighbourTile = newTile.GetAnotherTile(_myUnitController.GetGridPosition().x - 1, _myUnitController.GetGridPosition().y);
-        if (neighbourTile != null && neighbourTile._isOccupied && neighbourTile._myUnit.IsKing() && neighbourTile._myUnit.GetPlayerId() == _myUnitController.GetPlayerId()) isKingClose = true;
+        if (neighbourTile != null && neighbourTile.IsOccupied && neighbourTile.Unit.IsKing() && neighbourTile.Unit.GetPlayerId() == _myUnitController.GetPlayerId()) isKingClose = true;
         neighbourTile = newTile.GetAnotherTile(_myUnitController.GetGridPosition().x - 1, _myUnitController.GetGridPosition().y + 1);
-        if (neighbourTile != null && neighbourTile._isOccupied && neighbourTile._myUnit.IsKing() && neighbourTile._myUnit.GetPlayerId() == _myUnitController.GetPlayerId()) isKingClose = true;
+        if (neighbourTile != null && neighbourTile.IsOccupied && neighbourTile.Unit.IsKing() && neighbourTile.Unit.GetPlayerId() == _myUnitController.GetPlayerId()) isKingClose = true;
         neighbourTile = newTile.GetAnotherTile(_myUnitController.GetGridPosition().x, _myUnitController.GetGridPosition().y - 1);
-        if (neighbourTile != null && neighbourTile._isOccupied && neighbourTile._myUnit.IsKing() && neighbourTile._myUnit.GetPlayerId() == _myUnitController.GetPlayerId()) isKingClose = true;
+        if (neighbourTile != null && neighbourTile.IsOccupied && neighbourTile.Unit.IsKing() && neighbourTile.Unit.GetPlayerId() == _myUnitController.GetPlayerId()) isKingClose = true;
         neighbourTile = newTile.GetAnotherTile(_myUnitController.GetGridPosition().x, _myUnitController.GetGridPosition().y + 1);
-        if (neighbourTile != null && neighbourTile._isOccupied && neighbourTile._myUnit.IsKing() && neighbourTile._myUnit.GetPlayerId() == _myUnitController.GetPlayerId()) isKingClose = true;
+        if (neighbourTile != null && neighbourTile.IsOccupied && neighbourTile.Unit.IsKing() && neighbourTile.Unit.GetPlayerId() == _myUnitController.GetPlayerId()) isKingClose = true;
         neighbourTile = newTile.GetAnotherTile(_myUnitController.GetGridPosition().x + 1, _myUnitController.GetGridPosition().y - 1);
-        if (neighbourTile != null && neighbourTile._isOccupied && neighbourTile._myUnit.IsKing() && neighbourTile._myUnit.GetPlayerId() == _myUnitController.GetPlayerId()) isKingClose = true;
+        if (neighbourTile != null && neighbourTile.IsOccupied && neighbourTile.Unit.IsKing() && neighbourTile.Unit.GetPlayerId() == _myUnitController.GetPlayerId()) isKingClose = true;
         neighbourTile = newTile.GetAnotherTile(_myUnitController.GetGridPosition().x + 1, _myUnitController.GetGridPosition().y);
-        if (neighbourTile != null && neighbourTile._isOccupied && neighbourTile._myUnit.IsKing() && neighbourTile._myUnit.GetPlayerId() == _myUnitController.GetPlayerId()) isKingClose = true;
+        if (neighbourTile != null && neighbourTile.IsOccupied && neighbourTile.Unit.IsKing() && neighbourTile.Unit.GetPlayerId() == _myUnitController.GetPlayerId()) isKingClose = true;
         neighbourTile = newTile.GetAnotherTile(_myUnitController.GetGridPosition().x + 1, _myUnitController.GetGridPosition().y + 1);
-        if (neighbourTile != null && neighbourTile._isOccupied && neighbourTile._myUnit.IsKing() && neighbourTile._myUnit.GetPlayerId() == _myUnitController.GetPlayerId()) isKingClose = true;
+        if (neighbourTile != null && neighbourTile.IsOccupied && neighbourTile.Unit.IsKing() && neighbourTile.Unit.GetPlayerId() == _myUnitController.GetPlayerId()) isKingClose = true;
         if(!_isAdjacentToKing && isKingClose)
         {
             _isAdjacentToKing = isKingClose;

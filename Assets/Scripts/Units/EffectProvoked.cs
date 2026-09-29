@@ -25,7 +25,7 @@ public class EffectProvoked : MonoBehaviour, IValidateTarget, IMoveRangeModifier
     public void EndTurnAction(int playerId)
     {
         if(_myUnitController.GetPlayerId() != playerId 
-            && (_instigator._isKilled || Mathf.Abs(_instigator.GetGridPosition().x - _myUnitController.GetGridPosition().x) > 1 || Mathf.Abs(_instigator.GetGridPosition().y - _myUnitController.GetGridPosition().y) > 1))
+            && (_instigator.IsKilled || Mathf.Abs(_instigator.GetGridPosition().x - _myUnitController.GetGridPosition().x) > 1 || Mathf.Abs(_instigator.GetGridPosition().y - _myUnitController.GetGridPosition().y) > 1))
         {
             Destroy(this);
         }
@@ -43,7 +43,8 @@ public class EffectProvoked : MonoBehaviour, IValidateTarget, IMoveRangeModifier
 
     public GridPosition GetValidPosition()
     {
-        if (!_instigator._isKilled) return _instigator.GetGridPosition();
-        else return new GridPosition();
+        // A killed instigator has no tile anymore; the default (0, 0) used to highlight a random corner tile.
+        if (_instigator != null && !_instigator.IsKilled) return _instigator.GetGridPosition();
+        return GridPosition.Invalid;
     }
 }

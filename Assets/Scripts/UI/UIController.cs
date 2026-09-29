@@ -16,6 +16,7 @@ public class UIController : MonoBehaviour
     [SerializeField] private Image _timerImage;
     [SerializeField] private Text _timerText;
     private int _myTimer;
+    private Coroutine _turnTimer;
     private bool _unitDeployedThisTurn;
 
 
@@ -30,6 +31,7 @@ public class UIController : MonoBehaviour
 
     private IEnumerator TurnTimer(int timeLimit, GameController myGameController)
     {
+        WaitForSeconds oneSecond = new WaitForSeconds(1.0f);
         while (true)
         {
             if (_myTimer >= timeLimit)
@@ -39,12 +41,15 @@ public class UIController : MonoBehaviour
             }
             _timerText.text = (timeLimit - _myTimer).ToString();
             _myTimer += 1;
-            yield return new WaitForSeconds(1.0f);
+            yield return oneSecond;
         }
     }
 
     public void DisplayWinner(int winnerId)
     {
+        // The game is over, the timer would otherwise keep ending turns (and clicking) in the background.
+        if (_turnTimer != null) StopCoroutine(_turnTimer);
+        _turnTimer = null;
         _winnerImage.transform.DOPunchScale(new Vector3(0.2f, 0.2f, 0.0f), 0.5f);
         if (winnerId == 1) _winnerText.text = "Winner: Super Hot";
         else _winnerText.text = "Winner: Super Cold";
@@ -53,7 +58,8 @@ public class UIController : MonoBehaviour
     public void InitializeUnitsPanel(List<UnitController> units, int startingPlayer, GameController myGameController, int timeLimit)
     {
         _myUnitsPanel.InitializePanel(units, startingPlayer);
-        StartCoroutine(TurnTimer(timeLimit, myGameController));
+        if (_turnTimer != null) StopCoroutine(_turnTimer);
+        _turnTimer = StartCoroutine(TurnTimer(timeLimit, myGameController));
     }
 
     public void DisplayTile(TileController tile)
@@ -96,7 +102,7 @@ public class UIController : MonoBehaviour
             _abilityButton.transform.Translate(new Vector3(1092.0f, 0.0f, 0.0f));
         }
         _winnerImage.transform.DOPunchScale(new Vector3(0.2f, 0.2f, 0.0f), 0.5f);
-        SoundController._instance.PlayEndTurn();
+        SoundController.Instance.PlayEndTurn();
     }
 
     public void SelectUnit(UnitController unit)

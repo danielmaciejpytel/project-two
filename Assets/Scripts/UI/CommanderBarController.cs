@@ -37,9 +37,10 @@ public class CommanderBarController : MonoBehaviour
 
     public void SetNewValue(int newHealth)
     {
-        foreach(Image i in _healthPoints)
+        // Destroy the whole point objects, destroying only the Image component leaked an empty object per point.
+        foreach (Image point in _healthPoints)
         {
-            Destroy(i);
+            Destroy(point.gameObject);
         }
         CreateBar(newHealth);
     }

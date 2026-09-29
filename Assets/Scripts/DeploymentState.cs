@@ -10,11 +10,12 @@ public class DeploymentState : IGameState
 
     private bool IsTileInDeploymentZone(TileController startingTile, TileController checkedTile)
     {
-        GridPosition startingPosition, checkedPosition;
-        startingPosition = startingTile.GetGridPosition();
-        checkedPosition = checkedTile.GetGridPosition();
-        if (Mathf.Abs(startingPosition.x - checkedPosition.x) <= 1 && Mathf.Abs(startingPosition.y - checkedPosition.y) <= 1 && !checkedTile._isOccupied && checkedTile.isWalkable()) return true;
-        else return false;
+        GridPosition startingPosition = startingTile.GetGridPosition();
+        GridPosition checkedPosition = checkedTile.GetGridPosition();
+        return Mathf.Abs(startingPosition.x - checkedPosition.x) <= 1
+            && Mathf.Abs(startingPosition.y - checkedPosition.y) <= 1
+            && !checkedTile.IsOccupied
+            && checkedTile.isWalkable();
     }
 
     public DeploymentState(UnitController unit, UnitController king, BoardGrid myGrid, UIController ui)
@@ -28,80 +29,39 @@ public class DeploymentState : IGameState
 
     public IGameState TileClicked(GameController myGameController, TileController clickedTile)
     {
-        UIController ui;
-        BoardGrid myGrid;
-        int newPlayer;
+        UIController ui = myGameController.GetUI();
+        BoardGrid myGrid = myGameController.GetGrid();
 
-        SoundController._instance.PlayClick();
-        ui = myGameController.GetUI();
-        myGrid = myGameController.GetGrid();
-        GridPosition tilePosition;
-        tilePosition = clickedTile.GetGridPosition();
+        SoundController.Instance.PlayClick();
         if (_unitToDeploy == null)
         {
             ui.EndDeployment();
-            if (_activeUnit == null) return new BeginTurnState(_kingUnit.GetPlayerId());
-            else
-            {
-                if (_activeUnit._hasMoved)
-                {
-                    if (!myGrid.HasPossibleAttack(_activeUnit))
-                    {
-                        _activeUnit._isAvailable = false;
-                        myGrid.HideHighlight();
-                        _activeUnit.SetReticle(false);
-                        ui.MarkUnitUnavailable(_activeUnit);
-                    }
-                    else return new AttackSelectedState(_activeUnit, myGrid, ui);
-                    if(myGameController.MovesDepleted(_activeUnit.GetPlayerId()))
-                    {
-                        myGameController.EndPlayerTurn(_activeUnit.GetPlayerId());
-                        newPlayer = (_activeUnit.GetPlayerId() == 1 ? 2 : 1);
-                        return new BeginTurnState(newPlayer);
-                    }
-                    else return new BeginTurnState(_activeUnit.GetPlayerId());
-                }
-                else return new UnitSelectedState(_activeUnit, myGrid, ui);
-            }
+            return ReturnToActiveUnit(myGameController, myGrid, ui);
         }
-        else if (IsTileInDeploymentZone(_kingUnit._myTile, clickedTile) && !clickedTile._isOccupied)
+        if (!IsTileInDeploymentZone(_kingUnit.CurrentTile, clickedTile)) return null;
+
+        _unitToDeploy.DeployUnit(clickedTile);
+        SoundController.Instance.PlayCall();
+        if (_unitToDeploy.SummoningSickness())
         {
-            _unitToDeploy.DeployUnit(clickedTile);
-            SoundController._instance.PlayCall();
-            if (_unitToDeploy.SummoningSickness())
-            {
-                ui.MarkUnitUnavailable(_unitToDeploy);
-                _unitToDeploy._isAvailable = false;
-            }
-            _unitToDeploy._isDeployed = true;
-            clickedTile.ClearTile();
-            ui.EndDeployment();
-            myGrid.HideHighlight();
-            if (_activeUnit == null) return new BeginTurnState(_kingUnit.GetPlayerId());
-            else
-            {
-                if (_activeUnit._hasMoved)
-                {
-                    if (!myGrid.HasPossibleAttack(_activeUnit))
-                    {
-                        _activeUnit._isAvailable = false;
-                        myGrid.HideHighlight();
-                        _activeUnit.SetReticle(false);
-                        ui.MarkUnitUnavailable(_activeUnit);
-                    }
-                    else return new AttackSelectedState(_activeUnit, myGrid, ui);
-                    if (myGameController.MovesDepleted(_activeUnit.GetPlayerId()))
-                    {
-                        myGameController.EndPlayerTurn(_activeUnit.GetPlayerId());
-                        newPlayer = (_activeUnit.GetPlayerId() == 1 ? 2 : 1);
-                        return new BeginTurnState(newPlayer);
-                    }
-                    else return new BeginTurnState(_activeUnit.GetPlayerId());
-                }
-                else return new UnitSelectedState(_activeUnit, myGrid, ui);
-            }
+            ui.MarkUnitUnavailable(_unitToDeploy);
+            _unitToDeploy.IsAvailable = false;
         }
-        return null;
+        _unitToDeploy.IsDeployed = true;
+        clickedTile.ClearTile();
+        ui.EndDeployment();
+        myGrid.HideHighlight();
+        return ReturnToActiveUnit(myGameController, myGrid, ui);
+    }
+
+    // Leaves the deployment and resumes whatever the player was doing before pressing "Call".
+    private IGameState ReturnToActiveUnit(GameController myGameController, BoardGrid myGrid, UIController ui)
+    {
+        if (_activeUnit == null) return new BeginTurnState(_kingUnit.GetPlayerId());
+        if (!_activeUnit.HasMoved) return new UnitSelectedState(_activeUnit, myGrid, ui);
+        if (myGrid.HasPossibleAttack(_activeUnit)) return new AttackSelectedState(_activeUnit, myGrid, ui);
+        myGrid.HideHighlight();
+        return myGameController.FinishUnitActivation(_activeUnit);
     }
 
     public IGameState UnitClicked(GameController myGameController, UnitController clickedUnit)
@@ -109,10 +69,10 @@ public class DeploymentState : IGameState
         UIController ui;
         BoardGrid myGrid;
 
-        SoundController._instance.PlayClick();
+        SoundController.Instance.PlayClick();
         ui = myGameController.GetUI();
         myGrid = myGameController.GetGrid();
-        if (clickedUnit._isDeployed)
+        if (clickedUnit.IsDeployed)
         {
             myGrid.HideHighlight();
             ui.EndDeployment();
@@ -120,7 +80,7 @@ public class DeploymentState : IGameState
             {
                 _activeUnit.SetReticle(false);
             }
-            if (clickedUnit._hasMoved) return new AttackSelectedState(clickedUnit, myGrid, ui);
+            if (clickedUnit.HasMoved) return new AttackSelectedState(clickedUnit, myGrid, ui);
             else return new UnitSelectedState(clickedUnit, myGrid, ui);
         }
         else
@@ -128,7 +88,7 @@ public class DeploymentState : IGameState
             _unitToDeploy = clickedUnit;
             ui.DisplayUnit(_unitToDeploy);
             ui.SelectUnit(_unitToDeploy);
-            myGrid.ShowZone(_kingUnit._myTile, HighlightType.Deployment);
+            myGrid.ShowZone(_kingUnit.CurrentTile, HighlightType.Deployment);
         }
         return null;
     }
@@ -137,7 +97,7 @@ public class DeploymentState : IGameState
     {
         UIController ui;
 
-        SoundController._instance.PlayHover();
+        SoundController.Instance.PlayHover();
         if (hoveredTile.isWalkable()) hoveredTile.Highlight(HighlightType.Hover, false);
         ui = myGameController.GetUI();
         ui.DisplayTile(hoveredTile);
@@ -148,7 +108,7 @@ public class DeploymentState : IGameState
     {
         UIController ui;
 
-        SoundController._instance.PlayHover();
+        SoundController.Instance.PlayHover();
         ui = myGameController.GetUI();
         ui.DisplayUnit(hoveredUnit);
         return null;
@@ -171,21 +131,8 @@ public class DeploymentState : IGameState
 
     public IGameState EndTurnPressed(GameController myGameController)
     {
-        // disable unit reticle
-        BoardGrid myGrid;
-        int newPlayer;
-        UIController ui;
-
-        ui = myGameController.GetUI();
-        myGrid = myGameController.GetGrid();
-        myGrid.HideHighlight();
-        _activeUnit.SetReticle(false);
-        _activeUnit._isAvailable = false;
-        ui.MarkUnitUnavailable(_activeUnit);
-        myGameController.EndPlayerTurn(_activeUnit.GetPlayerId());
-        newPlayer = (_activeUnit.GetPlayerId() == 1 ? 2 : 1);
-        ui.EndDeployment();
-        return new BeginTurnState(newPlayer);
+        // Deployment can be opened without a selected unit, so the active player comes from the commander.
+        return myGameController.ForceEndTurn(_kingUnit.GetPlayerId(), _activeUnit);
     }
 
     public IGameState DeploymentPressed(GameController myGameController)

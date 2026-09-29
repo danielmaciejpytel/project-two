@@ -103,12 +103,12 @@ public class HealthController : MonoBehaviour
     {
         for (int i = _designerHealthPointsList.Count - 1; i >= 0; i--)
         {
-            Destroy(_designerHealthPointsList[i]);
+            Destroy(_designerHealthPointsList[i].gameObject);
         }
         _designerHealthPointsList.Clear();
         for (int i = _healthPointsList.Count - 1; i >= 0; i--)
         {
-            Destroy(_healthPointsList[i]);
+            Destroy(_healthPointsList[i].gameObject);
         }
         _healthPointsList.Clear();
         _initialHealthPoints += change;

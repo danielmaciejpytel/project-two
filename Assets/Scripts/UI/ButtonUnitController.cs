@@ -21,7 +21,7 @@ public class ButtonUnitController : MonoBehaviour
 
     public void ClickedMe()
     {
-        if(!_myUnit._isKilled) EventManager._instance.UnitClicked(_myUnit);
+        if(!_myUnit.IsKilled) EventManager.Instance.UnitClicked(_myUnit);
     }
 
     public void SetUnit(UnitController unit)
@@ -29,9 +29,9 @@ public class ButtonUnitController : MonoBehaviour
         _myUnit = unit;
         _myImage.sprite = unit.GetUnitCard();
         _unitText.text = unit.GetUnitName();
-        if (unit._isAvailable) _myImage.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+        if (unit.IsAvailable) _myImage.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
         else _myImage.color = new Color(0.5f, 0.5f, 0.5f, 1.0f);
-        if (unit._isKilled) _killedImage.enabled = true;
+        if (unit.IsKilled) _killedImage.enabled = true;
         else _killedImage.enabled = false;
     }
 
@@ -58,13 +58,13 @@ public class ButtonUnitController : MonoBehaviour
 
     public void MarkForDeployment()
     {
-        if (!_myUnit._isDeployed) gameObject.SetActive(true); 
+        if (!_myUnit.IsDeployed) gameObject.SetActive(true); 
         else gameObject.SetActive(false);
     }
 
     public void MarkForAction()
     {
-        if (!_myUnit._isDeployed) gameObject.SetActive(false);
+        if (!_myUnit.IsDeployed) gameObject.SetActive(false);
         else gameObject.SetActive(true);  
     }
 
@@ -75,6 +75,6 @@ public class ButtonUnitController : MonoBehaviour
 
     public bool IsUnitDeployed()
     {
-        return _myUnit._isDeployed;
+        return _myUnit.IsDeployed;
     }
 }

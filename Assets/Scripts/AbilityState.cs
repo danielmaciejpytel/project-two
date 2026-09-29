@@ -19,26 +19,26 @@ public class AbilityState : IGameState
 
     public IGameState TileClicked(GameController myGameController, TileController clickedTile)
     {
-        SoundController._instance.PlayClick();
+        SoundController.Instance.PlayClick();
         return _activeAbility.TileClicked(myGameController, clickedTile);
     }
 
     public IGameState UnitClicked(GameController myGameController, UnitController clickedUnit)
     {
-        SoundController._instance.PlayClick();
+        SoundController.Instance.PlayClick();
         return _activeAbility.UnitClicked(myGameController, clickedUnit);
     }
 
     public IGameState TileHovered(GameController myGameController, TileController hoveredTile)
     {
-        SoundController._instance.PlayHover();
+        SoundController.Instance.PlayHover();
         return _activeAbility.TileHovered(myGameController, hoveredTile);
     }
 
     public IGameState UnitHovered(GameController myGameController, UnitController hoveredUnit)
     {
-        SoundController._instance.PlayHover();
-        hoveredUnit._myTile.AnimateHighlight();
+        SoundController.Instance.PlayHover();
+        hoveredUnit.CurrentTile.AnimateHighlight();
         return _activeAbility.UnitHovered(myGameController, hoveredUnit);
     }
 
@@ -55,21 +55,7 @@ public class AbilityState : IGameState
 
     public IGameState EndTurnPressed(GameController myGameController)
     {
-        // disable unit reticle
-        BoardGrid myGrid;
-        int newPlayer;
-        UIController ui;
-
-        ui = myGameController.GetUI();
-        myGrid = myGameController.GetGrid();
-        myGrid.HideHighlight();
-        _activeUnit.SetReticle(false);
-        _activeUnit._isAvailable = false;
-        ui.MarkUnitUnavailable(_activeUnit);
-        myGameController.EndPlayerTurn(_activeUnit.GetPlayerId());
-        newPlayer = (_activeUnit.GetPlayerId() == 1 ? 2 : 1);
-        ui.EndDeployment();
-        return new BeginTurnState(newPlayer);
+        return myGameController.ForceEndTurn(_activeUnit.GetPlayerId(), _activeUnit);
     }
 
     public IGameState DeploymentPressed(GameController myGameController)

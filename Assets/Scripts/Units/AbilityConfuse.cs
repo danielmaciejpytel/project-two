@@ -45,7 +45,7 @@ public class AbilityConfuse : MonoBehaviour, IAbility, IEndturnable
 
         ui = myGameController.GetUI();
         myGrid = myGameController.GetGrid();
-        if (_myUnit._hasMoved) return new AttackSelectedState(_myUnit, myGrid, ui);
+        if (_myUnit.HasMoved) return new AttackSelectedState(_myUnit, myGrid, ui);
         else return new UnitSelectedState(_myUnit, myGrid, ui);
     }
 
@@ -57,7 +57,7 @@ public class AbilityConfuse : MonoBehaviour, IAbility, IEndturnable
 
         ui = myGameController.GetUI();
         myGrid = myGameController.GetGrid();
-        if (clickedUnit._isDeployed && clickedUnit.GetPlayerId() != _myUnit.GetPlayerId() && _isAvailableThisTurn)
+        if (clickedUnit.IsDeployed && clickedUnit.GetPlayerId() != _myUnit.GetPlayerId() && _isAvailableThisTurn)
         {
             _myUnit.StartAnimation("UseAbility");
             _myUnit.PlaySound(_mySound);
@@ -65,7 +65,7 @@ public class AbilityConfuse : MonoBehaviour, IAbility, IEndturnable
             myEffectConfused.InitializeEffect(_myEffectDescription);
             _isAvailableThisTurn = false;
             myGrid.HideHighlight();
-            if (_myUnit._hasMoved) return new AttackSelectedState(_myUnit, myGrid, ui);
+            if (_myUnit.HasMoved) return new AttackSelectedState(_myUnit, myGrid, ui);
             else return new UnitSelectedState(_myUnit, myGrid, ui);
         }
         return null;
@@ -96,7 +96,7 @@ public class AbilityConfuse : MonoBehaviour, IAbility, IEndturnable
 
         ui = myGameController.GetUI();
         ui.ClearDisplay();
-        unhoveredUnit._myTile.StopAnimatingHighlight();
+        unhoveredUnit.CurrentTile.StopAnimatingHighlight();
         return null;
     }
 

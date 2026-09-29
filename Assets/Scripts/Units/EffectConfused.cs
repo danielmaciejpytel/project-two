@@ -12,7 +12,7 @@ public class EffectConfused : MonoBehaviour, IEffect, IEndturnable
     {
         _description = myDescription;
         _myUnitController = GetComponent<UnitController>();
-        _myUnitController._freeAttacksCount--;
+        _myUnitController.FreeAttacksCount--;
     }
 
     public string GetDescription()
@@ -24,7 +24,7 @@ public class EffectConfused : MonoBehaviour, IEffect, IEndturnable
     {
         if(_myUnitController.GetPlayerId() == playerId)
         {
-            _myUnitController._freeAttacksCount++;
+            _myUnitController.FreeAttacksCount++;
             Destroy(this);
         }
     }

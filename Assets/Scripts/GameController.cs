@@ -1,13 +1,19 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
-using UnityEngine;
 using System.IO;
+using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using DG.Tweening;
+#if ENABLE_INPUT_SYSTEM
+using UnityEngine.InputSystem;
+#endif
 
-public struct GridPosition
+public readonly struct GridPosition : IEquatable<GridPosition>
 {
-    public int x, y;
+    public static readonly GridPosition Invalid = new GridPosition(-1, -1);
+
+    public readonly int x, y;
 
     public GridPosition(int x, int y)
     {
@@ -15,40 +21,33 @@ public struct GridPosition
         this.y = y;
     }
 
-    public static bool operator ==(GridPosition gp1, GridPosition gp2)
-    {
-        if (gp1.x == gp2.x && gp1.y == gp2.y) return true;
-        else return false;
-    }
+    public bool Equals(GridPosition other) => x == other.x && y == other.y;
 
-    public static bool operator !=(GridPosition gp1, GridPosition gp2)
-    {
-        if (gp1.x != gp2.x || gp1.y != gp2.y) return true;
-        else return false;
-    }
+    public override bool Equals(object obj) => obj is GridPosition other && Equals(other);
 
-    public override bool Equals(object obj)
-    {
-        return base.Equals(obj);
-    }
+    public override int GetHashCode() => HashCode.Combine(x, y);
 
-    public override int GetHashCode()
-    {
-        return base.GetHashCode();
-    }
+    public override string ToString() => $"({x}, {y})";
+
+    public static bool operator ==(GridPosition gp1, GridPosition gp2) => gp1.Equals(gp2);
+
+    public static bool operator !=(GridPosition gp1, GridPosition gp2) => !gp1.Equals(gp2);
 }
 
-public enum HighlightType { MoveRange, Path, Hover, AttackRange, Deployment, Unit, Ability}
+public enum HighlightType { MoveRange, Path, Hover, AttackRange, Deployment, Unit, Ability }
 
 public class GameController : MonoBehaviour
 {
+    private const string GridFileName = "grid.csv";
+    private const string MenuSceneName = "MenuScene";
+
     [Header("Technical:")]
     [SerializeField] private UIController _myUIController;
     [SerializeField] private SpriteRenderer _backgroundImage;
     [SerializeField] private SpriteRenderer _shadowImage;
     [SerializeField] private SpriteRenderer _lineImage;
     [Header("For designers:")]
-    [Tooltip("Size of square board Tile, depends on tile sprote size.")]
+    [Tooltip("Size of square board Tile, depends on tile sprite size.")]
     [SerializeField] private float _designerTileSize;
     [SerializeField] private float _tileWidth;
     [SerializeField] private float _tileHeight;
@@ -59,324 +58,310 @@ public class GameController : MonoBehaviour
     [Tooltip("Turn limit in seconds")]
     [SerializeField] private int _timeLimit;
 
-    private static GameController _instance;
-    private List<GameObject> _unitPrefabsPlayer1;
-    private List<GameObject> _unitPrefabsPlayer2;
+    private readonly List<GameObject> _unitPrefabsPlayer1 = new List<GameObject>();
+    private readonly List<GameObject> _unitPrefabsPlayer2 = new List<GameObject>();
+    private readonly List<UnitController> _units = new List<UnitController>();
+    private readonly RaycastHit2D[] _clickHits = new RaycastHit2D[16];
     private IGameState _myGameState;
     private BoardGrid _myGrid;
-    private List<UnitController> _units;
     private Camera _myCamera;
     private bool _gameEnded;
 
+    public static GameController Instance { get; private set; }
+
+    public static int GetOpponent(int playerId) => playerId == 1 ? 2 : 1;
+
     private void Awake()
     {
-        if (_instance == null)
-            _instance = this;
-        else
+        if (Instance != null && Instance != this)
         {
             Destroy(this);
+            return;
         }
-        _unitPrefabsPlayer1 = new List<GameObject>();
-        _unitPrefabsPlayer2 = new List<GameObject>();
+        Instance = this;
+    }
+
+    private void SetState(IGameState newState)
+    {
+        if (newState != null) _myGameState = newState;
     }
 
     private void OnUnitClicked(UnitController clickedUnit)
     {
-        IGameState newState;
-        newState = _myGameState.UnitClicked(this, clickedUnit);
-        if(newState != null)
-        {
-            _myGameState = newState;
-        }
+        if (_myGameState != null) SetState(_myGameState.UnitClicked(this, clickedUnit));
     }
 
     private void OnUnitHovered(UnitController hoveredUnit)
     {
-        IGameState newState;
-        newState = _myGameState.UnitHovered(this, hoveredUnit);
-        if (newState != null)
-        {
-            _myGameState = newState;
-        }
+        if (_myGameState != null) SetState(_myGameState.UnitHovered(this, hoveredUnit));
     }
 
     private void OnUnitUnhovered(UnitController unhoveredUnit)
     {
-        IGameState newState;
-        newState = _myGameState.UnitUnhovered(this, unhoveredUnit);
-        if (newState != null)
-        {
-            _myGameState = newState;
-        }
+        if (_myGameState != null) SetState(_myGameState.UnitUnhovered(this, unhoveredUnit));
     }
 
     private void OnTileClicked(TileController clickedTile)
     {
-        IGameState newState;
-        newState = _myGameState.TileClicked(this, clickedTile);
-        if (newState != null)
-        {
-            _myGameState = newState;
-        }
+        if (_myGameState != null) SetState(_myGameState.TileClicked(this, clickedTile));
     }
 
     private void OnTileHovered(TileController hoveredTile)
     {
-        IGameState newState;
-        newState = _myGameState.TileHovered(this, hoveredTile);
-        if (newState != null)
-        {
-            _myGameState = newState;
-        }
+        if (_myGameState != null) SetState(_myGameState.TileHovered(this, hoveredTile));
     }
 
     private void OnUnitKilled(UnitController killedUnit)
     {
-        int winner;
         _myUIController.KillUnit(killedUnit);
-        if (killedUnit.IsKing())
+        if (killedUnit.IsKing() && !_gameEnded)
         {
             _gameEnded = true;
-            winner = (killedUnit.GetPlayerId() == 1 ? 2 : 1);
-            _myGameState = new EndState(this, winner);
+            _myGameState = new EndState(this, GetOpponent(killedUnit.GetPlayerId()));
         }
     }
 
     private void OnExecutionEnded(UnitController unit)
     {
-        IGameState newState;
-        newState = _myGameState.ExecutionEnd(this);
-        if (newState != null && !_gameEnded)
-        {
-            _myGameState = newState;
-        }
+        if (_gameEnded || _myGameState == null) return;
+        SetState(_myGameState.ExecutionEnd(this));
     }
 
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         _myCamera = Camera.main;
-        _units = new List<UnitController>();
         _gameEnded = false;
-        EventManager._instance.OnUnitClicked += OnUnitClicked;
-        EventManager._instance.OnUnitHovered += OnUnitHovered;
-        EventManager._instance.OnUnitUnhovered += OnUnitUnhovered;
-        EventManager._instance.OnTileClicked += OnTileClicked;
-        EventManager._instance.OnTileHovered += OnTileHovered;
-        EventManager._instance.OnExecutionEnd += OnExecutionEnded;
-        EventManager._instance.OnUnitKilled += OnUnitKilled;
+        EventManager events = EventManager.Instance;
+        events.OnUnitClicked += OnUnitClicked;
+        events.OnUnitHovered += OnUnitHovered;
+        events.OnUnitUnhovered += OnUnitUnhovered;
+        events.OnTileClicked += OnTileClicked;
+        events.OnTileHovered += OnTileHovered;
+        events.OnExecutionEnd += OnExecutionEnded;
+        events.OnUnitKilled += OnUnitKilled;
     }
 
     private void Update()
     {
+        if (!TryGetClickPosition(out Vector2 screenPosition)) return;
+        // Clicks on HUD buttons must not also select tiles or units lying under them.
+        if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject()) return;
+
+        Vector2 worldPosition = _myCamera.ScreenToWorldPoint(screenPosition);
+        int hitCount = Physics2D.Raycast(worldPosition, Vector2.zero, ContactFilter2D.noFilter, _clickHits, 0.01f);
+        SpriteRenderer topRenderer = null;
+        for (int i = 0; i < hitCount; i++)
+        {
+            if (!_clickHits[i].collider.TryGetComponent(out SpriteRenderer currentRenderer)) continue;
+            if (topRenderer == null || IsDrawnAbove(currentRenderer, topRenderer)) topRenderer = currentRenderer;
+        }
+        if (topRenderer != null && topRenderer.TryGetComponent(out IClickable clickedObject)) clickedObject.Click();
+    }
+
+    private static bool TryGetClickPosition(out Vector2 screenPosition)
+    {
+#if ENABLE_INPUT_SYSTEM
+        Mouse mouse = Mouse.current;
+        if (mouse != null && mouse.leftButton.wasPressedThisFrame)
+        {
+            screenPosition = mouse.position.ReadValue();
+            return true;
+        }
+        Touchscreen touch = Touchscreen.current;
+        if (touch != null && touch.primaryTouch.press.wasPressedThisFrame)
+        {
+            screenPosition = touch.primaryTouch.position.ReadValue();
+            return true;
+        }
+#else
         if (Input.GetMouseButtonDown(0))
         {
-            Vector2 mousePosition = _myCamera.ScreenToWorldPoint(Input.mousePosition);
-            RaycastHit2D[] hits = Physics2D.RaycastAll(mousePosition, new Vector2(0, 0), 0.01f);
-            SpriteRenderer topRenderer = null;
-            foreach(RaycastHit2D hit in hits)
-            {
-                if(topRenderer == null)
-                {
-                    topRenderer = hit.collider.gameObject.GetComponent<SpriteRenderer>();
-                    continue;
-                }
-                SpriteRenderer currentRenderer = hit.collider.gameObject.GetComponent<SpriteRenderer>();
-                if (currentRenderer.sortingLayerID > topRenderer.sortingLayerID) topRenderer = currentRenderer;
-                else if (currentRenderer.sortingLayerID == topRenderer.sortingLayerID)
-                {
-                    if(currentRenderer.sortingOrder > topRenderer.sortingOrder) topRenderer = currentRenderer;
-                }
-            }
-            if(topRenderer != null)
-            {
-                IClickable clickedObject = null;
-                clickedObject = topRenderer.gameObject.GetComponent<IClickable>();
-                if(clickedObject != null) clickedObject.Click();
-            }
+            screenPosition = Input.mousePosition;
+            return true;
         }
+#endif
+        screenPosition = default;
+        return false;
+    }
+
+    private static bool IsDrawnAbove(SpriteRenderer candidate, SpriteRenderer current)
+    {
+        // Sorting layer IDs are arbitrary numbers, the draw order is given by the layer value.
+        int candidateLayer = SortingLayer.GetLayerValueFromID(candidate.sortingLayerID);
+        int currentLayer = SortingLayer.GetLayerValueFromID(current.sortingLayerID);
+        if (candidateLayer != currentLayer) return candidateLayer > currentLayer;
+        return candidate.sortingOrder > current.sortingOrder;
     }
 
     private void OnDestroy()
     {
-        EventManager._instance.OnUnitClicked -= OnUnitClicked;
-        EventManager._instance.OnTileClicked -= OnTileClicked;
-        EventManager._instance.OnTileHovered -= OnTileHovered;
-        EventManager._instance.OnUnitUnhovered -= OnUnitUnhovered;
-        EventManager._instance.OnExecutionEnd -= OnExecutionEnded;
-        EventManager._instance.OnUnitKilled -= OnUnitKilled;
-        EventManager._instance.OnUnitHovered -= OnUnitHovered;
+        if (Instance == this) Instance = null;
+        EventManager events = EventManager.Instance;
+        if (events == null) return;
+        events.OnUnitClicked -= OnUnitClicked;
+        events.OnUnitHovered -= OnUnitHovered;
+        events.OnUnitUnhovered -= OnUnitUnhovered;
+        events.OnTileClicked -= OnTileClicked;
+        events.OnTileHovered -= OnTileHovered;
+        events.OnExecutionEnd -= OnExecutionEnded;
+        events.OnUnitKilled -= OnUnitKilled;
     }
 
-    public BoardGrid GetGrid()
-    {
-        return _myGrid;
-    }
+    public BoardGrid GetGrid() => _myGrid;
 
-    public UIController GetUI()
-    {
-        return _myUIController;
-    }
+    public UIController GetUI() => _myUIController;
 
     public bool MovesDepleted(int playerId)
     {
-        bool allUnitsNotAvailable = true;
-        foreach(UnitController unit in _units)
+        foreach (UnitController unit in _units)
         {
-            if (unit.GetPlayerId() == playerId && unit._isAvailable && !unit._isKilled && unit._isDeployed) allUnitsNotAvailable = false;
+            if (unit.GetPlayerId() == playerId && unit.IsAvailable && !unit.IsKilled && unit.IsDeployed) return false;
         }
-        return allUnitsNotAvailable;
+        return true;
     }
 
     public void EndTurnAction()
     {
-        IGameState newState;
-
-        SoundController._instance.PlayClick();
-        newState = _myGameState.EndTurnPressed(this);
-        if (newState != null)
-        {
-            _myGameState = newState;
-        }
+        if (_myGameState == null) return;
+        SoundController.Instance.PlayClick();
+        SetState(_myGameState.EndTurnPressed(this));
     }
 
     public void DeployAction()
     {
-        IGameState newState;
-
-        SoundController._instance.PlayClick();
-        newState = _myGameState.DeploymentPressed(this);
-        if (newState != null)
-        {
-            _myGameState = newState;
-        }
+        if (_myGameState == null) return;
+        SoundController.Instance.PlayClick();
+        SetState(_myGameState.DeploymentPressed(this));
     }
 
     public void AbilityAction()
     {
-        IGameState newState;
-
-        SoundController._instance.PlayClick();
-        newState = _myGameState.AbilityPressed(this);
-        if (newState != null)
-        {
-            _myGameState = newState;
-        }
+        if (_myGameState == null) return;
+        SoundController.Instance.PlayClick();
+        SetState(_myGameState.AbilityPressed(this));
     }
 
     public void EndPlayerTurn(int playerId)
     {
-        IEndturnable[] endturnableList;
-
         foreach (UnitController unit in _units)
         {
-            endturnableList = unit.gameObject.GetComponents<IEndturnable>();
-            if (endturnableList.Length > 0 && unit._isDeployed && !unit._isKilled)
+            if (!unit.IsDeployed || unit.IsKilled) continue;
+            foreach (IEndturnable endturnObject in unit.GetComponents<IEndturnable>())
             {
-                foreach (IEndturnable endturnObject  in endturnableList)
-                {
-                    endturnObject.EndTurnAction(playerId);
-                }
+                endturnObject.EndTurnAction(playerId);
             }
         }
         _myGrid.MakeEndTurnActions(playerId);
-        _myUIController.StartPlayerTurn(playerId==1?2:1);
+        _myUIController.StartPlayerTurn(GetOpponent(playerId));
     }
 
     public void AddUnitPrefab(GameObject unitPrefab, int playerId)
     {
-        if(playerId == 1) _unitPrefabsPlayer1.Add(unitPrefab);
+        if (playerId == 1) _unitPrefabsPlayer1.Add(unitPrefab);
         else _unitPrefabsPlayer2.Add(unitPrefab);
     }
 
     public void StartGame()
     {
-        UnitController newUnit;
-
-        string configFilePath = Application.streamingAssetsPath + "/grid.csv";
-        string[] gridFile = File.ReadAllLines(configFilePath);
-        _myGrid = new BoardGrid(gridFile, _tilePrefabs, _designerTileSize, _tileWidth, _tileHeight);
+        string configFilePath = Path.Combine(Application.streamingAssetsPath, GridFileName);
+        if (!File.Exists(configFilePath))
+        {
+            Debug.LogError($"Board layout not found: {configFilePath}");
+            return;
+        }
+        _myGrid = new BoardGrid(File.ReadAllLines(configFilePath), _tilePrefabs, _designerTileSize, _tileWidth, _tileHeight);
         _myGameState = new BeginTurnState(_startingPlayer);
-        int i = 0;
-        foreach (GameObject unitPrefab in _unitPrefabsPlayer1)
-        {
-            newUnit = Instantiate(unitPrefab, new Vector3(100.0f, 100.0f, 0.0f), Quaternion.identity).GetComponent<UnitController>();
-            newUnit.InitializeUnit();
-            if (newUnit.IsKing()) newUnit.DeployUnit(_myGrid.GetTile(0, _myGrid.GetBoardHeight() - 1));
-            _units.Add(newUnit);
-            i++;
-        }
-        i = 0;
-        foreach (GameObject unitPrefab in _unitPrefabsPlayer2)
-        {
-            newUnit = Instantiate(unitPrefab, new Vector3(100.0f, 100.0f, 0.0f), Quaternion.identity).GetComponent<UnitController>();
-            newUnit.InitializeUnit();
-            if (newUnit.IsKing()) newUnit.DeployUnit(_myGrid.GetTile(_myGrid.GetBoardWidth() - 1, 0));
-            _units.Add(newUnit);
-            i++;
-        }
+        SpawnUnits(_unitPrefabsPlayer1, _myGrid.GetTile(0, _myGrid.GetBoardHeight() - 1));
+        SpawnUnits(_unitPrefabsPlayer2, _myGrid.GetTile(_myGrid.GetBoardWidth() - 1, 0));
+        // Run tile reactions again once every commander is on the board, so skills depending on neighbours see them.
         foreach (UnitController unit in _units)
         {
-            IEnterTile[] unitEnterTileReactors;
-            if (unit._isDeployed)
+            if (!unit.IsDeployed) continue;
+            foreach (IEnterTile reactor in unit.GetComponents<IEnterTile>())
             {
-                unitEnterTileReactors = unit.gameObject.GetComponents<IEnterTile>();
-                foreach (IEnterTile reactor in unitEnterTileReactors)
-                {
-                    reactor.EnterTileAction(unit._myTile);
-                }
+                reactor.EnterTileAction(unit.CurrentTile);
             }
         }
         _myUIController.InitializeUnitsPanel(_units, _startingPlayer, this, _timeLimit);
     }
 
+    private void SpawnUnits(List<GameObject> unitPrefabs, TileController commanderTile)
+    {
+        foreach (GameObject unitPrefab in unitPrefabs)
+        {
+            UnitController newUnit = Instantiate(unitPrefab, new Vector3(100.0f, 100.0f, 0.0f), Quaternion.identity).GetComponent<UnitController>();
+            newUnit.InitializeUnit();
+            if (newUnit.IsKing()) newUnit.DeployUnit(commanderTile);
+            _units.Add(newUnit);
+        }
+    }
+
     public void ChangeMode()
     {
-        SoundController._instance.PlayClick();
-        if (_backgroundImage.enabled)
-        {
-            _backgroundImage.enabled = false;
-            _shadowImage.enabled = false;
-            _lineImage.enabled = false;
-        }
-        else
-        {
-            _backgroundImage.enabled = true;
-            _shadowImage.enabled = true;
-            _lineImage.enabled = true;
-        }
-        _myGameState.ChangeMode(this);
+        SoundController.Instance.PlayClick();
+        bool showArt = !_backgroundImage.enabled;
+        _backgroundImage.enabled = showArt;
+        _shadowImage.enabled = showArt;
+        _lineImage.enabled = showArt;
+        _myGameState?.ChangeMode(this);
     }
 
     public UnitController GetCommander(int playerId)
     {
-        foreach(UnitController unit in _units)
+        foreach (UnitController unit in _units)
         {
             if (unit.IsKing() && unit.GetPlayerId() == playerId) return unit;
         }
         return null;
     }
 
-    public bool DeployedThisTurn()
-    {
-        return _myUIController.DeployedThisTurn();
-    }
+    public bool DeployedThisTurn() => _myUIController.DeployedThisTurn();
 
     public void QuitPressed()
     {
-        SoundController._instance.PlayClick();
+        SoundController.Instance.PlayClick();
         DOTween.KillAll(false);
-        SceneManager.LoadScene("MenuScene");
+        SceneManager.LoadScene(MenuSceneName);
     }
 
     public void HighlightUnits(int playerId, bool highlightKing)
     {
-        foreach(UnitController unit in _units)
+        foreach (UnitController unit in _units)
         {
-            if(unit.GetPlayerId() == playerId && unit._isDeployed && !unit._isKilled)
-            {
-                if (!unit.IsKing() || (unit.IsKing() && highlightKing)) unit._myTile.Highlight(HighlightType.Ability, false);
-            }
+            if (unit.GetPlayerId() != playerId || !unit.IsDeployed || unit.IsKilled) continue;
+            if (!unit.IsKing() || highlightKing) unit.CurrentTile.Highlight(HighlightType.Ability, false);
         }
+    }
+
+    /// <summary>
+    /// Finishes the unit's activation and, when the player has nothing left to do, passes the turn.
+    /// Returns the state the game should continue in.
+    /// </summary>
+    public IGameState FinishUnitActivation(UnitController unit)
+    {
+        int playerId = unit.GetPlayerId();
+        unit.SetReticle(false);
+        unit.IsAvailable = false;
+        _myUIController.MarkUnitUnavailable(unit);
+        if (!MovesDepleted(playerId)) return new BeginTurnState(playerId);
+        EndPlayerTurn(playerId);
+        return new BeginTurnState(GetOpponent(playerId));
+    }
+
+    /// <summary>
+    /// Ends the turn of <paramref name="playerId"/>, closing the activation of <paramref name="activeUnit"/> if there is one.
+    /// </summary>
+    public IGameState ForceEndTurn(int playerId, UnitController activeUnit)
+    {
+        _myGrid.HideHighlight();
+        if (activeUnit != null)
+        {
+            activeUnit.SetReticle(false);
+            activeUnit.IsAvailable = false;
+            _myUIController.MarkUnitUnavailable(activeUnit);
+        }
+        _myUIController.EndDeployment();
+        EndPlayerTurn(playerId);
+        return new BeginTurnState(GetOpponent(playerId));
     }
 }

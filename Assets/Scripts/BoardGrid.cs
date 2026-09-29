@@ -1,419 +1,328 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class BoardGrid
 {
-    private int _height, _width;
-    private float _designerTileSize;
-    private float _tileWidth;
-    private float _tileHeight;
-    private TileController[,] _gridArray;
+    private static readonly GridPosition[] OrthogonalDirections =
+    {
+        new GridPosition(-1, 0), new GridPosition(1, 0), new GridPosition(0, -1), new GridPosition(0, 1)
+    };
+
+    private readonly int _height, _width;
+    private readonly float _designerTileSize;
+    private readonly float _tileWidth;
+    private readonly float _tileHeight;
+    private readonly TileController[,] _gridArray;
     private bool _isDesignerMode;
-
-    private Vector3 GetWorldPosition(GridPosition gp)
-    {
-        float x, y;
-        if (_isDesignerMode) return new Vector3((gp.x) * _designerTileSize - 3.5f, gp.y * -_designerTileSize, 0.0f);
-        else
-        {
-            x = (gp.x - gp.y) * _tileWidth/2;
-            y = -(gp.x + gp.y - 2.0f) * _tileHeight / 2;
-            return new Vector3(x, y, 0.0f);
-        }
-    }
-
-    private void HighlightSurroundingTiles(GridPosition startingPosition, bool isAttack, HighlightType hType, int playerId = 0)
-    {
-        if (startingPosition.x > 0)
-        {
-            _gridArray[startingPosition.x - 1, startingPosition.y].Highlight(hType, isAttack, playerId);
-            if (startingPosition.y > 0) _gridArray[startingPosition.x - 1, startingPosition.y - 1].Highlight(hType, isAttack, playerId);
-            if (startingPosition.y < _height - 1) _gridArray[startingPosition.x - 1, startingPosition.y + 1].Highlight(hType, isAttack, playerId);
-        }
-        if (startingPosition.x < _width - 1)
-        {
-            _gridArray[startingPosition.x + 1, startingPosition.y].Highlight(hType, isAttack, playerId);
-            if (startingPosition.y > 0) _gridArray[startingPosition.x + 1, startingPosition.y - 1].Highlight(hType, isAttack, playerId);
-            if (startingPosition.y < _height - 1) _gridArray[startingPosition.x + 1, startingPosition.y + 1].Highlight(hType, isAttack, playerId);
-        }
-        if (startingPosition.y > 0) _gridArray[startingPosition.x, startingPosition.y - 1].Highlight(hType, isAttack, playerId);
-        if (startingPosition.y < _height - 1) _gridArray[startingPosition.x, startingPosition.y + 1].Highlight(hType, isAttack, playerId);
-    }
-
-    #region Pathfinding
-
-    private TileController GetLowestFCostNode(List<TileController> nodeList)
-    {
-        TileController lowestFCostNode = null;
-        foreach(TileController gn in nodeList)
-        {
-            if(lowestFCostNode == null || gn._fCost < lowestFCostNode._fCost)
-            {
-                lowestFCostNode = gn;
-            }
-        }
-        return lowestFCostNode;
-    }
-
-    private List<TileController> GetNeighbourList(GridPosition myPosition)
-    {
-        List<TileController> resultList;
-        resultList = new List<TileController>();
-        if (myPosition.x > 0) resultList.Add(_gridArray[myPosition.x - 1, myPosition.y]);
-        if(myPosition.x < _width - 1) resultList.Add(_gridArray[myPosition.x + 1, myPosition.y]);
-        if (myPosition.y > 0) resultList.Add(_gridArray[myPosition.x, myPosition.y - 1]);
-        if (myPosition.y < _height - 1) resultList.Add(_gridArray[myPosition.x, myPosition.y + 1]);
-        return resultList;
-    }
-
-    private List<TileController> CalculatePath(TileController endNode)
-    {
-        List<TileController> resultPath = new List<TileController>();
-        resultPath.Add(endNode);
-        TileController currentNode = endNode;
-        while (currentNode._cameFromNode != null)
-        {
-            resultPath.Add(currentNode._cameFromNode);
-            currentNode = currentNode._cameFromNode;
-        }
-        resultPath.Reverse();
-        return resultPath;
-    }
-
-    private int CalculateDistance(GridPosition start, GridPosition end)
-    {
-        return Mathf.Abs(start.x - end.x) + Mathf.Abs(start.y - end.y);
-    }
-
-    private bool IsTileVisible(GridPosition startingPosition, GridPosition checkedTilePosition)
-    {
-        bool result = true;
-        if (checkedTilePosition.x > startingPosition.x)
-        {
-            for (int x2 = startingPosition.x + 1; x2 < checkedTilePosition.x; x2++) if (_gridArray[x2, startingPosition.y]._isOccupied) result = false;
-        }
-        if (checkedTilePosition.x < startingPosition.x)
-        {
-            for (int x2 = startingPosition.x - 1; x2 > checkedTilePosition.x; x2--) if (_gridArray[x2, startingPosition.y]._isOccupied) result = false;
-        }
-        if (checkedTilePosition.y > startingPosition.y)
-        {
-            for (int y2 = startingPosition.y + 1; y2 < checkedTilePosition.y; y2++) if (_gridArray[startingPosition.x, y2]._isOccupied) result = false;
-        }
-        if (checkedTilePosition.y < startingPosition.y)
-        {
-            for (int y2 = startingPosition.y - 1; y2 > checkedTilePosition.y; y2--) if (_gridArray[startingPosition.x, y2]._isOccupied) result = false;
-        }
-        return result;
-    }
-
-    public List<TileController> FindPath(GridPosition startPosition, GridPosition endPosition)
-    {
-        List<TileController> openList, closedList;
-
-        TileController startNode = _gridArray[startPosition.x, startPosition.y];
-        TileController endNode = _gridArray[endPosition.x, endPosition.y];
-        openList = new List<TileController> { startNode };
-        closedList = new List<TileController>();
-        for (int y = 0; y < _gridArray.GetLength(0); y++)
-        {
-            for (int x = 0; x < _gridArray.GetLength(1); x++)
-            {
-                TileController pathNode = _gridArray[x, y];
-                pathNode._gCost = int.MaxValue;
-                pathNode.CalculateFCost();
-                pathNode._cameFromNode = null;
-            }
-        }
-        startNode._gCost = 0;
-        startNode._hCost = CalculateDistance(startNode.GetGridPosition(), endNode.GetGridPosition());
-        startNode.CalculateFCost();
-        while (openList.Count > 0)
-        {
-            TileController currentNode = GetLowestFCostNode(openList);
-            if (currentNode == endNode)
-            {
-                return CalculatePath(endNode);
-            }
-
-            openList.Remove(currentNode);
-            closedList.Add(currentNode);
-
-            foreach (TileController neighbourNode in GetNeighbourList(currentNode.GetGridPosition()))
-            {
-                if (closedList.Contains(neighbourNode)) continue;
-                if (!neighbourNode.isWalkable() || neighbourNode._isOccupied)
-                {
-                    closedList.Add(neighbourNode);
-                    continue;
-                }
-
-                int tempGCost = currentNode._gCost + 1;
-                if (tempGCost < neighbourNode._gCost)
-                {
-                    neighbourNode._cameFromNode = currentNode;
-                    neighbourNode._gCost = tempGCost;
-                    neighbourNode._hCost = CalculateDistance(neighbourNode.GetGridPosition(), endNode.GetGridPosition());
-                    neighbourNode.CalculateFCost();
-
-                    if (!openList.Contains(neighbourNode))
-                    {
-                        openList.Add(neighbourNode);
-                    }
-                }
-            }
-        }
-        return null;
-    }
-
-    #endregion
 
     public BoardGrid(string[] gridInfo, GameObject[] tilePrefabs, float tileSize, float tileWidth, float tileHeight)
     {
         _height = gridInfo.Length;
-        _width = (gridInfo[0].Length+1)/2;
+        _width = (gridInfo[0].Length + 1) / 2;
         _gridArray = new TileController[_width, _height];
         _designerTileSize = tileSize;
         _tileWidth = tileWidth;
         _tileHeight = tileHeight;
         _isDesignerMode = false;
-        for (int y = 0; y < _gridArray.GetLength(0); y++)
+
+        Dictionary<string, GameObject> prefabsByLetter = new Dictionary<string, GameObject>();
+        foreach (GameObject prefab in tilePrefabs)
         {
-            string[] gridLine = gridInfo[y].Split(',');
-            for (int x = 0; x < _gridArray.GetLength(1); x++)
+            prefabsByLetter[prefab.GetComponent<TileController>().GetLetter()] = prefab;
+        }
+
+        for (int y = 0; y < _height; y++)
+        {
+            string[] gridLine = gridInfo[y].Trim().Split(',');
+            for (int x = 0; x < _width; x++)
             {
-                foreach (GameObject g in tilePrefabs)
+                string letter = x < gridLine.Length ? gridLine[x].Trim() : string.Empty;
+                if (!prefabsByLetter.TryGetValue(letter, out GameObject prefab))
                 {
-                    TileController tc = g.GetComponent<TileController>();
-                    if (gridLine[x] == tc.GetLetter())// do zmiany
-                    {
-                        GridPosition tempGridPosition = new GridPosition(x, y);
-                        TileController tempTileController = Object.Instantiate(g, GetWorldPosition(tempGridPosition), Quaternion.identity).GetComponent<TileController>();
-                        tempTileController.InitializeTile(tempGridPosition, this);
-                        _gridArray[x, y] = tempTileController;
-                    }
+                    Debug.LogError($"Tile {x}, {y}: unknown tile letter '{letter}' in the board layout.");
+                    continue;
                 }
-                if (_gridArray[x, y] == null) Debug.Log("Error: Tile"+x.ToString()+", "+y.ToString()+" not initialized");
+                GridPosition position = new GridPosition(x, y);
+                TileController tile = Object.Instantiate(prefab, GetWorldPosition(position), Quaternion.identity).GetComponent<TileController>();
+                tile.InitializeTile(position, this);
+                _gridArray[x, y] = tile;
             }
         }
     }
 
-    public TileController GetTile(GridPosition tilePosition)
+    private Vector3 GetWorldPosition(GridPosition gp)
     {
-        if (tilePosition.x < 0 || tilePosition.y < 0 || tilePosition.x >= _width || tilePosition.y >= _height) return null;
-        else return _gridArray[tilePosition.x, tilePosition.y];
+        if (_isDesignerMode) return new Vector3(gp.x * _designerTileSize - 3.5f, gp.y * -_designerTileSize, 0.0f);
+
+        float x = (gp.x - gp.y) * _tileWidth / 2;
+        float y = -(gp.x + gp.y - 2.0f) * _tileHeight / 2;
+        return new Vector3(x, y, 0.0f);
     }
 
-    public TileController GetTile(int x, int y)
+    private bool IsInside(int x, int y) => x >= 0 && y >= 0 && x < _width && y < _height;
+
+    private IEnumerable<TileController> AllTiles()
     {
-        if (x < 0 || y < 0 || x >= _width || y >= _height) return null;
-        return _gridArray[x, y];
+        for (int y = 0; y < _height; y++)
+        {
+            for (int x = 0; x < _width; x++)
+            {
+                if (_gridArray[x, y] != null) yield return _gridArray[x, y];
+            }
+        }
     }
+
+    // All 8 tiles around the position (melee range, deployment and ability zones).
+    private IEnumerable<TileController> SurroundingTiles(GridPosition center)
+    {
+        for (int dy = -1; dy <= 1; dy++)
+        {
+            for (int dx = -1; dx <= 1; dx++)
+            {
+                if (dx == 0 && dy == 0) continue;
+                TileController tile = GetTile(center.x + dx, center.y + dy);
+                if (tile != null) yield return tile;
+            }
+        }
+    }
+
+    private void HighlightSurroundingTiles(GridPosition startingPosition, bool isAttack, HighlightType hType, int playerId = 0)
+    {
+        foreach (TileController tile in SurroundingTiles(startingPosition))
+        {
+            tile.Highlight(hType, isAttack, playerId);
+        }
+    }
+
+    #region Pathfinding
+
+    /// <summary>
+    /// Breadth-first search over walkable, unoccupied tiles. Every move costs 1, so BFS gives the same
+    /// distances as A* but computes the whole reachable area in one pass instead of one search per tile.
+    /// </summary>
+    private int[,] CalculateDistances(GridPosition startPosition, int maxDistance)
+    {
+        int[,] distances = new int[_width, _height];
+        for (int y = 0; y < _height; y++)
+            for (int x = 0; x < _width; x++)
+                distances[x, y] = int.MaxValue;
+
+        if (!IsInside(startPosition.x, startPosition.y)) return distances;
+
+        Queue<GridPosition> frontier = new Queue<GridPosition>();
+        distances[startPosition.x, startPosition.y] = 0;
+        frontier.Enqueue(startPosition);
+        while (frontier.Count > 0)
+        {
+            GridPosition current = frontier.Dequeue();
+            int nextDistance = distances[current.x, current.y] + 1;
+            if (nextDistance > maxDistance) continue;
+            foreach (GridPosition direction in OrthogonalDirections)
+            {
+                int nx = current.x + direction.x;
+                int ny = current.y + direction.y;
+                if (!IsInside(nx, ny) || distances[nx, ny] <= nextDistance) continue;
+                TileController neighbour = _gridArray[nx, ny];
+                if (neighbour == null || !neighbour.isWalkable() || neighbour.IsOccupied) continue;
+                distances[nx, ny] = nextDistance;
+                frontier.Enqueue(new GridPosition(nx, ny));
+            }
+        }
+        return distances;
+    }
+
+    private int GetPathLength(GridPosition startPosition, GridPosition endPosition, int maxDistance)
+    {
+        if (!IsInside(endPosition.x, endPosition.y)) return int.MaxValue;
+        return CalculateDistances(startPosition, maxDistance)[endPosition.x, endPosition.y];
+    }
+
+    /// <summary>
+    /// Returns the shortest path from start to end (both included), or null when the end can't be reached.
+    /// </summary>
+    public List<TileController> FindPath(GridPosition startPosition, GridPosition endPosition)
+    {
+        int[,] distances = CalculateDistances(startPosition, int.MaxValue - 1);
+        if (!IsInside(endPosition.x, endPosition.y) || distances[endPosition.x, endPosition.y] == int.MaxValue) return null;
+
+        // Walk back from the end, always stepping onto a tile one move closer to the start.
+        List<TileController> path = new List<TileController>();
+        GridPosition current = endPosition;
+        path.Add(_gridArray[current.x, current.y]);
+        while (current != startPosition)
+        {
+            int currentDistance = distances[current.x, current.y];
+            foreach (GridPosition direction in OrthogonalDirections)
+            {
+                int nx = current.x + direction.x;
+                int ny = current.y + direction.y;
+                if (IsInside(nx, ny) && distances[nx, ny] == currentDistance - 1)
+                {
+                    current = new GridPosition(nx, ny);
+                    break;
+                }
+            }
+            path.Add(_gridArray[current.x, current.y]);
+        }
+        path.Reverse();
+        return path;
+    }
+
+    #endregion
+
+    private bool IsTileVisible(GridPosition startingPosition, GridPosition checkedTilePosition)
+    {
+        // Only straight lines are checked; any unit standing in between blocks the shot.
+        int stepX = System.Math.Sign(checkedTilePosition.x - startingPosition.x);
+        int stepY = System.Math.Sign(checkedTilePosition.y - startingPosition.y);
+        if (stepX != 0 && stepY != 0) return true;
+
+        int x = startingPosition.x + stepX;
+        int y = startingPosition.y + stepY;
+        while (x != checkedTilePosition.x || y != checkedTilePosition.y)
+        {
+            if (_gridArray[x, y].IsOccupied) return false;
+            x += stepX;
+            y += stepY;
+        }
+        return true;
+    }
+
+    public TileController GetTile(GridPosition tilePosition) => GetTile(tilePosition.x, tilePosition.y);
+
+    public TileController GetTile(int x, int y) => IsInside(x, y) ? _gridArray[x, y] : null;
+
+    public int GetBoardWidth() => _width;
+
+    public int GetBoardHeight() => _height;
 
     public void ShowMoveRange(GridPosition startingPosition, int range)
     {
-        List<TileController> pathNodeList;
-        for (int y = 0; y < _gridArray.GetLength(0); y++)
+        int[,] distances = CalculateDistances(startingPosition, range);
+        for (int y = 0; y < _height; y++)
         {
-            for (int x = 0; x < _gridArray.GetLength(1); x++)
+            for (int x = 0; x < _width; x++)
             {
-                if(_gridArray[x, y].GetGridDistance(startingPosition) <= range)
-                {
-                    // skip unwalkable tiles
-                    if (!_gridArray[x, y].isWalkable()) continue;
-                    pathNodeList = FindPath(startingPosition, _gridArray[x, y].GetGridPosition());
-                    if (pathNodeList != null && pathNodeList.Count-1 <= range && _gridArray[x, y].GetGridPosition() != startingPosition) _gridArray[x, y].Highlight(HighlightType.MoveRange, false);
-                }
+                if (distances[x, y] > 0 && distances[x, y] <= range) _gridArray[x, y].Highlight(HighlightType.MoveRange, false);
             }
         }
     }
 
     public bool IsTileInMoveRange(UnitController myUnit, TileController myTile)
     {
-        List<TileController> pathNodeList;
-        pathNodeList = FindPath(myUnit.GetGridPosition(), myTile.GetGridPosition());
-        if (pathNodeList != null && pathNodeList.Count - 1 <= myUnit.GetMoveRange()) return true;
-        else return false;
+        int range = myUnit.GetMoveRange();
+        return GetPathLength(myUnit.GetGridPosition(), myTile.GetGridPosition(), range) <= range;
     }
 
     public void ShowPath(UnitController myUnit, TileController myTile)
     {
-        List<TileController> pathNodeList;
         //hide previous path
         ShowMoveRange(myUnit.GetGridPosition(), myUnit.GetMoveRange());
-        if (IsTileInMoveRange(myUnit, myTile) && myTile.isWalkable())
+        if (myTile.isWalkable() && IsTileInMoveRange(myUnit, myTile))
         {
-            //show new path
-            pathNodeList = FindPath(myUnit.GetGridPosition(), myTile.GetGridPosition());
-            foreach (TileController myNode in pathNodeList)
+            foreach (TileController myNode in FindPath(myUnit.GetGridPosition(), myTile.GetGridPosition()))
             {
                 myNode.Highlight(HighlightType.Path, false);
             }
             myTile.AnimateHighlight();
-            myUnit._myTile.StopAnimatingHighlight();
+            myUnit.CurrentTile.StopAnimatingHighlight();
         }
         else
         {
-            myUnit._myTile.AnimateHighlight();
+            myUnit.CurrentTile.AnimateHighlight();
             if (myTile.isWalkable()) myTile.Highlight(HighlightType.Hover, false);
         }
     }
 
     public void HideHighlight()
     {
-        for (int y = 0; y < _gridArray.GetLength(0); y++)
+        foreach (TileController tile in AllTiles())
         {
-            for (int x = 0; x < _gridArray.GetLength(1); x++)
-            {
-                _gridArray[x, y].ClearTile();
-            }
+            tile.ClearTile();
         }
-    }
-
-    public int GetBoardWidth()
-    {
-        return _width;
-    }
-
-    public int GetBoardHeight()
-    {
-        return _height;
     }
 
     public void ShowAttackRange(UnitController myUnit, int range, int playerId)
     {
-        GridPosition startingPosition;
-        startingPosition = myUnit.GetGridPosition();
-        if (myUnit.gameObject.GetComponent<IValidateTarget>() != null)
+        GridPosition startingPosition = myUnit.GetGridPosition();
+        IValidateTarget myValidator = myUnit.GetComponent<IValidateTarget>();
+        if (myValidator != null)
         {
-            IValidateTarget myValidator;
-            GridPosition targetPosition;
-            myValidator = myUnit.gameObject.GetComponent<IValidateTarget>();
-            targetPosition = myValidator.GetValidPosition();
-            _gridArray[targetPosition.x, targetPosition.y].Highlight(HighlightType.AttackRange, true, playerId);
+            // e.g. provoked units may only attack the unit that provoked them
+            TileController targetTile = GetTile(myValidator.GetValidPosition());
+            if (targetTile != null) targetTile.Highlight(HighlightType.AttackRange, true, playerId);
+            return;
         }
-        else
+
+        // highlight melee attack range
+        HighlightSurroundingTiles(startingPosition, true, HighlightType.AttackRange, playerId);
+        if (range <= 1) return;
+
+        // highlight range attack range
+        foreach (GridPosition direction in OrthogonalDirections)
         {
-            // highlight melee attack range
-            HighlightSurroundingTiles(startingPosition, true, HighlightType.AttackRange, playerId);
-            if (range > 1) // highlight range attack range
+            for (int i = 1; i <= range; i++)
             {
-                for (int i = 1; i < _width; i++)
-                {
-                    if (startingPosition.x + i < _width && i <= range && IsTileVisible(startingPosition, new GridPosition(startingPosition.x + i, startingPosition.y))) _gridArray[startingPosition.x + i, startingPosition.y].Highlight(HighlightType.AttackRange, true, playerId);
-                    if (startingPosition.x - i >= 0 && i <= range && IsTileVisible(startingPosition, new GridPosition(startingPosition.x - i, startingPosition.y))) _gridArray[startingPosition.x - i, startingPosition.y].Highlight(HighlightType.AttackRange, true, playerId);
-                }
-                for (int i = 1; i < _height; i++)
-                {
-                    if (startingPosition.y + i < _height && i <= range && IsTileVisible(startingPosition, new GridPosition(startingPosition.x, startingPosition.y + i))) _gridArray[startingPosition.x, startingPosition.y + i].Highlight(HighlightType.AttackRange, true, playerId);
-                    if (startingPosition.y - i >= 0 && i <= range && IsTileVisible(startingPosition, new GridPosition(startingPosition.x, startingPosition.y - i))) _gridArray[startingPosition.x, startingPosition.y - i].Highlight(HighlightType.AttackRange, true, playerId);
-                }
+                GridPosition target = new GridPosition(startingPosition.x + direction.x * i, startingPosition.y + direction.y * i);
+                if (!IsInside(target.x, target.y)) break;
+                if (IsTileVisible(startingPosition, target)) _gridArray[target.x, target.y].Highlight(HighlightType.AttackRange, true, playerId);
             }
         }
     }
 
     public bool IsTileInAttackRange(UnitController myUnit, TileController targetTile)
     {
-        if(myUnit.gameObject.GetComponent<IValidateTarget>() != null)
-        {
-            IValidateTarget myValidator;
-            myValidator = myUnit.gameObject.GetComponent<IValidateTarget>();
-            if (targetTile._isOccupied && myValidator.IsTargetValid(targetTile._myUnit)) return true;
-            else return false;
-        }
-        if (Mathf.Abs(myUnit.GetGridPosition().x - targetTile.GetGridPosition().x) <= 1 && Mathf.Abs(myUnit.GetGridPosition().y - targetTile.GetGridPosition().y) <= 1) return true;
-        if (myUnit.GetAttackRange() > 1)
-        {
-            if (myUnit.GetGridPosition().x == targetTile.GetGridPosition().x && Mathf.Abs(myUnit.GetGridPosition().y - targetTile.GetGridPosition().y) <= myUnit.GetAttackRange()
-                || myUnit.GetGridPosition().y == targetTile.GetGridPosition().y && Mathf.Abs(myUnit.GetGridPosition().x - targetTile.GetGridPosition().x) <= myUnit.GetAttackRange())
-            {
-                return IsTileVisible(myUnit.GetGridPosition(), targetTile.GetGridPosition());
-            }
-            else return false;
-        }
-        else return false;
+        GridPosition unitPosition = myUnit.GetGridPosition();
+        GridPosition targetPosition = targetTile.GetGridPosition();
+
+        IValidateTarget myValidator = myUnit.GetComponent<IValidateTarget>();
+        if (myValidator != null) return targetTile.IsOccupied && myValidator.IsTargetValid(targetTile.Unit);
+
+        int dx = Mathf.Abs(unitPosition.x - targetPosition.x);
+        int dy = Mathf.Abs(unitPosition.y - targetPosition.y);
+        if (dx <= 1 && dy <= 1) return true;
+
+        int range = myUnit.GetAttackRange();
+        if (range <= 1) return false;
+        bool inStraightLine = (dx == 0 && dy <= range) || (dy == 0 && dx <= range);
+        return inStraightLine && IsTileVisible(unitPosition, targetPosition);
     }
 
     public void MakeEndTurnActions(int playerId)
     {
-        IEndturnable myTileEndTurn;
-        for (int y = 0; y < _gridArray.GetLength(0); y++)
+        foreach (TileController tile in AllTiles())
         {
-            for (int x = 0; x < _gridArray.GetLength(1); x++)
-            {
-                myTileEndTurn = _gridArray[x, y].gameObject.GetComponent<IEndturnable>();
-                if (myTileEndTurn != null) myTileEndTurn.EndTurnAction(playerId);
-            }
+            IEndturnable myTileEndTurn = tile.GetComponent<IEndturnable>();
+            if (myTileEndTurn != null) myTileEndTurn.EndTurnAction(playerId);
         }
     }
 
     public void ShowZone(TileController startingTile, HighlightType zoneType)
     {
-        GridPosition startingPosition;
-        startingPosition = startingTile.GetGridPosition();
-        HighlightSurroundingTiles(startingPosition, false, zoneType);
+        HighlightSurroundingTiles(startingTile.GetGridPosition(), false, zoneType);
     }
 
     public bool HasPossibleAttack(UnitController unit)
     {
-        GridPosition startingPosition;
-        int unitPlayer, range;
+        if (unit.FreeAttacksCount < 1) return false;
 
-        if (unit._freeAttacksCount < 1) return false;
-        startingPosition = unit.GetGridPosition();
-        unitPlayer = unit.GetPlayerId();
-        range = unit.GetAttackRange();
-        if (startingPosition.x > 0)
+        // Uses the same rules as an actual attack, so effects like "provoked" are respected
+        // and the player is never left in the attack state without a legal target.
+        foreach (TileController tile in AllTiles())
         {
-            if(_gridArray[startingPosition.x - 1, startingPosition.y]._isOccupied && _gridArray[startingPosition.x - 1, startingPosition.y]._myUnit.GetPlayerId() != unitPlayer) return true;
-            if (startingPosition.y > 0 && _gridArray[startingPosition.x - 1, startingPosition.y - 1]._isOccupied && _gridArray[startingPosition.x - 1, startingPosition.y - 1]._myUnit.GetPlayerId() != unitPlayer) return true;
-            if (startingPosition.y < _height - 1 && _gridArray[startingPosition.x - 1, startingPosition.y + 1]._isOccupied && _gridArray[startingPosition.x - 1, startingPosition.y + 1]._myUnit.GetPlayerId() != unitPlayer) return true;
-        }
-        if (startingPosition.x < _width - 1)
-        {
-            if(_gridArray[startingPosition.x + 1, startingPosition.y]._isOccupied && _gridArray[startingPosition.x + 1, startingPosition.y]._myUnit.GetPlayerId() != unitPlayer) return true;
-            if (startingPosition.y > 0 && _gridArray[startingPosition.x + 1, startingPosition.y - 1]._isOccupied && _gridArray[startingPosition.x + 1, startingPosition.y - 1]._myUnit.GetPlayerId() != unitPlayer) return true;
-            if (startingPosition.y < _height - 1 && _gridArray[startingPosition.x + 1, startingPosition.y + 1]._isOccupied && _gridArray[startingPosition.x + 1, startingPosition.y + 1]._myUnit.GetPlayerId() != unitPlayer) return true;
-        }
-        if(startingPosition.y > 0 && _gridArray[startingPosition.x, startingPosition.y - 1]._isOccupied && _gridArray[startingPosition.x, startingPosition.y - 1]._myUnit.GetPlayerId() != unitPlayer) return true;
-        if (startingPosition.y < _height - 1 && _gridArray[startingPosition.x, startingPosition.y + 1]._isOccupied && _gridArray[startingPosition.x, startingPosition.y + 1]._myUnit.GetPlayerId() != unitPlayer) return true;
-        if (range > 1)
-        {
-            for (int i = 1; i < _width; i++)
-            {
-                if (startingPosition.x + i < _width && i <= range && _gridArray[startingPosition.x + i, startingPosition.y]._isOccupied && _gridArray[startingPosition.x + i, startingPosition.y]._myUnit.GetPlayerId() != unitPlayer && IsTileVisible(startingPosition, new GridPosition(startingPosition.x + i, startingPosition.y))) return true;
-                if (startingPosition.x - i >= 0 && i <= range && _gridArray[startingPosition.x - i, startingPosition.y]._isOccupied && _gridArray[startingPosition.x - i, startingPosition.y]._myUnit.GetPlayerId() != unitPlayer && IsTileVisible(startingPosition, new GridPosition(startingPosition.x - i, startingPosition.y))) return true;
-            }
-            for (int i = 1; i < _height; i++)
-            {
-                if (startingPosition.y + i < _height && i <= range && _gridArray[startingPosition.x, startingPosition.y + i]._isOccupied && _gridArray[startingPosition.x, startingPosition.y + i]._myUnit.GetPlayerId() != unitPlayer && IsTileVisible(startingPosition, new GridPosition(startingPosition.x, startingPosition.y + i))) return true;
-                if (startingPosition.y - i >= 0 && i <= range && _gridArray[startingPosition.x, startingPosition.y - i]._isOccupied && _gridArray[startingPosition.x, startingPosition.y - i]._myUnit.GetPlayerId() != unitPlayer && IsTileVisible(startingPosition, new GridPosition(startingPosition.x, startingPosition.y - i))) return true;
-            }
+            if (!tile.IsOccupied || tile.Unit == unit) continue;
+            if (unit.IsTargetValid(tile.Unit) && IsTileInAttackRange(unit, tile)) return true;
         }
         return false;
     }
 
     public void ChangeMode()
     {
-        string mode;
-
-        if (_isDesignerMode)
+        _isDesignerMode = !_isDesignerMode;
+        string mode = _isDesignerMode ? "designer" : "player";
+        foreach (TileController tile in AllTiles())
         {
-            _isDesignerMode = false;
-            mode = "player";
-        }
-        else
-        {
-            _isDesignerMode = true;
-            mode = "designer";
-        }
-        for (int y = 0; y < _gridArray.GetLength(0); y++)
-        {
-            for (int x = 0; x < _gridArray.GetLength(1); x++)
-            {
-                _gridArray[x, y].ChangeMode(mode, GetWorldPosition(_gridArray[x, y].GetGridPosition()));
-            }
+            tile.ChangeMode(mode, GetWorldPosition(tile.GetGridPosition()));
         }
     }
 }

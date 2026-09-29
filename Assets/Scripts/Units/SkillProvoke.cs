@@ -19,12 +19,12 @@ public class SkillProvoke : MonoBehaviour, IEnterTile, ISkill
         EffectProvoked myEffect;
         UnitController neighbourUnit;
 
-        if (neighbourTile != null && neighbourTile._isOccupied)
+        if (neighbourTile != null && neighbourTile.IsOccupied)
         {
-            neighbourUnit = neighbourTile._myUnit;
+            neighbourUnit = neighbourTile.Unit;
             if (neighbourUnit.GetPlayerId() != _myUnitController.GetPlayerId() && neighbourUnit.gameObject.GetComponent<EffectProvoked>() == null)
             {
-                myEffect = neighbourTile._myUnit.gameObject.AddComponent<EffectProvoked>();
+                myEffect = neighbourTile.Unit.gameObject.AddComponent<EffectProvoked>();
                 myEffect.InitializeEffect(_myUnitController, _effectDescription);
             }
         }
@@ -34,21 +34,21 @@ public class SkillProvoke : MonoBehaviour, IEnterTile, ISkill
     {
         TileController neighbourTile;
 
-        neighbourTile = _myUnitController._myTile.GetAnotherTile(_myUnitController.GetGridPosition().x - 1, _myUnitController.GetGridPosition().y - 1);
+        neighbourTile = _myUnitController.CurrentTile.GetAnotherTile(_myUnitController.GetGridPosition().x - 1, _myUnitController.GetGridPosition().y - 1);
         AddEffect(neighbourTile);
-        neighbourTile = _myUnitController._myTile.GetAnotherTile(_myUnitController.GetGridPosition().x - 1, _myUnitController.GetGridPosition().y);
+        neighbourTile = _myUnitController.CurrentTile.GetAnotherTile(_myUnitController.GetGridPosition().x - 1, _myUnitController.GetGridPosition().y);
         AddEffect(neighbourTile);
-        neighbourTile = _myUnitController._myTile.GetAnotherTile(_myUnitController.GetGridPosition().x - 1, _myUnitController.GetGridPosition().y + 1);
+        neighbourTile = _myUnitController.CurrentTile.GetAnotherTile(_myUnitController.GetGridPosition().x - 1, _myUnitController.GetGridPosition().y + 1);
         AddEffect(neighbourTile);
-        neighbourTile = _myUnitController._myTile.GetAnotherTile(_myUnitController.GetGridPosition().x, _myUnitController.GetGridPosition().y - 1);
+        neighbourTile = _myUnitController.CurrentTile.GetAnotherTile(_myUnitController.GetGridPosition().x, _myUnitController.GetGridPosition().y - 1);
         AddEffect(neighbourTile);
-        neighbourTile = _myUnitController._myTile.GetAnotherTile(_myUnitController.GetGridPosition().x, _myUnitController.GetGridPosition().y + 1);
+        neighbourTile = _myUnitController.CurrentTile.GetAnotherTile(_myUnitController.GetGridPosition().x, _myUnitController.GetGridPosition().y + 1);
         AddEffect(neighbourTile);
-        neighbourTile = _myUnitController._myTile.GetAnotherTile(_myUnitController.GetGridPosition().x + 1, _myUnitController.GetGridPosition().y - 1);
+        neighbourTile = _myUnitController.CurrentTile.GetAnotherTile(_myUnitController.GetGridPosition().x + 1, _myUnitController.GetGridPosition().y - 1);
         AddEffect(neighbourTile);
-        neighbourTile = _myUnitController._myTile.GetAnotherTile(_myUnitController.GetGridPosition().x + 1, _myUnitController.GetGridPosition().y);
+        neighbourTile = _myUnitController.CurrentTile.GetAnotherTile(_myUnitController.GetGridPosition().x + 1, _myUnitController.GetGridPosition().y);
         AddEffect(neighbourTile);
-        neighbourTile = _myUnitController._myTile.GetAnotherTile(_myUnitController.GetGridPosition().x + 1, _myUnitController.GetGridPosition().y + 1);
+        neighbourTile = _myUnitController.CurrentTile.GetAnotherTile(_myUnitController.GetGridPosition().x + 1, _myUnitController.GetGridPosition().y + 1);
         AddEffect(neighbourTile);
     }
 

@@ -11,7 +11,7 @@ public class UnitSelectedState : IGameState
         _activeUnit = uc;
         _activeUnit.SetReticle(true);
         myGrid.ShowMoveRange(_activeUnit.GetGridPosition(), _activeUnit.GetMoveRange());
-        if(_activeUnit._freeAttacksCount > 0) myGrid.ShowAttackRange(uc, uc.GetAttackRange(), _activeUnit.GetPlayerId());
+        if(_activeUnit.FreeAttacksCount > 0) myGrid.ShowAttackRange(uc, uc.GetAttackRange(), _activeUnit.GetPlayerId());
         ui.DisplayUnit(uc);
         ui.SelectUnit(uc);
         Debug.Log("Stan: Wybrana jednostka gracza: " + _activeUnit.GetPlayerId());
@@ -21,7 +21,7 @@ public class UnitSelectedState : IGameState
     {
         BoardGrid myGrid;
         // if tile in move range change state to execution, if not go back to begin turn state
-        SoundController._instance.PlayClick();
+        SoundController.Instance.PlayClick();
         myGrid = myGameController.GetGrid();
         if (myGrid.IsTileInMoveRange(_activeUnit, clickedTile))
         {
@@ -43,26 +43,26 @@ public class UnitSelectedState : IGameState
         UIController ui;
         bool attackEndsTurn;
         // if it's active player's unit, change state to selected unit if not go back to begin turn state
-        SoundController._instance.PlayClick();
+        SoundController.Instance.PlayClick();
         myGrid = myGameController.GetGrid();
         ui = myGameController.GetUI();
-        if (_activeUnit.GetPlayerId() == clickedUnit.GetPlayerId() && _activeUnit != clickedUnit && clickedUnit._isAvailable && clickedUnit._isDeployed)
+        if (_activeUnit.GetPlayerId() == clickedUnit.GetPlayerId() && _activeUnit != clickedUnit && clickedUnit.IsAvailable && clickedUnit.IsDeployed)
         {
             myGrid.HideHighlight();
             _activeUnit.SetReticle(false);
-            if (clickedUnit._hasMoved && clickedUnit._freeAttacksCount > 0) return new AttackSelectedState(clickedUnit, myGrid, ui);
-            else if (clickedUnit._freeAttacksCount > 0) return new UnitSelectedState(clickedUnit, myGrid, ui);
+            if (clickedUnit.HasMoved && clickedUnit.FreeAttacksCount > 0) return new AttackSelectedState(clickedUnit, myGrid, ui);
+            else if (clickedUnit.FreeAttacksCount > 0) return new UnitSelectedState(clickedUnit, myGrid, ui);
             else return null;
         }
-        else if(_activeUnit.GetPlayerId() != clickedUnit.GetPlayerId() && _activeUnit._freeAttacksCount > 0)
+        else if(_activeUnit.GetPlayerId() != clickedUnit.GetPlayerId() && _activeUnit.FreeAttacksCount > 0)
         {
-            if (_activeUnit.IsTargetValid(clickedUnit) && myGrid.IsTileInAttackRange(_activeUnit, clickedUnit._myTile))
+            if (_activeUnit.IsTargetValid(clickedUnit) && myGrid.IsTileInAttackRange(_activeUnit, clickedUnit.CurrentTile))
             {
                 myGrid.HideHighlight();
                 _activeUnit.SetReticle(false);
                 clickedUnit.StopShowingPotentialDamage();
                 _activeUnit.AttackUnit(clickedUnit);
-                if (_activeUnit._freeAttacksCount < 1) attackEndsTurn = true;
+                if (_activeUnit.FreeAttacksCount < 1) attackEndsTurn = true;
                 else attackEndsTurn = false;
                 return new ExecutionState(_activeUnit, attackEndsTurn);
             }
@@ -82,7 +82,7 @@ public class UnitSelectedState : IGameState
         BoardGrid myGrid;
         UIController ui;
 
-        SoundController._instance.PlayHover();
+        SoundController.Instance.PlayHover();
         myGrid = myGameController.GetGrid();
         myGrid.ShowPath(_activeUnit, hoveredTile);
         ui = myGameController.GetUI();
@@ -97,17 +97,17 @@ public class UnitSelectedState : IGameState
         BoardGrid myGrid;
         UIController ui;
 
-        SoundController._instance.PlayHover();
+        SoundController.Instance.PlayHover();
         myGrid = myGameController.GetGrid();
         ui = myGameController.GetUI();
         ui.DisplayUnit(hoveredUnit);
-        if (_activeUnit.IsTargetValid(hoveredUnit) && !myGrid.IsTileInAttackRange(_activeUnit, hoveredUnit._myTile))
+        if (_activeUnit.IsTargetValid(hoveredUnit) && !myGrid.IsTileInAttackRange(_activeUnit, hoveredUnit.CurrentTile))
         {
             myGrid.HideHighlight();
             myGrid.ShowMoveRange(hoveredUnit.GetGridPosition(), hoveredUnit.GetMoveRange());
-            if (hoveredUnit._freeAttacksCount > 0) myGrid.ShowAttackRange(hoveredUnit, hoveredUnit.GetAttackRange(), hoveredUnit.GetPlayerId());
+            if (hoveredUnit.FreeAttacksCount > 0) myGrid.ShowAttackRange(hoveredUnit, hoveredUnit.GetAttackRange(), hoveredUnit.GetPlayerId());
         }
-        else if (_activeUnit.IsTargetValid(hoveredUnit) && _activeUnit._freeAttacksCount > 0) hoveredUnit.ShowPotentialDamage(_activeUnit.GetCalculatedAttack(hoveredUnit));
+        else if (_activeUnit.IsTargetValid(hoveredUnit) && _activeUnit.FreeAttacksCount > 0) hoveredUnit.ShowPotentialDamage(_activeUnit.GetCalculatedAttack(hoveredUnit));
         return null;
     }
 
@@ -119,7 +119,7 @@ public class UnitSelectedState : IGameState
         ui = myGameController.GetUI();
         ui.ClearDisplay();
         myGrid = myGameController.GetGrid();
-        if (_activeUnit.IsTargetValid(unhoveredUnit) && !myGrid.IsTileInAttackRange(_activeUnit, unhoveredUnit._myTile))
+        if (_activeUnit.IsTargetValid(unhoveredUnit) && !myGrid.IsTileInAttackRange(_activeUnit, unhoveredUnit.CurrentTile))
         {
             myGrid.HideHighlight();
             myGrid.ShowMoveRange(_activeUnit.GetGridPosition(), _activeUnit.GetMoveRange());
@@ -138,20 +138,7 @@ public class UnitSelectedState : IGameState
 
     public IGameState EndTurnPressed(GameController myGameController)
     {
-        // disable unit reticle
-        BoardGrid myGrid;
-        UIController ui;
-        int newPlayer;
-
-        myGrid = myGameController.GetGrid();
-        myGrid.HideHighlight();
-        ui = myGameController.GetUI();
-        _activeUnit.SetReticle(false);
-        _activeUnit._isAvailable = false;
-        ui.MarkUnitUnavailable(_activeUnit);
-        myGameController.EndPlayerTurn(_activeUnit.GetPlayerId());
-        newPlayer = (_activeUnit.GetPlayerId() == 1 ? 2 : 1);
-        return new BeginTurnState(newPlayer);
+        return myGameController.ForceEndTurn(_activeUnit.GetPlayerId(), _activeUnit);
     }
 
     public IGameState DeploymentPressed(GameController myGameController)

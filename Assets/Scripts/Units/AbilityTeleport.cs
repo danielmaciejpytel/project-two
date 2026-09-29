@@ -24,7 +24,7 @@ public class AbilityTeleport : MonoBehaviour, IAbility, IEndturnable
         GridPosition startingPosition, checkedPosition;
         startingPosition = startingTile.GetGridPosition();
         checkedPosition = checkedTile.GetGridPosition();
-        if (Mathf.Abs(startingPosition.x - checkedPosition.x) <= 1 && Mathf.Abs(startingPosition.y - checkedPosition.y) <= 1 && !checkedTile._isOccupied && checkedTile.isWalkable()) return true;
+        if (Mathf.Abs(startingPosition.x - checkedPosition.x) <= 1 && Mathf.Abs(startingPosition.y - checkedPosition.y) <= 1 && !checkedTile.IsOccupied && checkedTile.isWalkable()) return true;
         else return false;
     }
 
@@ -58,20 +58,20 @@ public class AbilityTeleport : MonoBehaviour, IAbility, IEndturnable
         myGrid = myGameController.GetGrid();
         if (_unitToTeleport == null)
         {
-            if (_myUnit._hasMoved) return new AttackSelectedState(_myUnit, myGrid, ui);
+            if (_myUnit.HasMoved) return new AttackSelectedState(_myUnit, myGrid, ui);
             else return new UnitSelectedState(_myUnit, myGrid, ui);
         }
-        else if(IsTileInTeleportZone(_unitToTeleport._myTile, clickedTile) && !clickedTile._isOccupied)
+        else if(IsTileInTeleportZone(_unitToTeleport.CurrentTile, clickedTile) && !clickedTile.IsOccupied)
         {
             _myUnit.StartAnimation("UseAbility");
             _myUnit.PlaySound(_mySound);
-            unitTile = _unitToTeleport._myTile;
+            unitTile = _unitToTeleport.CurrentTile;
             _unitToTeleport.DeployUnit(clickedTile);
-            unitTile._isOccupied = false;
-            unitTile._myUnit = null;
+            unitTile.IsOccupied = false;
+            unitTile.Unit = null;
             myGrid.HideHighlight();
             _isAvailableThisTurn = false;
-            if (_myUnit._hasMoved) return new AttackSelectedState(_myUnit, myGrid, ui);
+            if (_myUnit.HasMoved) return new AttackSelectedState(_myUnit, myGrid, ui);
             else return new UnitSelectedState(_myUnit, myGrid, ui);
         }
         return null;
@@ -83,10 +83,10 @@ public class AbilityTeleport : MonoBehaviour, IAbility, IEndturnable
         BoardGrid myGrid;
         ui = myGameController.GetUI();
         myGrid = myGameController.GetGrid();
-        if (clickedUnit._isDeployed && clickedUnit.GetPlayerId() == _myUnit.GetPlayerId() && clickedUnit != _myUnit)
+        if (clickedUnit.IsDeployed && clickedUnit.GetPlayerId() == _myUnit.GetPlayerId() && clickedUnit != _myUnit)
         { 
             _unitToTeleport = clickedUnit;
-            myGrid.ShowZone(clickedUnit._myTile, HighlightType.MoveRange);
+            myGrid.ShowZone(clickedUnit.CurrentTile, HighlightType.MoveRange);
         }
         return null;
     }
@@ -116,7 +116,7 @@ public class AbilityTeleport : MonoBehaviour, IAbility, IEndturnable
 
         ui = myGameController.GetUI();
         ui.ClearDisplay();
-        unhoveredUnit._myTile.StopAnimatingHighlight();
+        unhoveredUnit.CurrentTile.StopAnimatingHighlight();
         return null;
     }
 

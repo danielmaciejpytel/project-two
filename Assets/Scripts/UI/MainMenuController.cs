@@ -28,7 +28,7 @@ public class MainMenuController : MonoBehaviour
 
     public void DisplayCredits()
     {
-        SoundController._instance.PlayClick();
+        SoundController.Instance.PlayClick();
         _playButton.gameObject.SetActive(false);
         _instructionsButton.gameObject.SetActive(false);
         _optionsButton.gameObject.SetActive(false);
@@ -41,7 +41,7 @@ public class MainMenuController : MonoBehaviour
 
     public void HideCredits()
     {
-        SoundController._instance.PlayClick();
+        SoundController.Instance.PlayClick();
         _playButton.gameObject.SetActive(true);
         _instructionsButton.gameObject.SetActive(true);
         _optionsButton.gameObject.SetActive(true);
@@ -55,7 +55,7 @@ public class MainMenuController : MonoBehaviour
 
     public void DisplayOptions()
     {
-        SoundController._instance.PlayClick();
+        SoundController.Instance.PlayClick();
         _playButton.gameObject.SetActive(false);
         _instructionsButton.gameObject.SetActive(false);
         _optionsButton.gameObject.SetActive(false);
@@ -63,13 +63,13 @@ public class MainMenuController : MonoBehaviour
         _exitButton.gameObject.SetActive(false);
         _optionsPanel.SetActive(true);
         _barImage.transform.position = new Vector3(-1920.0f, 0.0f, 0.0f);
-        _soundToggle.isOn = SoundController._instance._soundOn;
-        _musicToggle.isOn = SoundController._instance._musicOn;
+        _soundToggle.isOn = SoundController.Instance.SoundOn;
+        _musicToggle.isOn = SoundController.Instance.MusicOn;
     }
 
     public void HideOptions()
     {
-        SoundController._instance.PlayClick();
+        SoundController.Instance.PlayClick();
         _playButton.gameObject.SetActive(true);
         _instructionsButton.gameObject.SetActive(true);
         _optionsButton.gameObject.SetActive(true);
@@ -81,7 +81,7 @@ public class MainMenuController : MonoBehaviour
 
     public void DisplayInstructions()
     {
-        SoundController._instance.PlayClick();
+        SoundController.Instance.PlayClick();
         _playButton.gameObject.SetActive(false);
         _instructionsButton.gameObject.SetActive(false);
         _optionsButton.gameObject.SetActive(false);
@@ -94,33 +94,38 @@ public class MainMenuController : MonoBehaviour
 
     public void QuitGame()
     {
-        SoundController._instance.PlayClick();
+        SoundController.Instance.PlayClick();
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
         Application.Quit();
+#endif
     }
 
     public void OnMybuttonEnter(Button myButton)
     {
-        SoundController._instance.PlayHover();
+        SoundController.Instance.PlayHover();
         _barImage.transform.position = new Vector3(-1920.0f, myButton.transform.position.y, 0.0f);
-        DOTween.KillAll();
+        // Only stop the highlight bar tween, KillAll also stopped every other running tween in the menu.
+        _barImage.transform.DOKill();
         _barImage.transform.DOLocalMoveX(0.0f, 1.0f).SetEase(Ease.OutExpo);
     }
 
     public void OnMybuttonExit(Button myButton)
     {
-        DOTween.KillAll();
+        _barImage.transform.DOKill();
         _barImage.transform.DOLocalMoveX(-1920.0f, 1.0f).SetEase(Ease.OutExpo);
     }
 
     public void SoundToggleClicked()
     {
-        SoundController._instance.PlayClick();
-        SoundController._instance._soundOn = _soundToggle.isOn;
+        SoundController.Instance.PlayClick();
+        SoundController.Instance.SoundOn = _soundToggle.isOn;
     }
 
     public void MusicToggleClicked()
     {
-        SoundController._instance.PlayClick();
-        SoundController._instance._musicOn = _musicToggle.isOn;
+        SoundController.Instance.PlayClick();
+        SoundController.Instance.MusicOn = _musicToggle.isOn;
     }
 }

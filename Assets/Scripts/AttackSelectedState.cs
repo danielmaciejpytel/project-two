@@ -20,7 +20,7 @@ public class AttackSelectedState : IGameState
     public IGameState TileClicked(GameController myGameController, TileController clickedTile)
     {
         //nothing happens
-        SoundController._instance.PlayClick();
+        SoundController.Instance.PlayClick();
         return null;
     }
 
@@ -30,24 +30,24 @@ public class AttackSelectedState : IGameState
         UIController ui;
         bool attackEndsTurn;
 
-        SoundController._instance.PlayClick();
+        SoundController.Instance.PlayClick();
         ui = myGameController.GetUI();
         myGrid = myGameController.GetGrid();
-        if (_activeUnit.IsTargetValid(clickedUnit) && myGrid.IsTileInAttackRange(_activeUnit, clickedUnit._myTile))
+        if (_activeUnit.IsTargetValid(clickedUnit) && myGrid.IsTileInAttackRange(_activeUnit, clickedUnit.CurrentTile))
         {
             myGrid.HideHighlight();
             _activeUnit.SetReticle(false);
             clickedUnit.StopShowingPotentialDamage();
             _activeUnit.AttackUnit(clickedUnit);
-            if (_activeUnit._freeAttacksCount < 1) attackEndsTurn = true;
+            if (_activeUnit.FreeAttacksCount < 1) attackEndsTurn = true;
             else attackEndsTurn = false;
             return new ExecutionState(_activeUnit, attackEndsTurn);
         }
-        else if (_activeUnit.GetPlayerId() == clickedUnit.GetPlayerId() && _activeUnit != clickedUnit && clickedUnit._isAvailable && clickedUnit._isDeployed)
+        else if (_activeUnit.GetPlayerId() == clickedUnit.GetPlayerId() && _activeUnit != clickedUnit && clickedUnit.IsAvailable && clickedUnit.IsDeployed)
         {
             myGrid.HideHighlight();
             _activeUnit.SetReticle(false);
-            if (clickedUnit._hasMoved) return new AttackSelectedState(clickedUnit, myGrid, ui);
+            if (clickedUnit.HasMoved) return new AttackSelectedState(clickedUnit, myGrid, ui);
             else return new UnitSelectedState(clickedUnit, myGrid, ui);
         }
         else return null;
@@ -56,7 +56,7 @@ public class AttackSelectedState : IGameState
     public IGameState TileHovered(GameController myGameController, TileController hoveredTile)
     {
         //highlight tile
-        SoundController._instance.PlayHover();
+        SoundController.Instance.PlayHover();
         if (hoveredTile.isWalkable()) hoveredTile.Highlight(HighlightType.Hover, false);
         return null;
     }
@@ -67,17 +67,17 @@ public class AttackSelectedState : IGameState
         BoardGrid myGrid;
         UIController ui;
 
-        SoundController._instance.PlayHover();
+        SoundController.Instance.PlayHover();
         ui = myGameController.GetUI();
         myGrid = myGameController.GetGrid();
         ui.DisplayUnit(hoveredUnit);
-        if (_activeUnit.IsTargetValid(hoveredUnit) && !myGrid.IsTileInAttackRange(_activeUnit, hoveredUnit._myTile))
+        if (_activeUnit.IsTargetValid(hoveredUnit) && !myGrid.IsTileInAttackRange(_activeUnit, hoveredUnit.CurrentTile))
         {
             myGrid.HideHighlight();
             myGrid.ShowMoveRange(hoveredUnit.GetGridPosition(), hoveredUnit.GetMoveRange());
-            if (hoveredUnit._freeAttacksCount > 0) myGrid.ShowAttackRange(hoveredUnit, hoveredUnit.GetAttackRange(), hoveredUnit.GetPlayerId());
+            if (hoveredUnit.FreeAttacksCount > 0) myGrid.ShowAttackRange(hoveredUnit, hoveredUnit.GetAttackRange(), hoveredUnit.GetPlayerId());
         }
-        else if(_activeUnit.IsTargetValid(hoveredUnit) && _activeUnit._freeAttacksCount > 0) hoveredUnit.ShowPotentialDamage(_activeUnit.GetCalculatedAttack(hoveredUnit));
+        else if(_activeUnit.IsTargetValid(hoveredUnit) && _activeUnit.FreeAttacksCount > 0) hoveredUnit.ShowPotentialDamage(_activeUnit.GetCalculatedAttack(hoveredUnit));
         return null;
     }
 
@@ -90,7 +90,7 @@ public class AttackSelectedState : IGameState
         ui = myGameController.GetUI();
         myGrid = myGameController.GetGrid();
         ui.DisplayUnit(_activeUnit);
-        if (_activeUnit.IsTargetValid(unhoveredUnit) && !myGrid.IsTileInAttackRange(_activeUnit, unhoveredUnit._myTile))
+        if (_activeUnit.IsTargetValid(unhoveredUnit) && !myGrid.IsTileInAttackRange(_activeUnit, unhoveredUnit.CurrentTile))
         {
             myGrid.HideHighlight();
             myGrid.ShowAttackRange(_activeUnit, _activeUnit.GetAttackRange(), _activeUnit.GetPlayerId());
@@ -108,20 +108,7 @@ public class AttackSelectedState : IGameState
 
     public IGameState EndTurnPressed(GameController myGameController)
     {
-        // disable unit reticle and turn off highlight
-        BoardGrid myGrid;
-        UIController ui;
-        int newPlayer;
-
-        ui = myGameController.GetUI();
-        myGrid = myGameController.GetGrid();
-        myGrid.HideHighlight();
-        _activeUnit.SetReticle(false);
-        _activeUnit._isAvailable = false;
-        ui.MarkUnitUnavailable(_activeUnit);
-        myGameController.EndPlayerTurn(_activeUnit.GetPlayerId());
-        newPlayer = (_activeUnit.GetPlayerId() == 1 ? 2 : 1);
-        return new BeginTurnState(newPlayer);
+        return myGameController.ForceEndTurn(_activeUnit.GetPlayerId(), _activeUnit);
     }
 
     public IGameState DeploymentPressed(GameController myGameController)

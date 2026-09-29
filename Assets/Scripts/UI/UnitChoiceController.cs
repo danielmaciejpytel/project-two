@@ -1,12 +1,13 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public struct ChosenUnit
+public readonly struct ChosenUnit : IEquatable<ChosenUnit>
 {
-    public int playerId;
-    public int unitType;
+    public readonly int playerId;
+    public readonly int unitType;
 
     public ChosenUnit(int p, int t)
     {
@@ -14,27 +15,15 @@ public struct ChosenUnit
         unitType = t;
     }
 
-    public static bool operator ==(ChosenUnit cu1, ChosenUnit cu2)
-    {
-        if (cu1.playerId == cu2.playerId && cu1.unitType == cu2.unitType) return true;
-        else return false;
-    }
+    public bool Equals(ChosenUnit other) => playerId == other.playerId && unitType == other.unitType;
 
-    public static bool operator !=(ChosenUnit cu1, ChosenUnit cu2)
-    {
-        if (cu1.playerId != cu2.playerId || cu1.unitType != cu2.unitType) return true;
-        else return false;
-    }
+    public override bool Equals(object obj) => obj is ChosenUnit other && Equals(other);
 
-    public override bool Equals(object obj)
-    {
-        return base.Equals(obj);
-    }
+    public override int GetHashCode() => HashCode.Combine(playerId, unitType);
 
-    public override int GetHashCode()
-    {
-        return base.GetHashCode();
-    }
+    public static bool operator ==(ChosenUnit cu1, ChosenUnit cu2) => cu1.Equals(cu2);
+
+    public static bool operator !=(ChosenUnit cu1, ChosenUnit cu2) => !cu1.Equals(cu2);
 }
 
 public class UnitChoiceController : MonoBehaviour
@@ -129,7 +118,7 @@ public class UnitChoiceController : MonoBehaviour
         GameObject opposingUnit;
         bool unitValid;
 
-        SoundController._instance.PlayClick();
+        SoundController.Instance.PlayClick();
         currentUnitController = _currentUnitPanel.GetUnitPrefab().GetComponent<UnitController>();
         _chosenUnits.Add(new ChosenUnit(currentUnitController.GetPlayerId(), currentUnitController.GetUnitType()));
         _myGameController.AddUnitPrefab(_currentUnitPanel.GetUnitPrefab(), _currentPlayer);
@@ -227,7 +216,7 @@ public class UnitChoiceController : MonoBehaviour
         UnitController currentUnitController;
         bool unitValid;
 
-        SoundController._instance.PlayClick();
+        SoundController.Instance.PlayClick();
         unitValid = false;
         while (!unitValid)
         {

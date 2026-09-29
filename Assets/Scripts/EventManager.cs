@@ -1,68 +1,44 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
-using System;
 
 public class EventManager : MonoBehaviour
 {
-    public static EventManager _instance;
+    public static EventManager Instance { get; private set; }
+
+    public event Action<UnitController> OnUnitClicked;
+    public event Action<UnitController> OnUnitHovered;
+    public event Action<UnitController> OnUnitUnhovered;
+    public event Action<TileController> OnTileClicked;
+    public event Action<TileController> OnTileHovered;
+    public event Action<UnitController> OnExecutionEnd;
+    public event Action<UnitController> OnUnitKilled;
 
     private void Awake()
     {
-        if (_instance == null)
-            _instance = this;
-        else
+        if (Instance != null && Instance != this)
         {
             Destroy(this);
+            return;
         }
+        Instance = this;
     }
 
-    public event Action<UnitController> OnUnitClicked;
-
-    public void UnitClicked(UnitController clickedUnit)
+    private void OnDestroy()
     {
-        OnUnitClicked?.Invoke(clickedUnit);
+        if (Instance == this) Instance = null;
     }
 
-    public event Action<UnitController> OnUnitHovered;
+    public void UnitClicked(UnitController clickedUnit) => OnUnitClicked?.Invoke(clickedUnit);
 
-    public void UnitHovered(UnitController hoveredUnit)
-    {
-        OnUnitHovered?.Invoke(hoveredUnit);
-    }
+    public void UnitHovered(UnitController hoveredUnit) => OnUnitHovered?.Invoke(hoveredUnit);
 
-    public event Action<UnitController> OnUnitUnhovered;
+    public void UnitUnhovered(UnitController unhoveredUnit) => OnUnitUnhovered?.Invoke(unhoveredUnit);
 
-    public void UnitUnhovered(UnitController unhoveredUnit)
-    {
-        OnUnitUnhovered?.Invoke(unhoveredUnit);
-    }
+    public void TileClicked(TileController clickedTile) => OnTileClicked?.Invoke(clickedTile);
 
-    public event Action<TileController> OnTileClicked;
+    public void TileHovered(TileController hoveredTile) => OnTileHovered?.Invoke(hoveredTile);
 
-    public void TileClicked(TileController clickedTile)
-    {
-        OnTileClicked?.Invoke(clickedTile);
-    }
+    public void ExecutionEnded(UnitController unit) => OnExecutionEnd?.Invoke(unit);
 
-    public event Action<TileController> OnTileHovered;
-
-    public void TileHovered(TileController hoveredTile)
-    {
-        OnTileHovered?.Invoke(hoveredTile);
-    }
-
-    public event Action<UnitController> OnExecutionEnd;
-
-    public void ExecutionEnded(UnitController unit)
-    {
-        OnExecutionEnd?.Invoke(unit);
-    }
-
-    public event Action<UnitController> OnUnitKilled;
-
-    public void UnitKilled(UnitController killedUnit)
-    {
-        OnUnitKilled?.Invoke(killedUnit);
-    }
+    public void UnitKilled(UnitController killedUnit) => OnUnitKilled?.Invoke(killedUnit);
 }

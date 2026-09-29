@@ -17,7 +17,7 @@ public class UnitPanelController : MonoBehaviour
 
     public void ShowUnitInfo()
     {
-        SoundController._instance.PlayHover();
+        SoundController.Instance.PlayHover();
         _previousUnit = _myInfoPanel.GetDisplayedUnit();
         _myInfoPanel.DisplayUnit(_myUnitPrefab.GetComponent<UnitController>());
         _myUnitImage.sprite = _myUnitPrefab.GetComponent<UnitController>().GetUnitPortrait();

@@ -15,7 +15,7 @@ public class BeginTurnState : IGameState
     public IGameState TileClicked(GameController myGameController, TileController clickedTile)  
     {
         //nothing happens
-        SoundController._instance.PlayClick();
+        SoundController.Instance.PlayClick();
         return null;
     }
 
@@ -24,12 +24,12 @@ public class BeginTurnState : IGameState
         //if it's active player's unit and this unit is available, change state to selected unit 
         BoardGrid myGrid;
         UIController ui;
-        SoundController._instance.PlayClick();
-        if (clickedUnit.GetPlayerId() == _activePlayerId && clickedUnit._isAvailable && clickedUnit._isDeployed)
+        SoundController.Instance.PlayClick();
+        if (clickedUnit.GetPlayerId() == _activePlayerId && clickedUnit.IsAvailable && clickedUnit.IsDeployed)
         {
             myGrid = myGameController.GetGrid();
             ui = myGameController.GetUI();
-            if (clickedUnit._hasMoved) return new AttackSelectedState(clickedUnit, myGrid, ui);
+            if (clickedUnit.HasMoved) return new AttackSelectedState(clickedUnit, myGrid, ui);
             else return new UnitSelectedState(clickedUnit, myGrid, ui);
         }
         return null;
@@ -40,7 +40,7 @@ public class BeginTurnState : IGameState
         //highlight tile
         UIController ui;
 
-        SoundController._instance.PlayHover();
+        SoundController.Instance.PlayHover();
         if (hoveredTile.isWalkable()) hoveredTile.Highlight(HighlightType.Hover, false);
         ui = myGameController.GetUI();
         ui.DisplayTile(hoveredTile);
@@ -53,10 +53,10 @@ public class BeginTurnState : IGameState
         BoardGrid myGrid;
         UIController ui;
 
-        SoundController._instance.PlayHover();
+        SoundController.Instance.PlayHover();
         myGrid = myGameController.GetGrid();
         myGrid.ShowMoveRange(hoveredUnit.GetGridPosition(), hoveredUnit.GetMoveRange());
-        if(hoveredUnit._freeAttacksCount > 0) myGrid.ShowAttackRange(hoveredUnit, hoveredUnit.GetAttackRange(), hoveredUnit.GetPlayerId());
+        if(hoveredUnit.FreeAttacksCount > 0) myGrid.ShowAttackRange(hoveredUnit, hoveredUnit.GetAttackRange(), hoveredUnit.GetPlayerId());
         ui = myGameController.GetUI();
         ui.DisplayUnit(hoveredUnit);
         hoveredUnit.HighlighUnitTile(HighlightType.Unit);
@@ -80,12 +80,7 @@ public class BeginTurnState : IGameState
 
     public IGameState EndTurnPressed(GameController myGameController)
     {
-        //change player turn
-        int newPlayer;
-
-        myGameController.EndPlayerTurn(_activePlayerId);
-        newPlayer = (_activePlayerId == 1 ? 2 : 1);
-        return new BeginTurnState(newPlayer);
+        return myGameController.ForceEndTurn(_activePlayerId, null);
     }
 
     public IGameState DeploymentPressed(GameController myGameController)

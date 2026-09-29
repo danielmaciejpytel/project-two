@@ -16,7 +16,7 @@ public class TileHealing : MonoBehaviour, IEndturnable
     public void EndTurnAction(int playerId)
     {
         UnitController myUnit;
-        myUnit = _myTileController._myUnit;
+        myUnit = _myTileController.Unit;
         if (myUnit != null && myUnit.GetPlayerId() == playerId)
         {
             myUnit.HealUnit(_healAmount);

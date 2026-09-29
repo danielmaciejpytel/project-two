@@ -26,12 +26,12 @@ public class TileController : MonoBehaviour, IClickable
     [SerializeField] private Color _player1Color;
     [SerializeField] private Color _player2Color;
     [SerializeField] private Color _abilityColor;
-    public UnitController _myUnit { get; set; }
-    public bool _isOccupied { get; set; }
-    public int _gCost { get; set; }
-    public int _hCost { get; set; }
-    public int _fCost { get; set; }
-    public TileController _cameFromNode { get; set; }
+    public UnitController Unit { get; set; }
+    public bool IsOccupied { get; set; }
+    public int GCost { get; set; }
+    public int HCost { get; set; }
+    public int FCost { get; set; }
+    public TileController CameFromNode { get; set; }
     private SpriteRenderer _mySpriteRenderer;
     private GridPosition _gridPosition;
     private Color _previousColor;
@@ -44,19 +44,19 @@ public class TileController : MonoBehaviour, IClickable
 
     private void OnMouseEnter()
     {
-        if(_isOccupied) EventManager._instance.UnitHovered(_myUnit);
-        else if (_tile.isWalkable && !_isOccupied) EventManager._instance.TileHovered(this);
+        if(IsOccupied) EventManager.Instance.UnitHovered(Unit);
+        else if (_tile.isWalkable && !IsOccupied) EventManager.Instance.TileHovered(this);
     }
 
     private void OnMouseExit()
     {
-        if (_isOccupied) EventManager._instance.UnitUnhovered(_myUnit);
+        if (IsOccupied) EventManager.Instance.UnitUnhovered(Unit);
         else
         {
             _overlayMarkerSpriteRenderer.transform.DOKill(false);
             _overlayMarkerSpriteRenderer.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
         }
-        if (_tile.isWalkable && !_isOccupied)
+        if (_tile.isWalkable && !IsOccupied)
         {
             _overlayColorSpriteRenderer.color = _previousColor;
             _overlayMarkerSpriteRenderer.sprite = _previousMarker;
@@ -75,11 +75,11 @@ public class TileController : MonoBehaviour, IClickable
         _gridPosition = position;
         _previousColor = _overlayColorSpriteRenderer.color;
         _previousMarker = _overlayMarkerSpriteRenderer.sprite;
-        _myUnit = null;
-        _isOccupied = false;
-        _gCost = 0;
-        _hCost = 0;
-        _fCost = 0;
+        Unit = null;
+        IsOccupied = false;
+        GCost = 0;
+        HCost = 0;
+        FCost = 0;
         _myBehaviour = GetComponent<ITileBehaviour>();
         _myBoard = myBoardGrid;
         _isDesignerMode = false;
@@ -88,7 +88,7 @@ public class TileController : MonoBehaviour, IClickable
 
     public void CalculateFCost()
     {
-        _fCost = _gCost + _hCost;
+        FCost = GCost + HCost;
     }
 
     public int GetGridDistance(GridPosition startingPosition)
@@ -99,7 +99,7 @@ public class TileController : MonoBehaviour, IClickable
     public void Click()
     {
         Debug.Log("Kliknięto na tile");
-        if (!_isOccupied) EventManager._instance.TileClicked(this);
+        if (!IsOccupied) EventManager.Instance.TileClicked(this);
     }
 
     public GridPosition GetGridPosition()
@@ -125,10 +125,10 @@ public class TileController : MonoBehaviour, IClickable
 
     public void Highlight(HighlightType hType, bool showAttackRange, int playerId = 0)
     {
-        if (!_isOccupied && showAttackRange && _tile.isWalkable) _crosshairSpriteRenderer.enabled = true;
+        if (!IsOccupied && showAttackRange && _tile.isWalkable) _crosshairSpriteRenderer.enabled = true;
         else
         {
-            if (!_isOccupied && _tile.isWalkable || _isOccupied && playerId != _myUnit.GetPlayerId())
+            if (!IsOccupied && _tile.isWalkable || IsOccupied && playerId != Unit.GetPlayerId())
             {
                 _previousColor = _overlayColorSpriteRenderer.color;
                 _previousMarker = _overlayMarkerSpriteRenderer.sprite;
@@ -150,7 +150,7 @@ public class TileController : MonoBehaviour, IClickable
                         if (!_isDesignerMode) _overlayMarkerSpriteRenderer.sprite = _attackSprite;
                         break;
                     case HighlightType.Deployment:
-                        if (!_isOccupied)
+                        if (!IsOccupied)
                         {
                             _overlayColorSpriteRenderer.color = _deploymentZoneColor;
                             if (!_isDesignerMode)
@@ -161,7 +161,7 @@ public class TileController : MonoBehaviour, IClickable
                         break;
                     case HighlightType.Unit:
                         if (!_isDesignerMode) _overlayMarkerSpriteRenderer.sprite = _currentUnitSprite;
-                        if(_myUnit.GetPlayerId() == 1) _overlayColorSpriteRenderer.color = _player1Color;
+                        if(Unit.GetPlayerId() == 1) _overlayColorSpriteRenderer.color = _player1Color;
                         else _overlayColorSpriteRenderer.color = _player2Color;
                         AnimateHighlight();
                         break;
@@ -243,10 +243,10 @@ public class TileController : MonoBehaviour, IClickable
             _myCollider.enabled = true;
         }
         transform.position = newPosition;
-        if (_isOccupied)
+        if (IsOccupied)
         {
-            _myUnit.ChangePosition(newPosition);
-            _myUnit.ChangeMode(newMode);
+            Unit.ChangePosition(newPosition);
+            Unit.ChangeMode(newMode);
         }
     }
 

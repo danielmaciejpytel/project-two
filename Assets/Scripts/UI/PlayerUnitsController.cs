@@ -32,7 +32,7 @@ public class PlayerUnitsController : MonoBehaviour
                 buttonController = _unitButtons[i].GetComponent<ButtonUnitController>();
                 buttonController.SetUnit(unit);
                 buttonController.EnlargeUnit(null);
-                if (!unit._isDeployed) buttonController.gameObject.SetActive(false);
+                if (!unit.IsDeployed) buttonController.gameObject.SetActive(false);
                 else buttonController.gameObject.SetActive(true);
                 i++;
             }
