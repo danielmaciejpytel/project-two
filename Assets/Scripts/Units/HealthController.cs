@@ -123,6 +123,12 @@ public class HealthController : MonoBehaviour
         else return false;
     }
 
+    // Includes bonus health from skills such as Zeal or Infiltrate.
+    public int GetMaxHealth()
+    {
+        return _initialHealthPoints;
+    }
+
     public int GetCurrentHealth()
     {
         return _healthPoints;

@@ -388,7 +388,8 @@ public class UnitController : MonoBehaviour, IClickable, IHoverable, IEndturnabl
 
     public int GetMaxHP()
     {
-        return _unit.unitHealth;
+        // Units on the board can have bonus health (e.g. "11/11" instead of "11/9"); prefabs in the draft use the base value.
+        return IsDeployed ? _myHealth.GetMaxHealth() : _unit.unitHealth;
     }
 
     public int GetBaseMoveRange()

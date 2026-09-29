@@ -20,6 +20,7 @@ public class UnitTilePanelController : MonoBehaviour
     [SerializeField] TMP_Text _effects;
 
     private UnitController _myUnit;
+    private bool _hasContent;
 
     // Start is called before the first frame update
     void Awake()
@@ -34,22 +35,26 @@ public class UnitTilePanelController : MonoBehaviour
         _attackStrengthText.enabled = false;
         _skillsText.enabled = false;
         if(_effectsText != null) _effectsText.enabled = false;
+        // Start empty instead of showing the placeholder text left in the scene
+        // (unless something was already displayed while the panel was inactive).
+        if (!_hasContent) ClearDisplay();
     }
 
     public void DisplayTile(TileController myTile)
     {
+        _hasContent = true;
         _name.text = myTile.GetTileName();
         _description.text = myTile.GetDescription();
         _hpText.enabled = false;
         _moveRangeText.enabled = false;
         _attackStrengthText.enabled = false;
         _skillsText.enabled = false;
-        _effectsText.enabled = false;
+        if (_effectsText != null) _effectsText.enabled = false;
         _hp.text = "";
         _moveRange.text = "";
         _attackStrength.text = "";
         _skills.text = "";
-        _effects.text = "";
+        if (_effects != null) _effects.text = "";
     }
 
     public void DisplayUnit(UnitController myUnit)
@@ -60,6 +65,7 @@ public class UnitTilePanelController : MonoBehaviour
         string description;
         int counter;
 
+        _hasContent = true;
         _myUnit = myUnit;
         _hpText.enabled = true;
         _moveRangeText.enabled = true;
@@ -138,14 +144,14 @@ public class UnitTilePanelController : MonoBehaviour
         _moveRangeText.enabled = false;
         _attackStrengthText.enabled = false;
         _skillsText.enabled = false;
-        _effectsText.enabled = false;
+        if (_effectsText != null) _effectsText.enabled = false;
         _name.text = "";
         _description.text = "";
         _hp.text = "";
         _moveRange.text = "";
         _attackStrength.text = "";
         _skills.text = "";
-        _effects.text = "";
+        if (_effects != null) _effects.text = "";
     }
 
     public UnitController GetDisplayedUnit()
