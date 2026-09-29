@@ -7760,153 +7760,183 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ForegroundAnimator
   _pieces:
   - rect: {fileID: 1435725354}
-    amplitude: {x: 2, y: 3}
+    amplitude: {x: 2, y: 6}
     rotation: 0
+    downOnly: 1
     period: 11
     phase: 0.066746935
   - rect: {fileID: 2134193674}
     amplitude: {x: 4, y: 9}
     rotation: 0.8
+    downOnly: 0
     period: 8.5
     phase: 0.07015951
   - rect: {fileID: 1233169865}
     amplitude: {x: 6, y: 8}
     rotation: 8
+    downOnly: 0
     period: 8.044558
     phase: 0.77476513
   - rect: {fileID: 1237595066}
     amplitude: {x: 6, y: 8}
     rotation: 8
+    downOnly: 0
     period: 9.309233
     phase: 0.79749054
   - rect: {fileID: 261399310}
     amplitude: {x: 6, y: 8}
     rotation: 8
+    downOnly: 0
     period: 8.944523
     phase: 0.16595879
   - rect: {fileID: 1384940017}
     amplitude: {x: 6, y: 8}
     rotation: 8
+    downOnly: 0
     period: 8.024019
     phase: 0.26021636
   - rect: {fileID: 1692173083}
     amplitude: {x: 6, y: 8}
     rotation: 8
+    downOnly: 0
     period: 7.548562
     phase: 0.23027372
   - rect: {fileID: 577544018}
     amplitude: {x: 5, y: 7}
     rotation: 3
+    downOnly: 0
     period: 7.062433
     phase: 0.21598062
   - rect: {fileID: 586147138}
     amplitude: {x: 6, y: 8}
     rotation: 8
+    downOnly: 0
     period: 8.963327
     phase: 0.1348336
   - rect: {fileID: 57057306}
     amplitude: {x: 5, y: 7}
     rotation: 3
+    downOnly: 0
     period: 9.6611185
     phase: 0.19509107
   - rect: {fileID: 1803927161}
     amplitude: {x: 6, y: 8}
     rotation: 8
+    downOnly: 0
     period: 7.43546
     phase: 0.8611006
   - rect: {fileID: 2012147105}
     amplitude: {x: 6, y: 8}
     rotation: 8
+    downOnly: 0
     period: 8.118332
     phase: 0.10370226
   - rect: {fileID: 872588634}
     amplitude: {x: 6, y: 8}
     rotation: 8
+    downOnly: 0
     period: 8.830022
     phase: 0.35875502
   - rect: {fileID: 906739738}
     amplitude: {x: 6, y: 8}
     rotation: 8
+    downOnly: 0
     period: 8.482193
     phase: 0.58047485
   - rect: {fileID: 40096400}
     amplitude: {x: 6, y: 8}
     rotation: 8
+    downOnly: 0
     period: 8.991531
     phase: 0.7324966
   - rect: {fileID: 2057777417}
     amplitude: {x: 5, y: 7}
     rotation: 3
+    downOnly: 0
     period: 7.7357717
     phase: 0.39625105
   - rect: {fileID: 1737273594}
     amplitude: {x: 6, y: 8}
     rotation: 8
+    downOnly: 0
     period: 6.842185
     phase: 0.6863451
   - rect: {fileID: 2007531141}
     amplitude: {x: 6, y: 8}
     rotation: 8
+    downOnly: 0
     period: 7.9415636
     phase: 0.5175376
   - rect: {fileID: 1048107156}
     amplitude: {x: 6, y: 8}
     rotation: 8
+    downOnly: 0
     period: 9.083116
     phase: 0.25280544
   - rect: {fileID: 1655694140}
     amplitude: {x: 5, y: 7}
     rotation: 3
+    downOnly: 0
     period: 8.451736
     phase: 0.0025789393
   - rect: {fileID: 680989821}
     amplitude: {x: 6, y: 8}
     rotation: 8
+    downOnly: 0
     period: 7.945842
     phase: 0.4479579
   - rect: {fileID: 408561777}
     amplitude: {x: 5, y: 7}
     rotation: 3
+    downOnly: 0
     period: 8.353744
     phase: 0.7115774
   - rect: {fileID: 363406418}
     amplitude: {x: 6, y: 8}
     rotation: 8
+    downOnly: 0
     period: 7.132162
     phase: 0.26995236
   - rect: {fileID: 1874114758}
     amplitude: {x: 5, y: 7}
     rotation: 3
+    downOnly: 0
     period: 7.884336
     phase: 0.6352414
   - rect: {fileID: 1261398598}
     amplitude: {x: 6, y: 8}
     rotation: 8
+    downOnly: 0
     period: 9.410723
     phase: 0.3695336
   - rect: {fileID: 1669189733}
     amplitude: {x: 6, y: 8}
     rotation: 8
+    downOnly: 0
     period: 9.408802
     phase: 0.17566556
   - rect: {fileID: 1087849989}
     amplitude: {x: 6, y: 8}
     rotation: 8
+    downOnly: 0
     period: 8.463333
     phase: 0.6443546
   - rect: {fileID: 2069626002}
     amplitude: {x: 6, y: 8}
     rotation: 8
+    downOnly: 0
     period: 7.9867873
     phase: 0.44152084
   - rect: {fileID: 1511935123}
     amplitude: {x: 6, y: 8}
     rotation: 8
+    downOnly: 0
     period: 8.148655
     phase: 0.030103534
   - rect: {fileID: 351731694}
     amplitude: {x: 5, y: 7}
     rotation: 3
+    downOnly: 0
     period: 7.201779
     phase: 0.7114045
   _intensity: 1
