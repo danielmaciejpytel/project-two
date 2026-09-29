@@ -15,12 +15,13 @@ public class SkillZeal : MonoBehaviour, IAttackModifier, IEnterTile, ISkill
     {
         _myUnitController = GetComponent<UnitController>();
         _isAdjacentToKing = false;
-        EventManager.Instance.OnExecutionEnd += OnExecutionEnded;
+        if (EventManager.Instance != null) EventManager.Instance.OnExecutionEnd += OnExecutionEnded;
     }
 
     private void OnDestroy()
     {
-        EventManager.Instance.OnExecutionEnd -= OnExecutionEnded;
+        // On scene unload the EventManager can be destroyed before the units.
+        if (EventManager.Instance != null) EventManager.Instance.OnExecutionEnd -= OnExecutionEnded;
     }
 
     private void OnExecutionEnded(UnitController unit)
