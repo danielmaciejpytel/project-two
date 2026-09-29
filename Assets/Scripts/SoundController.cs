@@ -4,8 +4,13 @@ using UnityEngine.SceneManagement;
 public class SoundController : MonoBehaviour
 {
     private const string MenuSceneName = "MenuScene";
-    private const string SoundPrefKey = "Options.SoundOn";
-    private const string MusicPrefKey = "Options.MusicOn";
+    private const string SoundVolumePrefKey = "Options.SoundVolume";
+    private const string MusicVolumePrefKey = "Options.MusicVolume";
+    // Older versions saved on/off switches instead of volumes.
+    private const string OldSoundPrefKey = "Options.SoundOn";
+    private const string OldMusicPrefKey = "Options.MusicOn";
+    // Music volume at the slider's maximum (the slider's default of 0.5 gives the old fixed volume of 0.2).
+    private const float MusicMaxVolume = 0.4f;
 
     [SerializeField] private AudioClip _clickClip;
     [SerializeField] private AudioClip _hoverClip;
@@ -13,35 +18,33 @@ public class SoundController : MonoBehaviour
     [SerializeField] private AudioClip _endTurnClip;
     [Tooltip("Index 0 is the menu theme, the rest are played in game.")]
     [SerializeField] private AudioClip[] _gameMusic;
-    [SerializeField, Range(0.0f, 1.0f)] private float _musicVolume = 0.2f;
 
     private AudioSource _myAudioSource;
     private AudioSource _myMusicSource;
-    private bool _soundOn;
-    private bool _musicOn;
+    private float _soundVolume;
+    private float _musicVolume;
 
     public static SoundController Instance { get; private set; }
 
-    public bool SoundOn
+    // Volumes go from 0 (silent) to 1 and are saved as soon as they change.
+    public float SoundVolume
     {
-        get => _soundOn;
+        get => _soundVolume;
         set
         {
-            _soundOn = value;
-            PlayerPrefs.SetInt(SoundPrefKey, value ? 1 : 0);
+            _soundVolume = Mathf.Clamp01(value);
+            PlayerPrefs.SetFloat(SoundVolumePrefKey, _soundVolume);
         }
     }
 
-    public bool MusicOn
+    public float MusicVolume
     {
-        get => _musicOn;
+        get => _musicVolume;
         set
         {
-            _musicOn = value;
-            PlayerPrefs.SetInt(MusicPrefKey, value ? 1 : 0);
-            CancelInvoke(nameof(PlayNextClip));
-            if (_musicOn) PlayNextClip();
-            else _myMusicSource.Pause();
+            _musicVolume = Mathf.Clamp01(value);
+            PlayerPrefs.SetFloat(MusicVolumePrefKey, _musicVolume);
+            if (_myMusicSource != null) _myMusicSource.volume = _musicVolume * MusicMaxVolume;
         }
     }
 
@@ -60,13 +63,14 @@ public class SoundController : MonoBehaviour
         _myAudioSource = gameObject.AddComponent<AudioSource>();
         _myMusicSource = gameObject.AddComponent<AudioSource>();
         _myMusicSource.loop = false;
-        _myMusicSource.volume = _musicVolume;
-        _soundOn = PlayerPrefs.GetInt(SoundPrefKey, 1) == 1;
+        _soundVolume = PlayerPrefs.GetFloat(SoundVolumePrefKey, PlayerPrefs.GetInt(OldSoundPrefKey, 1) == 1 ? 1.0f : 0.0f);
+        _musicVolume = PlayerPrefs.GetFloat(MusicVolumePrefKey, PlayerPrefs.GetInt(OldMusicPrefKey, 1) == 1 ? 0.5f : 0.0f);
+        _myMusicSource.volume = _musicVolume * MusicMaxVolume;
     }
 
     private void Start()
     {
-        MusicOn = PlayerPrefs.GetInt(MusicPrefKey, 1) == 1;
+        PlayNextClip();
         SceneManager.activeSceneChanged += OnActiveSceneChanged;
     }
 
@@ -81,16 +85,13 @@ public class SoundController : MonoBehaviour
     private void OnActiveSceneChanged(Scene previous, Scene next)
     {
         // Switch between the menu theme and the in-game playlist without waiting for the current track to finish.
-        if (_musicOn)
-        {
-            CancelInvoke(nameof(PlayNextClip));
-            PlayNextClip();
-        }
+        CancelInvoke(nameof(PlayNextClip));
+        PlayNextClip();
     }
 
     private void PlayNextClip()
     {
-        if (!_musicOn || _gameMusic == null || _gameMusic.Length == 0) return;
+        if (_gameMusic == null || _gameMusic.Length == 0) return;
 
         int song = 0;
         if (SceneManager.GetActiveScene().name != MenuSceneName && _gameMusic.Length > 1)
@@ -102,8 +103,11 @@ public class SoundController : MonoBehaviour
 
     private void PlayOneShot(AudioClip clip)
     {
-        if (_soundOn && clip != null) _myAudioSource.PlayOneShot(clip);
+        if (clip != null && _soundVolume > 0.0f) _myAudioSource.PlayOneShot(clip, _soundVolume);
     }
+
+    // Sound effects played by other objects (unit attacks, deaths) follow the same volume.
+    public void PlayClip(AudioClip clip) => PlayOneShot(clip);
 
     public void PlayClick() => PlayOneShot(_clickClip);
 

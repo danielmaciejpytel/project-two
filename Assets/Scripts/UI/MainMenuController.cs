@@ -23,9 +23,10 @@ public class MainMenuController : MonoBehaviour
     [SerializeField] private Image _creditsImage;
     [SerializeField] private TMP_Text _instructionText;
     [SerializeField] private GameObject _optionsPanel;
-    [SerializeField] private Toggle _soundToggle;
-    [SerializeField] private Toggle _musicToggle;
+    [SerializeField] private Slider _soundSlider;
+    [SerializeField] private Slider _musicSlider;
     [SerializeField] private TMP_Text _difficultyLabel;
+    [SerializeField] private TMP_Text _resolutionLabel;
 
     private const float HiddenBarX = -1920.0f;
 
@@ -122,9 +123,10 @@ public class MainMenuController : MonoBehaviour
         SetMainButtonsActive(false);
         _optionsPanel.SetActive(true);
         HideBar();
-        _soundToggle.isOn = SoundController.Instance.SoundOn;
+        _soundSlider.SetValueWithoutNotify(SoundController.Instance.SoundVolume);
+        _musicSlider.SetValueWithoutNotify(SoundController.Instance.MusicVolume);
         UpdateDifficultyLabel();
-        _musicToggle.isOn = SoundController.Instance.MusicOn;
+        UpdateResolutionLabel();
     }
 
     public void HideOptions()
@@ -183,18 +185,42 @@ public class MainMenuController : MonoBehaviour
 
     private void UpdateDifficultyLabel()
     {
-        if (_difficultyLabel != null) _difficultyLabel.text = "AI: " + GameSession.Difficulty;
+        if (_difficultyLabel != null) _difficultyLabel.text = "Difficulty: " + GameSession.Difficulty;
     }
 
-    public void SoundToggleClicked()
+    // Options: cycles through the resolutions the monitor supports (native first).
+    public void CycleResolution()
     {
         SoundController.Instance.PlayClick();
-        SoundController.Instance.SoundOn = _soundToggle.isOn;
+        List<Vector2Int> resolutions = DisplaySettings.Available();
+        int next = (resolutions.IndexOf(DisplaySettings.Current) + 1) % resolutions.Count;
+        DisplaySettings.Set(resolutions[next]);
+        UpdateResolutionLabel();
     }
 
-    public void MusicToggleClicked()
+    private void UpdateResolutionLabel()
+    {
+        if (_resolutionLabel == null) return;
+        Vector2Int current = DisplaySettings.Current;
+        _resolutionLabel.text = "Resolution: " + current.x + "x" + current.y + (DisplaySettings.IsNative(current) ? " (native)" : "");
+    }
+
+    // Sliders: the volume is applied and saved while dragging.
+    public void SoundVolumeChanged(float value)
+    {
+        SoundController.Instance.SoundVolume = value;
+    }
+
+    public void MusicVolumeChanged(float value)
+    {
+        SoundController.Instance.MusicVolume = value;
+    }
+
+    public void SoundSliderReleasedData(UnityEngine.EventSystems.BaseEventData data) => SoundSliderReleased();
+
+    // A click after releasing the sound slider, so the new volume can be heard.
+    public void SoundSliderReleased()
     {
         SoundController.Instance.PlayClick();
-        SoundController.Instance.MusicOn = _musicToggle.isOn;
     }
 }
