@@ -221,7 +221,7 @@ MonoBehaviour:
   m_fontSizeMax: 0
   m_fontStyle: 0
   m_HorizontalAlignment: 2
-  m_VerticalAlignment: 512
+  m_VerticalAlignment: 8192
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_characterHorizontalScale: 1
@@ -230,7 +230,7 @@ MonoBehaviour:
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_TextWrappingMode: 1
+  m_TextWrappingMode: 0
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
@@ -271,7 +271,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PixelText
   _fontPixels: 3
-  _shrinkToFit: 0
+  _shrinkToFit: 1
+  _fallbackFont: {fileID: 11400000, guid: 0aa3f05f38ab87941a21c1717ede9874, type: 2}
 --- !u!1 &23428678
 GameObject:
   m_ObjectHideFlags: 0
@@ -374,7 +375,7 @@ MonoBehaviour:
   m_fontSizeMax: 0
   m_fontStyle: 0
   m_HorizontalAlignment: 2
-  m_VerticalAlignment: 512
+  m_VerticalAlignment: 8192
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_characterHorizontalScale: 1
@@ -383,7 +384,7 @@ MonoBehaviour:
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_TextWrappingMode: 1
+  m_TextWrappingMode: 0
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
@@ -424,7 +425,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PixelText
   _fontPixels: 3
-  _shrinkToFit: 0
+  _shrinkToFit: 1
+  _fallbackFont: {fileID: 11400000, guid: 0aa3f05f38ab87941a21c1717ede9874, type: 2}
 --- !u!1 &248016930
 GameObject:
   m_ObjectHideFlags: 0
@@ -476,7 +478,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PixelText
   _fontPixels: 3
-  _shrinkToFit: 0
+  _shrinkToFit: 1
+  _fallbackFont: {fileID: 11400000, guid: 0aa3f05f38ab87941a21c1717ede9874, type: 2}
 --- !u!114 &248016933
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -533,7 +536,7 @@ MonoBehaviour:
   m_fontSizeMax: 0
   m_fontStyle: 0
   m_HorizontalAlignment: 1
-  m_VerticalAlignment: 4096
+  m_VerticalAlignment: 8192
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_characterHorizontalScale: 1
@@ -870,7 +873,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PixelText
   _fontPixels: 3
-  _shrinkToFit: 0
+  _shrinkToFit: 1
+  _fallbackFont: {fileID: 11400000, guid: 0aa3f05f38ab87941a21c1717ede9874, type: 2}
 --- !u!114 &561197641
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -927,7 +931,7 @@ MonoBehaviour:
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 1
-  m_VerticalAlignment: 4096
+  m_VerticalAlignment: 8192
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_characterHorizontalScale: 1
@@ -1552,7 +1556,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PixelText
   _fontPixels: 3
-  _shrinkToFit: 0
+  _shrinkToFit: 1
+  _fallbackFont: {fileID: 11400000, guid: 0aa3f05f38ab87941a21c1717ede9874, type: 2}
 --- !u!114 &957262513
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1609,7 +1614,7 @@ MonoBehaviour:
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 1
-  m_VerticalAlignment: 4096
+  m_VerticalAlignment: 8192
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_characterHorizontalScale: 1
@@ -2236,7 +2241,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PixelText
   _fontPixels: 3
-  _shrinkToFit: 0
+  _shrinkToFit: 1
+  _fallbackFont: {fileID: 11400000, guid: 0aa3f05f38ab87941a21c1717ede9874, type: 2}
 --- !u!114 &1060016404
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2293,7 +2299,7 @@ MonoBehaviour:
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 1
-  m_VerticalAlignment: 4096
+  m_VerticalAlignment: 8192
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_characterHorizontalScale: 1
@@ -2734,7 +2740,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PixelText
   _fontPixels: 3
-  _shrinkToFit: 0
+  _shrinkToFit: 1
+  _fallbackFont: {fileID: 11400000, guid: 0aa3f05f38ab87941a21c1717ede9874, type: 2}
 --- !u!114 &1212377407
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2791,7 +2798,7 @@ MonoBehaviour:
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 1
-  m_VerticalAlignment: 4096
+  m_VerticalAlignment: 8192
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_characterHorizontalScale: 1
@@ -3005,6 +3012,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PixelText
   _fontPixels: 2
   _shrinkToFit: 1
+  _fallbackFont: {fileID: 11400000, guid: 0aa3f05f38ab87941a21c1717ede9874, type: 2}
 --- !u!1 &1343401926
 GameObject:
   m_ObjectHideFlags: 0
@@ -3211,7 +3219,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PixelText
   _fontPixels: 3
-  _shrinkToFit: 0
+  _shrinkToFit: 1
+  _fallbackFont: {fileID: 11400000, guid: 0aa3f05f38ab87941a21c1717ede9874, type: 2}
 --- !u!114 &1483215282
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3268,7 +3277,7 @@ MonoBehaviour:
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 1
-  m_VerticalAlignment: 4096
+  m_VerticalAlignment: 8192
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_characterHorizontalScale: 1
@@ -3417,7 +3426,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PixelText
   _fontPixels: 3
-  _shrinkToFit: 0
+  _shrinkToFit: 1
+  _fallbackFont: {fileID: 11400000, guid: 0aa3f05f38ab87941a21c1717ede9874, type: 2}
 --- !u!114 &1521042004
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3474,7 +3484,7 @@ MonoBehaviour:
   m_fontSizeMax: 0
   m_fontStyle: 0
   m_HorizontalAlignment: 1
-  m_VerticalAlignment: 4096
+  m_VerticalAlignment: 8192
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_characterHorizontalScale: 1
@@ -3780,7 +3790,7 @@ MonoBehaviour:
   m_fontSizeMax: 0
   m_fontStyle: 0
   m_HorizontalAlignment: 2
-  m_VerticalAlignment: 512
+  m_VerticalAlignment: 8192
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_characterHorizontalScale: 1
@@ -3789,7 +3799,7 @@ MonoBehaviour:
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_TextWrappingMode: 1
+  m_TextWrappingMode: 0
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
@@ -3830,7 +3840,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PixelText
   _fontPixels: 3
-  _shrinkToFit: 0
+  _shrinkToFit: 1
+  _fallbackFont: {fileID: 11400000, guid: 0aa3f05f38ab87941a21c1717ede9874, type: 2}
 --- !u!1 &1739026556
 GameObject:
   m_ObjectHideFlags: 0
@@ -3866,8 +3877,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -499, y: 0}
-  m_SizeDelta: {x: 585, y: 306}
+  m_AnchoredPosition: {x: -421.5, y: 0}
+  m_SizeDelta: {x: 740, y: 306}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1739026558
 MonoBehaviour:
@@ -3959,6 +3970,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PixelText
   _fontPixels: 3
   _shrinkToFit: 0
+  _fallbackFont: {fileID: 11400000, guid: 0aa3f05f38ab87941a21c1717ede9874, type: 2}
 --- !u!114 &1756492300
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4546,7 +4558,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PixelText
   _fontPixels: 3
-  _shrinkToFit: 0
+  _shrinkToFit: 1
+  _fallbackFont: {fileID: 11400000, guid: 0aa3f05f38ab87941a21c1717ede9874, type: 2}
 --- !u!114 &1915400121
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4603,7 +4616,7 @@ MonoBehaviour:
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 1
-  m_VerticalAlignment: 4096
+  m_VerticalAlignment: 8192
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_characterHorizontalScale: 1

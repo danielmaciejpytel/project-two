@@ -235,6 +235,7 @@ GameObject:
   - component: {fileID: 5745298953492890231}
   - component: {fileID: 2251822428676956939}
   - component: {fileID: 4920683219022442154}
+  - component: {fileID: 6951785423747268417}
   m_Layer: 5
   m_Name: UnitNameText
   m_TagString: Untagged
@@ -259,7 +260,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 67.1}
-  m_SizeDelta: {x: 100, y: 16.844543}
+  m_SizeDelta: {x: 100, y: 17}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2251822428676956939
 CanvasRenderer:
@@ -291,8 +292,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: New Text
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 0aa3f05f38ab87941a21c1717ede9874, type: 2}
-  m_sharedMaterial: {fileID: 848374922052071493, guid: 0aa3f05f38ab87941a21c1717ede9874,
+  m_fontAsset: {fileID: 11400000, guid: 27b4ba54acb2c2246bf05e805a213f83, type: 2}
+  m_sharedMaterial: {fileID: -3559136528966462981, guid: 27b4ba54acb2c2246bf05e805a213f83,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -317,15 +318,15 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 14
-  m_fontSizeBase: 14
+  m_fontSize: 16
+  m_fontSizeBase: 16
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 2
-  m_VerticalAlignment: 512
+  m_VerticalAlignment: 8192
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_characterHorizontalScale: 1
@@ -334,7 +335,7 @@ MonoBehaviour:
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_TextWrappingMode: 1
+  m_TextWrappingMode: 0
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
@@ -362,3 +363,18 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &6951785423747268417
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7990607035419494883}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12f2fdd9e99ebbf4daefd580024831da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PixelText
+  _fontPixels: 1
+  _shrinkToFit: 1
+  _fallbackFont: {fileID: 11400000, guid: 0aa3f05f38ab87941a21c1717ede9874, type: 2}
