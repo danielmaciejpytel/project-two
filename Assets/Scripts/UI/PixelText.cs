@@ -5,7 +5,7 @@ using UnityEngine;
 /// Keeps text drawn with the pixel font crisp: the font size is chosen so that one pixel of the font
 /// covers a whole number of screen pixels at the current resolution (no uneven, half-pixel strokes).
 /// Sizes are given in font pixels at the 1920x1080 reference; at other resolutions they are rounded
-/// to the nearest whole number of screen pixels.
+/// down to a whole number of screen pixels.
 /// </summary>
 [RequireComponent(typeof(TMP_Text))]
 public class PixelText : MonoBehaviour
@@ -78,7 +78,8 @@ public class PixelText : MonoBehaviour
         if (_text == null) Awake();
         float scale = Mathf.Max(0.01f, GetScale());
 
-        int screenPixels = Mathf.Max(1, Mathf.RoundToInt(_fontPixels * scale));
+        // Round down: the text is never bigger than designed at 1080p, so it can't outgrow its box.
+        int screenPixels = Mathf.Max(1, Mathf.FloorToInt(_fontPixels * scale + 0.001f));
         if (_shrinkToFit)
         {
             while (screenPixels > 1 && !Fits(SizeFor(screenPixels, scale))) screenPixels--;
