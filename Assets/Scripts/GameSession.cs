@@ -1,6 +1,12 @@
-﻿// Settings chosen in the menu that the game scene reads.
+﻿using UnityEngine;
+
+public enum AiDifficulty { Easy, Normal, Hard }
+
+// Settings chosen in the menu that the game scene reads.
 public static class GameSession
 {
+    private const string DifficultyPrefKey = "Options.AiDifficulty";
+
     public const int NoAi = 0;
     public const int DefaultAiPlayer = 2;
 
@@ -8,4 +14,15 @@ public static class GameSession
     public static int AiPlayerId { get; set; } = NoAi;
 
     public static bool IsAiPlayer(int playerId) => AiPlayerId != NoAi && AiPlayerId == playerId;
+
+    // Chosen in Options, remembered between sessions.
+    public static AiDifficulty Difficulty
+    {
+        get => (AiDifficulty)Mathf.Clamp(PlayerPrefs.GetInt(DifficultyPrefKey, (int)AiDifficulty.Normal), 0, 2);
+        set
+        {
+            PlayerPrefs.SetInt(DifficultyPrefKey, (int)value);
+            PlayerPrefs.Save();
+        }
+    }
 }

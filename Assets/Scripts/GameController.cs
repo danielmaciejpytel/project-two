@@ -333,7 +333,7 @@ public class GameController : MonoBehaviour
         }
         _myUIController.InitializeUnitsPanel(_units, _startingPlayer, this, _timeLimit);
         _activePlayer = _startingPlayer;
-        if (GameSession.AiPlayerId != GameSession.NoAi) gameObject.AddComponent<AIController>().Initialize(this, GameSession.AiPlayerId);
+        if (GameSession.AiPlayerId != GameSession.NoAi) gameObject.AddComponent<AIController>().Initialize(this, GameSession.AiPlayerId, GameSession.Difficulty);
         EventManager.Instance.TurnStarted(_startingPlayer);
     }
 

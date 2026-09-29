@@ -8,25 +8,35 @@ using UnityEngine;
 /// Strategy per turn: call one Doppelganger, sometimes use the commander's ability (Confuse or
 /// Teleport), then each unit moves to the best tile and attacks the most valuable target;
 /// the commander stays back and only attacks what is next to it.
+/// Difficulty: Easy makes clumsy, partly random choices and never uses abilities; Normal is the
+/// strategy above; Hard also avoids tiles the enemy can strike next turn, always calls and uses
+/// abilities when useful, focuses wounded and dangerous targets and moves its commander out of danger.
 /// </summary>
 public class AIController : MonoBehaviour
 {
     private const float ThinkDelay = 0.8f;
     private const float StepDelay = 0.45f;
     private const float ExecutionTimeout = 10.0f;
-    // Abilities are used only now and then, even when there is a good opportunity.
-    private const float AbilityChance = 0.35f;
+    // Easy plays a random move or target this often.
+    private const float EasyMistakeChance = 0.5f;
 
     private GameController _game;
     private int _playerId;
     private Coroutine _turn;
+    private AiDifficulty _difficulty = AiDifficulty.Normal;
+    // Hard: tiles every enemy can stand on next turn.
+    private Dictionary<UnitController, List<GridPosition>> _enemyReach;
+
+    // Abilities: now and then on Normal, whenever useful on Hard, never on Easy.
+    private float AbilityChance => _difficulty == AiDifficulty.Hard ? 1.0f : _difficulty == AiDifficulty.Normal ? 0.35f : 0.0f;
 
     private bool IsMyTurn => _game != null && !_game.IsGameOver && _game.ActivePlayer == _playerId;
 
-    public void Initialize(GameController game, int playerId)
+    public void Initialize(GameController game, int playerId, AiDifficulty difficulty = AiDifficulty.Normal)
     {
         _game = game;
         _playerId = playerId;
+        _difficulty = difficulty;
         EventManager.Instance.OnTurnStarted += OnTurnStarted;
     }
 
@@ -45,13 +55,15 @@ public class AIController : MonoBehaviour
     private IEnumerator PlayTurn()
     {
         yield return new WaitForSeconds(ThinkDelay);
-        if (IsMyTurn) yield return TryDeploy();
+        // Easy forgets to call reinforcements half of the time.
+        if (IsMyTurn && (_difficulty != AiDifficulty.Easy || Random.value < 0.5f)) yield return TryDeploy();
         if (IsMyTurn) yield return TryUseAbilities();
 
         foreach (UnitController unit in GetActingOrder())
         {
             if (!IsMyTurn) break;
             if (!unit.IsDeployed || unit.IsKilled || !unit.IsAvailable) continue;
+            if (_difficulty == AiDifficulty.Hard) UpdateEnemyReach();
             yield return PlayUnit(unit);
         }
 
@@ -155,8 +167,9 @@ public class AIController : MonoBehaviour
     {
         BoardGrid grid = _game.GetGrid();
 
-        // The commander losing means losing the game, so it holds its position.
-        if (!unit.IsKing() && !unit.HasMoved)
+        // The commander losing means losing the game, so it holds its position
+        // (on Hard it steps out of danger when it can).
+        if ((!unit.IsKing() || _difficulty == AiDifficulty.Hard) && !unit.HasMoved)
         {
             TileController destination = ChooseDestination(unit);
             if (destination != null)
@@ -314,9 +327,17 @@ public class AIController : MonoBehaviour
     /// <summary>Best tile to move to, or null when staying is best.</summary>
     private TileController ChooseDestination(UnitController unit)
     {
+        List<TileController> reachable = _game.GetGrid().GetReachableTiles(unit);
+        if (_difficulty == AiDifficulty.Easy && Random.value < EasyMistakeChance)
+        {
+            // Clumsy: wander to a random tile (or stay).
+            int pick = Random.Range(0, reachable.Count + 1);
+            return pick < reachable.Count ? reachable[pick] : null;
+        }
+
         TileController best = null;
         float bestScore = ScorePosition(unit, unit.CurrentTile);
-        foreach (TileController tile in _game.GetGrid().GetReachableTiles(unit))
+        foreach (TileController tile in reachable)
         {
             float score = ScorePosition(unit, tile);
             if (score > bestScore)
@@ -332,6 +353,28 @@ public class AIController : MonoBehaviour
     {
         GridPosition position = tile.GetGridPosition();
         float score = TileBonus(tile, unit.GetAttackRange() > 1);
+
+        if (_difficulty == AiDifficulty.Hard)
+        {
+            // Avoid tiles the enemy can strike next turn; never walk into a lethal spot.
+            int danger = DamageThreat(unit, position);
+            score -= danger * (unit.IsKing() ? 12.0f : 4.0f);
+            if (danger >= unit.GetHP()) score -= unit.IsKing() ? 2000.0f : 80.0f;
+            // The commander only looks for safety, it doesn't charge.
+            if (unit.IsKing()) return score - 0.1f * Distance(position, unit.GetGridPosition());
+
+            // While the commander is in danger, guard it: stay next to it and go for the units threatening it.
+            UnitController myCommander = _game.GetCommander(_playerId);
+            if (myCommander != null && !myCommander.IsKilled && DamageThreat(myCommander, myCommander.GetGridPosition()) > 0)
+            {
+                GridPosition kingPosition = myCommander.GetGridPosition();
+                if (Mathf.Abs(kingPosition.x - position.x) <= 1 && Mathf.Abs(kingPosition.y - position.y) <= 1) score += 15.0f;
+                foreach (UnitController enemy in Enemies())
+                {
+                    if (ThreatensMyCommander(enemy) && unit.IsTargetValid(enemy) && CanAttackFrom(unit, position, enemy)) { score += 40.0f; break; }
+                }
+            }
+        }
 
         float bestTarget = 0.0f;
         foreach (UnitController enemy in Enemies())
@@ -356,7 +399,14 @@ public class AIController : MonoBehaviour
         foreach (UnitController enemy in Enemies())
         {
             if (!unit.IsTargetValid(enemy) || !grid.IsTileInAttackRange(unit, enemy.CurrentTile)) continue;
-            float value = TargetValue(unit, enemy);
+            // Easy doesn't weigh targets at all.
+            float value = _difficulty == AiDifficulty.Easy ? Random.value : TargetValue(unit, enemy);
+            // Hard finishes off wounded units, hits the most dangerous ones and above all those threatening its commander.
+            if (_difficulty == AiDifficulty.Hard)
+            {
+                value += enemy.GetAttackStrength() * 3.0f + (enemy.GetMaxHP() - enemy.GetHP()) * 2.0f;
+                if (ThreatensMyCommander(enemy)) value += 40.0f;
+            }
             if (value > bestValue)
             {
                 bestValue = value;
@@ -376,10 +426,61 @@ public class AIController : MonoBehaviour
         return value;
     }
 
+    // Hard: where every enemy can stand next turn (its reachable tiles plus its own).
+    private void UpdateEnemyReach()
+    {
+        _enemyReach = new Dictionary<UnitController, List<GridPosition>>();
+        foreach (UnitController enemy in Enemies())
+        {
+            List<GridPosition> positions = new List<GridPosition> { enemy.GetGridPosition() };
+            foreach (TileController tile in _game.GetGrid().GetReachableTiles(enemy)) positions.Add(tile.GetGridPosition());
+            _enemyReach[enemy] = positions;
+        }
+    }
+
+    // Hard: can this enemy strike our commander next turn?
+    private bool ThreatensMyCommander(UnitController enemy)
+    {
+        UnitController myCommander = _game.GetCommander(_playerId);
+        if (myCommander == null || myCommander.IsKilled || myCommander.CurrentTile == null) return false;
+        if (_enemyReach == null) UpdateEnemyReach();
+        if (!_enemyReach.TryGetValue(enemy, out List<GridPosition> positions)) return false;
+        GridPosition kingPosition = myCommander.GetGridPosition();
+        foreach (GridPosition from in positions)
+        {
+            if (from != kingPosition && CanHit(enemy, from, kingPosition, null)) return true;
+        }
+        return false;
+    }
+
+    // Hard: total damage the enemy could deal to this unit if it stood on "position" next turn.
+    private int DamageThreat(UnitController unit, GridPosition position)
+    {
+        if (_enemyReach == null) UpdateEnemyReach();
+        int total = 0;
+        foreach (KeyValuePair<UnitController, List<GridPosition>> pair in _enemyReach)
+        {
+            UnitController enemy = pair.Key;
+            if (enemy.IsKilled || enemy.CurrentTile == null) continue;
+            foreach (GridPosition from in pair.Value)
+            {
+                if (from == position || !CanHit(enemy, from, position, unit)) continue;
+                total += unit.CalculateDamage(enemy.GetCalculatedAttack(unit)) * Mathf.Max(1, enemy.GetBaseAttacksCount());
+                break;
+            }
+        }
+        return total;
+    }
+
     // Same range rules as BoardGrid.IsTileInAttackRange, evaluated as if the attacker stood on "from".
     private bool CanAttackFrom(UnitController attacker, GridPosition from, UnitController target)
     {
-        GridPosition to = target.GetGridPosition();
+        return CanHit(attacker, from, target.GetGridPosition(), attacker);
+    }
+
+    // "ignored" is a unit that will have moved away, so its tile doesn't block the line of fire.
+    private bool CanHit(UnitController attacker, GridPosition from, GridPosition to, UnitController ignored)
+    {
         int dx = Mathf.Abs(from.x - to.x);
         int dy = Mathf.Abs(from.y - to.y);
         if (dx <= 1 && dy <= 1) return true;
@@ -394,8 +495,8 @@ public class AIController : MonoBehaviour
         for (int x = from.x + stepX, y = from.y + stepY; x != to.x || y != to.y; x += stepX, y += stepY)
         {
             TileController between = grid.GetTile(x, y);
-            // The attacker's current tile will be empty after it moves.
-            if (between.IsOccupied && between.Unit != attacker) return false;
+            // Tiles of units that will have moved are empty by then.
+            if (between.IsOccupied && between.Unit != attacker && between.Unit != ignored) return false;
         }
         return true;
     }

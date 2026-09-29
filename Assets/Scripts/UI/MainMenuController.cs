@@ -21,6 +21,7 @@ public class MainMenuController : MonoBehaviour
     [SerializeField] private GameObject _optionsPanel;
     [SerializeField] private Toggle _soundToggle;
     [SerializeField] private Toggle _musicToggle;
+    [SerializeField] private TMP_Text _difficultyLabel;
 
     private const float HiddenBarX = -1920.0f;
 
@@ -86,6 +87,7 @@ public class MainMenuController : MonoBehaviour
         _optionsPanel.SetActive(true);
         HideBar();
         _soundToggle.isOn = SoundController.Instance.SoundOn;
+        UpdateDifficultyLabel();
         _musicToggle.isOn = SoundController.Instance.MusicOn;
     }
 
@@ -133,6 +135,19 @@ public class MainMenuController : MonoBehaviour
     {
         _barImage.transform.DOKill();
         _barImage.transform.DOLocalMoveX(HiddenBarX, 1.0f).SetEase(Ease.OutExpo).SetLink(_barImage.gameObject);
+    }
+
+    // Options: cycles the computer opponent's difficulty Easy -> Normal -> Hard.
+    public void CycleDifficulty()
+    {
+        SoundController.Instance.PlayClick();
+        GameSession.Difficulty = (AiDifficulty)(((int)GameSession.Difficulty + 1) % 3);
+        UpdateDifficultyLabel();
+    }
+
+    private void UpdateDifficultyLabel()
+    {
+        if (_difficultyLabel != null) _difficultyLabel.text = "AI: " + GameSession.Difficulty;
     }
 
     public void SoundToggleClicked()
