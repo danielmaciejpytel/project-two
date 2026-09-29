@@ -26,6 +26,8 @@ public class SkillZeal : MonoBehaviour, IAttackModifier, IEnterTile, ISkill
 
     private void OnExecutionEnded(UnitController unit)
     {
+        // A killed unit has no tile anymore but stays subscribed until it is destroyed.
+        if (_myUnitController.IsKilled || _myUnitController.CurrentTile == null) return;
         if(_myUnitController.IsDeployed && unit.GetPlayerId() == _myUnitController.GetPlayerId() && unit.IsKing())
         {
             EnterTileAction(_myUnitController.CurrentTile);
