@@ -29,6 +29,15 @@ public class MainMenuController : MonoBehaviour
 
     private const float HiddenBarX = -1920.0f;
 
+    private void Start()
+    {
+        // Coming back from the unit draft: show the game mode choice right away.
+        if (!GameSession.OpenPlayMenu) return;
+        GameSession.OpenPlayMenu = false;
+        SetMainButtonsActive(false);
+        SetPlayButtonsActive(true);
+    }
+
     private void HideBar()
     {
         _barImage.transform.DOKill();

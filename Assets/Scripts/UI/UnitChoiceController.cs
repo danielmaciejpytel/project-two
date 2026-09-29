@@ -144,6 +144,14 @@ public class UnitChoiceController : MonoBehaviour
         _aiPicking = false;
     }
 
+    // Back: return to the game mode choice in the menu (works for the computer's picks too).
+    public void BackToModeSelection()
+    {
+        StopAllCoroutines();
+        GameSession.OpenPlayMenu = true;
+        _myGameController.QuitPressed();
+    }
+
     public void NextUnitPanel()
     {
         TMP_Text buttonText;

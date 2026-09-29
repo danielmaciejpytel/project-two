@@ -13,6 +13,9 @@ public static class GameSession
     // Player controlled by the computer (1 = Super Hot, 2 = Super Cold), NoAi for hot-seat.
     public static int AiPlayerId { get; set; } = NoAi;
 
+    // Set by Back in the unit draft: the menu opens on the game mode choice instead of the main buttons.
+    public static bool OpenPlayMenu { get; set; }
+
     public static bool IsAiPlayer(int playerId) => AiPlayerId != NoAi && AiPlayerId == playerId;
 
     // Chosen in Options, remembered between sessions.
