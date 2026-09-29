@@ -964,7 +964,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: PLAY VS AI
+  m_text: PLAY VS <color=#D72E66>AI</color>
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 53c8a1715de5b2c40922ad4538045d95, type: 2}
   m_sharedMaterial: {fileID: 5656722732583235556, guid: 53c8a1715de5b2c40922ad4538045d95,
