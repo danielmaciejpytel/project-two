@@ -43,6 +43,7 @@ public class BattleLogController : MonoBehaviour
     private RectTransform _buttonRect;
     private float _expandedHeight;
     private Vector2 _expandedButtonPosition;
+    private float _sideMargin;
 
     private void Awake()
     {
@@ -52,6 +53,7 @@ public class BattleLogController : MonoBehaviour
         _buttonRect = (RectTransform)_toggleButton.transform;
         _expandedHeight = _rect.sizeDelta.y;
         _expandedButtonPosition = _buttonRect.anchoredPosition;
+        _sideMargin = Mathf.Abs(_rect.anchoredPosition.x);
         // The label must catch clicks too, otherwise a button without a visible background can't be pressed.
         _toggleLabel.raycastTarget = true;
         _toggleButton.onClick.AddListener(ToggleBody);
@@ -93,6 +95,16 @@ public class BattleLogController : MonoBehaviour
         SetExpanded(!_body.activeSelf);
     }
 
+    // Follows the other turn controls: left edge for Super Hot, right edge for Super Cold.
+    private void MoveToPlayerSide(int playerId)
+    {
+        float side = playerId == 1 ? 0.0f : 1.0f;
+        _rect.anchorMin = new Vector2(side, _rect.anchorMin.y);
+        _rect.anchorMax = new Vector2(side, _rect.anchorMax.y);
+        _rect.pivot = new Vector2(side, _rect.pivot.y);
+        _rect.anchoredPosition = new Vector2(playerId == 1 ? _sideMargin : -_sideMargin, _rect.anchoredPosition.y);
+    }
+
     // Collapsed: only the "Battle log" title with "Show" on its right.
     private void SetExpanded(bool expanded)
     {
@@ -106,6 +118,7 @@ public class BattleLogController : MonoBehaviour
     {
         _turn++;
         _turnPlayer = playerId;
+        MoveToPlayerSide(playerId);
         _panel.SetActive(true);
         Refresh();
     }
