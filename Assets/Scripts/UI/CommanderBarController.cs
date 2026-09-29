@@ -13,18 +13,15 @@ public class CommanderBarController : MonoBehaviour
 
     private void CreateBar(int newHealth)
     {
-        Image newPoint;
-        Vector3 pointPosition;
+        // Work in the bar's local (canvas) space, so spacing and scale follow the Canvas Scaler.
+        Vector3 firstPoint = transform.InverseTransformPoint(_healthPointPoint.transform.position);
+        float step = playerId == 1 ? 27.0f : -27.0f;
 
         _healthPoints = new List<Image>();
         for (int i = 0; i < newHealth; i++)
         {
-            newPoint = Instantiate(_healthPointPrefab, Vector3.zero, Quaternion.identity).GetComponent<Image>();
-            newPoint.transform.SetParent(transform);
-            pointPosition = _healthPointPoint.transform.position;
-            if (playerId == 1) pointPosition.x += i * 27.0f;
-            else pointPosition.x -= i * 27.0f;
-            newPoint.transform.position = pointPosition;
+            Image newPoint = Instantiate(_healthPointPrefab, transform, false).GetComponent<Image>();
+            newPoint.transform.localPosition = firstPoint + new Vector3(i * step, 0.0f, 0.0f);
             _healthPoints.Add(newPoint);
         }
     }

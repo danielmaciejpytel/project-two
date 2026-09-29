@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class UnitPanelController : MonoBehaviour
 {
     [SerializeField] private Image _myUnitImage;
-    [SerializeField] private Text _myUnitText;
+    [SerializeField] private TMP_Text _myUnitText;
     [SerializeField] private Button _myLeftButton;
     [SerializeField] private Button _myRightButton;
     [SerializeField] private UnitTilePanelController _myInfoPanel;

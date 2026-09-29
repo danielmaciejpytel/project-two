@@ -2,21 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class UnitTilePanelController : MonoBehaviour
 {
-    [SerializeField] Text _name;
-    [SerializeField] Text _description;
-    [SerializeField] Text _hpText;
-    [SerializeField] Text _hp;
-    [SerializeField] Text _moveRangeText;
-    [SerializeField] Text _moveRange;
-    [SerializeField] Text _attackStrengthText;
-    [SerializeField] Text _attackStrength;
-    [SerializeField] Text _skillsText;
-    [SerializeField] Text _skills;
-    [SerializeField] Text _effectsText;
-    [SerializeField] Text _effects;
+    [SerializeField] TMP_Text _name;
+    [SerializeField] TMP_Text _description;
+    [SerializeField] TMP_Text _hpText;
+    [SerializeField] TMP_Text _hp;
+    [SerializeField] TMP_Text _moveRangeText;
+    [SerializeField] TMP_Text _moveRange;
+    [SerializeField] TMP_Text _attackStrengthText;
+    [SerializeField] TMP_Text _attackStrength;
+    [SerializeField] TMP_Text _skillsText;
+    [SerializeField] TMP_Text _skills;
+    [SerializeField] TMP_Text _effectsText;
+    [SerializeField] TMP_Text _effects;
 
     private UnitController _myUnit;
 

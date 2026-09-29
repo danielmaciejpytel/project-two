@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 using DG.Tweening;
 
 public class ButtonUnitController : MonoBehaviour
 {
     [SerializeField] private Image _killedImage;
-    [SerializeField] private Text _unitText;
+    [SerializeField] private TMP_Text _unitText;
     private UnitController _myUnit;
     private Image _myImage;
 

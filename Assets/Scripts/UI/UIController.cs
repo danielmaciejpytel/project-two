@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 using DG.Tweening;
 
 public class UIController : MonoBehaviour
 {
-    [SerializeField] private Text _winnerText;
+    [SerializeField] private TMP_Text _winnerText;
     [SerializeField] private Image _winnerImage;
     [SerializeField] private UnitTilePanelController _myInfoPanel;
     [SerializeField] private PlayerUnitsController _myUnitsPanel;
@@ -14,7 +15,7 @@ public class UIController : MonoBehaviour
     [SerializeField] private Button _abilityButton;
     [SerializeField] private Button _endTurnButton;
     [SerializeField] private Image _timerImage;
-    [SerializeField] private Text _timerText;
+    [SerializeField] private TMP_Text _timerText;
     private int _myTimer;
     private Coroutine _turnTimer;
     private bool _unitDeployedThisTurn;
@@ -88,21 +89,30 @@ public class UIController : MonoBehaviour
         if (playerId == 1)
         {
             _winnerText.text = "Turn: Super Hot";
-            _timerImage.transform.Translate(new Vector3(-1670.0f, 0.0f, 0.0f));
-            _endTurnButton.transform.Translate(new Vector3(-1750.0f, 0.0f, 0.0f));
-            _deployMinionButton.transform.Translate(new Vector3(-1420.0f, 0.0f, 0.0f));
-            _abilityButton.transform.Translate(new Vector3(-1092.0f, 0.0f, 0.0f));
+            MoveActivePlayerControls(-1.0f);
         }
         else
         {
             _winnerText.text = "Turn: Super Cold";
-            _timerImage.transform.Translate(new Vector3(1670.0f, 0.0f, 0.0f));
-            _endTurnButton.transform.Translate(new Vector3(1750.0f, 0.0f, 0.0f));
-            _deployMinionButton.transform.Translate(new Vector3(1420.0f, 0.0f, 0.0f));
-            _abilityButton.transform.Translate(new Vector3(1092.0f, 0.0f, 0.0f));
+            MoveActivePlayerControls(1.0f);
         }
         _winnerImage.transform.DOPunchScale(new Vector3(0.2f, 0.2f, 0.0f), 0.5f).SetLink(_winnerImage.gameObject);
         SoundController.Instance.PlayEndTurn();
+    }
+
+    // Moves the turn controls to the active player's side. Offsets are in canvas units (1920x1080 reference),
+    // so they stay correct at any resolution instead of shifting by raw screen pixels.
+    private void MoveActivePlayerControls(float direction)
+    {
+        ShiftX(_timerImage.rectTransform, 1670.0f * direction);
+        ShiftX((RectTransform)_endTurnButton.transform, 1750.0f * direction);
+        ShiftX((RectTransform)_deployMinionButton.transform, 1420.0f * direction);
+        ShiftX((RectTransform)_abilityButton.transform, 1092.0f * direction);
+    }
+
+    private static void ShiftX(RectTransform target, float offset)
+    {
+        target.anchoredPosition += new Vector2(offset, 0.0f);
     }
 
     public void SelectUnit(UnitController unit)
@@ -112,7 +122,7 @@ public class UIController : MonoBehaviour
         unitAbility = unit.gameObject.GetComponent<IAbility>();
         if (unitAbility != null && unitAbility.IsAvailableThisTurn())
         {
-            _abilityButton.GetComponentInChildren<Text>().text = unitAbility.GetButtonDescription();
+            _abilityButton.GetComponentInChildren<TMP_Text>().text = unitAbility.GetButtonDescription();
             _abilityButton.gameObject.SetActive(true);
         }
         else _abilityButton.gameObject.SetActive(false);

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public readonly struct ChosenUnit : IEquatable<ChosenUnit>
 {
@@ -36,7 +37,7 @@ public class UnitChoiceController : MonoBehaviour
     [SerializeField] private UnitTilePanelController _player2InfoPanel;
     [SerializeField] private Button _nextButton;
     [SerializeField] private GameController _myGameController;
-    [SerializeField] private Text _myDescription;
+    [SerializeField] private TMP_Text _myDescription;
 
     private UnitPanelController _currentUnitPanel;
     private UnitPanelController _currentOpponentUnitPanel;
@@ -113,7 +114,7 @@ public class UnitChoiceController : MonoBehaviour
 
     public void NextUnitPanel()
     {
-        Text buttonText;
+        TMP_Text buttonText;
         UnitController currentUnitController;
         GameObject opposingUnit;
         bool unitValid;
@@ -204,7 +205,7 @@ public class UnitChoiceController : MonoBehaviour
         }
         if (_currentPlayer == 2 && _currentPanelIndex + 1 == _player2Panels.Length)
         {
-            buttonText = _nextButton.GetComponentInChildren<Text>();
+            buttonText = _nextButton.GetComponentInChildren<TMP_Text>();
             buttonText.text = "Done";
         }
         _currentUnitPanel.EnableMe();

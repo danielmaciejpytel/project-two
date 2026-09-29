@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 using UnityEngine.SceneManagement;
 using DG.Tweening;
 
@@ -15,10 +16,20 @@ public class MainMenuController : MonoBehaviour
     [SerializeField] private Button _backButton;
     [SerializeField] private Image _barImage;
     [SerializeField] private Image _creditsImage;
-    [SerializeField] private Text _instructionText;
+    [SerializeField] private TMP_Text _instructionText;
     [SerializeField] private GameObject _optionsPanel;
     [SerializeField] private Toggle _soundToggle;
     [SerializeField] private Toggle _musicToggle;
+
+    private const float HiddenBarX = -1920.0f;
+
+    private void HideBar()
+    {
+        _barImage.transform.DOKill();
+        Vector3 localPosition = _barImage.transform.localPosition;
+        localPosition.x = HiddenBarX;
+        _barImage.transform.localPosition = localPosition;
+    }
 
     public void StartGame()
     {
@@ -36,7 +47,7 @@ public class MainMenuController : MonoBehaviour
         _exitButton.gameObject.SetActive(false);
         _backButton.gameObject.SetActive(true);
         _creditsImage.gameObject.SetActive(true);
-        _barImage.transform.position = new Vector3(-1920.0f, 0.0f, 0.0f);
+        HideBar();
     }
 
     public void HideCredits()
@@ -50,7 +61,7 @@ public class MainMenuController : MonoBehaviour
         _backButton.gameObject.SetActive(false);
         _creditsImage.gameObject.SetActive(false);
         _instructionText.gameObject.SetActive(false);
-        _barImage.transform.position = new Vector3(-1920.0f, 0.0f, 0.0f);
+        HideBar();
     }
 
     public void DisplayOptions()
@@ -62,7 +73,7 @@ public class MainMenuController : MonoBehaviour
         _creditsButton.gameObject.SetActive(false);
         _exitButton.gameObject.SetActive(false);
         _optionsPanel.SetActive(true);
-        _barImage.transform.position = new Vector3(-1920.0f, 0.0f, 0.0f);
+        HideBar();
         _soundToggle.isOn = SoundController.Instance.SoundOn;
         _musicToggle.isOn = SoundController.Instance.MusicOn;
     }
@@ -76,7 +87,7 @@ public class MainMenuController : MonoBehaviour
         _creditsButton.gameObject.SetActive(true);
         _exitButton.gameObject.SetActive(true);
         _optionsPanel.SetActive(false);
-        _barImage.transform.position = new Vector3(-1920.0f, 0.0f, 0.0f);
+        HideBar();
     }
 
     public void DisplayInstructions()
@@ -89,7 +100,7 @@ public class MainMenuController : MonoBehaviour
         _exitButton.gameObject.SetActive(false);
         _backButton.gameObject.SetActive(true);
         _instructionText.gameObject.SetActive(true);
-        _barImage.transform.position = new Vector3(-1920.0f, 0.0f, 0.0f);
+        HideBar();
     }
 
     public void QuitGame()
@@ -105,7 +116,11 @@ public class MainMenuController : MonoBehaviour
     public void OnMybuttonEnter(Button myButton)
     {
         SoundController.Instance.PlayHover();
-        _barImage.transform.position = new Vector3(-1920.0f, myButton.transform.position.y, 0.0f);
+        // Follow the hovered button vertically, start off-screen on the left (canvas units).
+        Vector3 barPosition = _barImage.transform.position;
+        barPosition.y = myButton.transform.position.y;
+        _barImage.transform.position = barPosition;
+        HideBar();
         // Only stop the highlight bar tween, KillAll also stopped every other running tween in the menu.
         _barImage.transform.DOKill();
         _barImage.transform.DOLocalMoveX(0.0f, 1.0f).SetEase(Ease.OutExpo).SetLink(_barImage.gameObject);
@@ -114,7 +129,7 @@ public class MainMenuController : MonoBehaviour
     public void OnMybuttonExit(Button myButton)
     {
         _barImage.transform.DOKill();
-        _barImage.transform.DOLocalMoveX(-1920.0f, 1.0f).SetEase(Ease.OutExpo).SetLink(_barImage.gameObject);
+        _barImage.transform.DOLocalMoveX(HiddenBarX, 1.0f).SetEase(Ease.OutExpo).SetLink(_barImage.gameObject);
     }
 
     public void SoundToggleClicked()
