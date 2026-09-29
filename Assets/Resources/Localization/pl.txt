@@ -5,10 +5,10 @@ PLAYER VS PLAYER	GRACZ KONTRA GRACZ
 PLAY VS <color=#D72E66>AI</color>	GRACZ KONTRA <color=#D72E66>AI</color>
 INSTRUCTIONS	INSTRUKCJA
 OPTIONS	OPCJE
-CREDITS	TWÓRCY
+CREDITS	AUTORZY
 EXIT	WYJŚCIE
-BACK	POWRÓT
-Back	Powrót
+BACK	WSTECZ
+Back	Wstecz
 Next	Dalej
 Done	Gotowe
 Effects	Efekty
@@ -90,7 +90,7 @@ Infiltrator	Infiltrator
 Operative	Agent
 Oppressor	Ciemiężca
 Protector	Obrońca
-Repeater	Powtarzacz
+Repeater	Replikator
 Stinger	Żądłak
 Striker	Szermierz
 Tormentor	Oprawca
@@ -110,7 +110,7 @@ Confuser (selected enemy has one attack fewer until your next turn, every other 
 Caller [can call Doppelgangers]	Przywoływacz [może przywoływać sobowtóry]
 TOUGH [reduce received damage by 1]	TWARDY [zmniejsza otrzymywane obrażenia o 1]
 GUNMAN [range of attack extended by 2 tiles in a straight line]	STRZELEC [zasięg ataku większy o 2 pola w linii prostej]
-BINARY [can attack twice in turn]	PODWÓJNY [może atakować dwa razy w turze]
+BINARY [can attack twice in turn]	DWUKROTNY [może atakować dwa razy w turze]
 SWIFT [can move in the turn it was called]	SZYBKI [może się ruszać w turze, w której został przyzwany]
 Impaired (+1 damage when attacked)	Osłabiony (+1 obrażeń przy ataku)
 Provoked [cannot move and can only attack Provoker]	Sprowokowany [nie może się ruszać i może atakować tylko prowokatora]
