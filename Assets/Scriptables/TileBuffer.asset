@@ -16,5 +16,5 @@ MonoBehaviour:
   tileSprite: {fileID: 21300000, guid: 60783264a69ce45488081c3705d6c92a, type: 3}
   tileDesignerSprite: {fileID: 21300000, guid: 2297b1306d27cdb4fa6b3ffc5c47eebf, type: 3}
   isWalkable: 1
-  tileName: Reinforcement Field
+  tileName: Reinforcement
   tileDescription: +1 Attack Strength

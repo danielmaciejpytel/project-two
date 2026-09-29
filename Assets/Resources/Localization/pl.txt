@@ -74,9 +74,9 @@ Cover	Osłona
 Dead Zone	Strefa śmierci
 High Ground	Wzniesienie
 Obstacle	Przeszkoda
-Reinforcement Field	Pole wzmocnienia
-Restriction Area	Strefa ograniczenia
-Safe Zone	Bezpieczna strefa
+Reinforcement	Wzmocnienie
+Restriction Area	Ograniczenie
+Safe Zone	Strefa ochrony
 +1 Attack Range	+1 do zasięgu ataku
 +1 Attack Strength	+1 do siły ataku
 +1 HP/Turn	+1 HP na turę

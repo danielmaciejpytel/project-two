@@ -597,7 +597,7 @@ public class AIController : MonoBehaviour
             case "Dead Zone": return -15.0f;
             case "Safe Zone": return 5.0f;
             case "Cover": return 4.0f;
-            case "Reinforcement Field": return 4.0f;
+            case "Reinforcement": return 4.0f;
             case "High Ground": return isRanged ? 6.0f : 2.0f;
             case "Restriction Area": return -2.0f;
             default: return 0.0f;
