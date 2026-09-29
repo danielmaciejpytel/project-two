@@ -3,6 +3,7 @@
 **English** | [Polski](README.pl.md)
 
 An updated and improved version of the project initially created by Team 13 during Game Dev School in 2021.
+All updates since the initial release are by Daniel Pytel.
 
 A turn-based tactics duel on an isometric board. Two Superiors, Super Hot and Super Cold, each
 lead a team of Doppelgangers. Before the battle the players draft their units in pairs. During the
@@ -22,7 +23,8 @@ Two players can play on one screen, or one player can face the computer.
 
 ## What changed since the initial release
 
-The initial release was the 2021 Game Dev School prototype for two players on one screen, built in Unity 2019.4. Since then the project has received:
+The initial release was the 2021 Game Dev School prototype for two players on one screen, built in Unity 2019.4
+by the whole Team 13. Since then Daniel Pytel has added:
 
 - **Unity 6.** The project runs on Unity 6000.3.23f1. Input is handled only by the Input System
   package, and mouse and touch are both supported. The unused GitHub for Unity plugin is gone.
@@ -75,6 +77,10 @@ The initial release was the 2021 Game Dev School prototype for two players on on
 
 ## Credits
 
+Initial release (Team 13, Game Dev School 2021):
+
 - Code: Karol Ławicki
 - Art: Daniel Pytel
 - Design: Matt Matuszewski, Mateusz Niziołek
+
+Updated version: Daniel Pytel
