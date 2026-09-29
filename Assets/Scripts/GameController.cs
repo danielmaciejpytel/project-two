@@ -5,9 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using DG.Tweening;
-#if ENABLE_INPUT_SYSTEM
 using UnityEngine.InputSystem;
-#endif
 
 public readonly struct GridPosition : IEquatable<GridPosition>
 {
@@ -62,6 +60,7 @@ public class GameController : MonoBehaviour
     private readonly List<GameObject> _unitPrefabsPlayer2 = new List<GameObject>();
     private readonly List<UnitController> _units = new List<UnitController>();
     private readonly RaycastHit2D[] _clickHits = new RaycastHit2D[16];
+    private IHoverable _hovered;
     private IGameState _myGameState;
     private BoardGrid _myGrid;
     private Camera _myCamera;
@@ -143,10 +142,17 @@ public class GameController : MonoBehaviour
 
     private void Update()
     {
-        if (!TryGetClickPosition(out Vector2 screenPosition)) return;
-        // Clicks on HUD buttons must not also select tiles or units lying under them.
-        if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject()) return;
+        bool hasPointer = TryGetPointer(out Vector2 screenPosition, out bool pressed);
+        // HUD buttons must not also hover or select tiles and units lying under them.
+        bool overUI = EventSystem.current != null && EventSystem.current.IsPointerOverGameObject();
+        GameObject target = hasPointer && !overUI ? GetTopObjectAt(screenPosition) : null;
 
+        UpdateHover(target);
+        if (pressed && target != null && target.TryGetComponent(out IClickable clickedObject)) clickedObject.Click();
+    }
+
+    private GameObject GetTopObjectAt(Vector2 screenPosition)
+    {
         Vector2 worldPosition = _myCamera.ScreenToWorldPoint(screenPosition);
         int hitCount = Physics2D.Raycast(worldPosition, Vector2.zero, ContactFilter2D.noFilter, _clickHits, 0.01f);
         SpriteRenderer topRenderer = null;
@@ -155,32 +161,39 @@ public class GameController : MonoBehaviour
             if (!_clickHits[i].collider.TryGetComponent(out SpriteRenderer currentRenderer)) continue;
             if (topRenderer == null || IsDrawnAbove(currentRenderer, topRenderer)) topRenderer = currentRenderer;
         }
-        if (topRenderer != null && topRenderer.TryGetComponent(out IClickable clickedObject)) clickedObject.Click();
+        return topRenderer != null ? topRenderer.gameObject : null;
     }
 
-    private static bool TryGetClickPosition(out Vector2 screenPosition)
+    private void UpdateHover(GameObject target)
     {
-#if ENABLE_INPUT_SYSTEM
-        Mouse mouse = Mouse.current;
-        if (mouse != null && mouse.leftButton.wasPressedThisFrame)
-        {
-            screenPosition = mouse.position.ReadValue();
-            return true;
-        }
+        IHoverable newHovered = null;
+        if (target != null) target.TryGetComponent(out newHovered);
+        if (ReferenceEquals(newHovered, _hovered)) return;
+
+        // A unit that died while hovered is already disabled and must not receive the exit.
+        if (_hovered is Component oldComponent && oldComponent != null && oldComponent.gameObject.activeInHierarchy) _hovered.PointerExit();
+        _hovered = newHovered;
+        _hovered?.PointerEnter();
+    }
+
+    private static bool TryGetPointer(out Vector2 screenPosition, out bool pressed)
+    {
         Touchscreen touch = Touchscreen.current;
-        if (touch != null && touch.primaryTouch.press.wasPressedThisFrame)
+        if (touch != null && touch.primaryTouch.press.isPressed)
         {
             screenPosition = touch.primaryTouch.position.ReadValue();
+            pressed = touch.primaryTouch.press.wasPressedThisFrame;
             return true;
         }
-#else
-        if (Input.GetMouseButtonDown(0))
+        Mouse mouse = Mouse.current;
+        if (mouse != null)
         {
-            screenPosition = Input.mousePosition;
+            screenPosition = mouse.position.ReadValue();
+            pressed = mouse.leftButton.wasPressedThisFrame;
             return true;
         }
-#endif
         screenPosition = default;
+        pressed = false;
         return false;
     }
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(SpriteRenderer))]
-public class UnitController : MonoBehaviour, IClickable, IEndturnable
+public class UnitController : MonoBehaviour, IClickable, IHoverable, IEndturnable
 {
     [SerializeField] private Sprite unitSprite;
     [SerializeField] private Sprite _unitPortrait;
@@ -46,12 +46,12 @@ public class UnitController : MonoBehaviour, IClickable, IEndturnable
         if(!_isDesignerMode) _mySpriteRenderer.sprite = unitSprite;
     }
 
-    private void OnMouseEnter()
+    public void PointerEnter()
     {
         if(IsDeployed) EventManager.Instance.UnitHovered(this);
     }
 
-    private void OnMouseExit()
+    public void PointerExit()
     {
         if (IsDeployed) EventManager.Instance.UnitUnhovered(this);
     }

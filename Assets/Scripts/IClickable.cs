@@ -6,3 +6,10 @@ public interface IClickable
 {
     void Click();
 }
+
+// Replaces OnMouseEnter/OnMouseExit, which depend on the legacy Input Manager.
+public interface IHoverable
+{
+    void PointerEnter();
+    void PointerExit();
+}

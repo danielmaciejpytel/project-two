@@ -4,7 +4,7 @@ using UnityEngine;
 using DG.Tweening;
 
 [RequireComponent(typeof(SpriteRenderer))]
-public class TileController : MonoBehaviour, IClickable
+public class TileController : MonoBehaviour, IClickable, IHoverable
 {
     [SerializeField] private SpriteRenderer _overlayColorSpriteRenderer;
     [SerializeField] private SpriteRenderer _overlayMarkerSpriteRenderer;
@@ -42,13 +42,13 @@ public class TileController : MonoBehaviour, IClickable
     private PolygonCollider2D _myCollider;
     private BoxCollider2D _myDesignerCollider;
 
-    private void OnMouseEnter()
+    public void PointerEnter()
     {
         if(IsOccupied) EventManager.Instance.UnitHovered(Unit);
         else if (_tile.isWalkable && !IsOccupied) EventManager.Instance.TileHovered(this);
     }
 
-    private void OnMouseExit()
+    public void PointerExit()
     {
         if (IsOccupied) EventManager.Instance.UnitUnhovered(Unit);
         else
