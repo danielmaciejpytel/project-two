@@ -26,7 +26,7 @@ public class UnitTilePanelController : MonoBehaviour
     void Awake()
     {
         // Long names (e.g. "Restriction Area") must stay on one line, otherwise they overlap the description below.
-        // PixelText on the name shrinks it by whole pixels when it doesn't fit.
+        // Its TextMeshPro auto-size shrinks it when it doesn't fit.
         _name.textWrappingMode = TextWrappingModes.NoWrap;
         _hpText.enabled = false;
         _moveRangeText.enabled = false;
