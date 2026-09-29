@@ -24,6 +24,11 @@ public class UnitTilePanelController : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
+        // Long names (e.g. "Restriction Area") must stay on one line, otherwise they overlap the description below.
+        _name.textWrappingMode = TextWrappingModes.NoWrap;
+        _name.enableAutoSizing = true;
+        _name.fontSizeMax = _name.fontSize;
+        _name.fontSizeMin = _name.fontSize * 0.6f;
         _hpText.enabled = false;
         _moveRangeText.enabled = false;
         _attackStrengthText.enabled = false;

@@ -55,6 +55,7 @@ public class BattleLogController : MonoBehaviour
         // The label must catch clicks too, otherwise a button without a visible background can't be pressed.
         _toggleLabel.raycastTarget = true;
         _toggleButton.onClick.AddListener(ToggleBody);
+        SetExpanded(false);
     }
 
     private void Start()

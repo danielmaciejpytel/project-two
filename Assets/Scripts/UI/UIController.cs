@@ -16,6 +16,8 @@ public class UIController : MonoBehaviour
     [SerializeField] private Button _endTurnButton;
     [SerializeField] private Image _timerImage;
     [SerializeField] private TMP_Text _timerText;
+    [SerializeField] private Color _superHotColor = new Color32(0xFF, 0x1B, 0x47, 0xFF);
+    [SerializeField] private Color _superColdColor = new Color32(0x14, 0xC8, 0xD8, 0xFF);
     private int _myTimer;
     private Coroutine _turnTimer;
     private bool _unitDeployedThisTurn;
@@ -27,7 +29,7 @@ public class UIController : MonoBehaviour
         _abilityButton.gameObject.SetActive(false);
         _myTimer = 0;
         _unitDeployedThisTurn = false;
-        _winnerText.text = "Turn: Super Cold";
+        _winnerText.text = "Turn: " + PlayerLabel(2);
     }
 
     private IEnumerator TurnTimer(int timeLimit, GameController myGameController)
@@ -52,8 +54,7 @@ public class UIController : MonoBehaviour
         if (_turnTimer != null) StopCoroutine(_turnTimer);
         _turnTimer = null;
         _winnerImage.transform.DOPunchScale(new Vector3(0.2f, 0.2f, 0.0f), 0.5f).SetLink(_winnerImage.gameObject);
-        if (winnerId == 1) _winnerText.text = "Winner: Super Hot";
-        else _winnerText.text = "Winner: Super Cold";
+        _winnerText.text = "Winner: " + PlayerLabel(winnerId);
     }
 
     public void InitializeUnitsPanel(List<UnitController> units, int startingPlayer, GameController myGameController, int timeLimit)
@@ -88,12 +89,12 @@ public class UIController : MonoBehaviour
         _abilityButton.gameObject.SetActive(false);
         if (playerId == 1)
         {
-            _winnerText.text = "Turn: Super Hot";
+            _winnerText.text = "Turn: " + PlayerLabel(1);
             MoveActivePlayerControls(-1.0f);
         }
         else
         {
-            _winnerText.text = "Turn: Super Cold";
+            _winnerText.text = "Turn: " + PlayerLabel(2);
             MoveActivePlayerControls(1.0f);
         }
         _winnerImage.transform.DOPunchScale(new Vector3(0.2f, 0.2f, 0.0f), 0.5f).SetLink(_winnerImage.gameObject);
@@ -113,6 +114,14 @@ public class UIController : MonoBehaviour
     private static void ShiftX(RectTransform target, float offset)
     {
         target.anchoredPosition += new Vector2(offset, 0.0f);
+    }
+
+    // Player name in the team color, e.g. "Super Cold" in cyan.
+    private string PlayerLabel(int playerId)
+    {
+        Color color = playerId == 1 ? _superHotColor : _superColdColor;
+        string name = playerId == 1 ? "Super Hot" : "Super Cold";
+        return $"<color=#{ColorUtility.ToHtmlStringRGB(color)}>{name}</color>";
     }
 
     public void SelectUnit(UnitController unit)
