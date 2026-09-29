@@ -41,7 +41,7 @@ przygotowanym przez cały Team 13. Od tego czasu Daniel Pytel wprowadził:
   z ostrą pikselową czcionką o stałych rozmiarach. HUD ma napis tury w kolorze drużyny
   i zwijany dziennik bitwy po stronie aktywnego gracza. Menu ma nową instrukcję, a panel
   informacji pokazuje maksymalne zdrowie razem z bonusami.
-- **Przeciwnik komputerowy.** Nowy tryb PLAY VS AI pozwala poprowadzić Super Hot przeciwko Super
+- **Przeciwnik komputerowy.** Nowy tryb PLAY VS AI (w menu PLAY) pozwala poprowadzić Super Hot przeciwko Super
   Cold sterowanemu przez komputer. Komputer wybiera jednostki, przyzywa posiłki, porusza się,
   atakuje i używa Confuse oraz Teleport. W opcjach można wybrać trzy poziomy trudności:
   - **Easy** gra niezdarnie i częściowo losowo.
@@ -72,8 +72,8 @@ przygotowanym przez cały Team 13. Od tego czasu Daniel Pytel wprowadził:
 
 1. Otwórz projekt w Unity 6000.3.23f1.
 2. Otwórz `Assets/Scenes/MenuScene.unity` i naciśnij Play.
-3. Wybierz **PLAY**, aby zagrać we dwoje na jednym ekranie, albo **PLAY VS AI**, aby zagrać
-   z komputerem. Poziom trudności AI zmienisz w **Options**.
+3. Wybierz **PLAY**, a potem **PLAYER VS PLAYER**, aby zagrać we dwoje na jednym ekranie, albo
+   **PLAY VS AI**, aby zagrać z komputerem. Poziom trudności AI zmienisz w **Options**.
 
 ## Twórcy
 

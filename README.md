@@ -41,7 +41,7 @@ by the whole Team 13. Since then Daniel Pytel has added:
   pixel font at fixed sizes. The HUD has a team-coloured turn label and a collapsible battle log
   on the active player's side. The menu has new instructions, and the info panel shows maximum
   health including bonuses.
-- **Computer opponent.** The new PLAY VS AI mode lets you lead Super Hot against a computer-led
+- **Computer opponent.** The new PLAY VS AI mode (under PLAY) lets you lead Super Hot against a computer-led
   Super Cold. The computer drafts its units, calls reinforcements, moves, attacks and uses
   Confuse and Teleport. Three difficulty levels can be chosen in Options:
   - **Easy** makes clumsy, partly random moves.
@@ -72,8 +72,8 @@ by the whole Team 13. Since then Daniel Pytel has added:
 
 1. Open the project in Unity 6000.3.23f1.
 2. Open `Assets/Scenes/MenuScene.unity` and press Play.
-3. Choose **PLAY** for two players on one screen or **PLAY VS AI** to play against the computer.
-   The AI difficulty can be changed in **Options**.
+3. Choose **PLAY**, then **PLAYER VS PLAYER** for two players on one screen or **PLAY VS AI**
+   to play against the computer. The AI difficulty can be changed in **Options**.
 
 ## Credits
 

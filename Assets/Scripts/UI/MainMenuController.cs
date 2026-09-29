@@ -9,7 +9,11 @@ using DG.Tweening;
 public class MainMenuController : MonoBehaviour
 {
     [SerializeField] private Button _playButton;
+    [Header("Play submenu")]
+    [SerializeField] private Button _playerVsPlayerButton;
     [SerializeField] private Button _playVsAiButton;
+    [SerializeField] private Button _playBackButton;
+    [Header("Main menu")]
     [SerializeField] private Button _instructionsButton;
     [SerializeField] private Button _optionsButton;
     [SerializeField] private Button _creditsButton;
@@ -36,11 +40,34 @@ public class MainMenuController : MonoBehaviour
     private void SetMainButtonsActive(bool active)
     {
         _playButton.gameObject.SetActive(active);
-        if (_playVsAiButton != null) _playVsAiButton.gameObject.SetActive(active);
         _instructionsButton.gameObject.SetActive(active);
         _optionsButton.gameObject.SetActive(active);
         _creditsButton.gameObject.SetActive(active);
         _exitButton.gameObject.SetActive(active);
+    }
+
+    private void SetPlayButtonsActive(bool active)
+    {
+        _playerVsPlayerButton.gameObject.SetActive(active);
+        _playVsAiButton.gameObject.SetActive(active);
+        _playBackButton.gameObject.SetActive(active);
+    }
+
+    // PLAY opens the choice between Player vs Player and Play vs AI in place of the main buttons.
+    public void DisplayPlayMenu()
+    {
+        SoundController.Instance.PlayClick();
+        SetMainButtonsActive(false);
+        SetPlayButtonsActive(true);
+        HideBar();
+    }
+
+    public void HidePlayMenu()
+    {
+        SoundController.Instance.PlayClick();
+        SetPlayButtonsActive(false);
+        SetMainButtonsActive(true);
+        HideBar();
     }
 
     public void StartGame()
