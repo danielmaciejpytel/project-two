@@ -19,6 +19,10 @@ public class UnitTilePanelController : MonoBehaviour
     [SerializeField] TMP_Text _effectsText;
     [SerializeField] TMP_Text _effects;
 
+    // Space between the tags text and the "Effects" heading, and to the panel's bottom edge.
+    private const float SectionGap = 10.0f;
+    private const float BottomMargin = 6.0f;
+
     private UnitController _myUnit;
     private bool _hasContent;
 
@@ -84,43 +88,43 @@ public class UnitTilePanelController : MonoBehaviour
         foreach(ISkill skill in unitSkills)
         {
             if (counter > 0) description += "\n\n";
-            description += Loc.T(skill.GetDescription());
+            description += FitBracket(Loc.T(skill.GetDescription()), _skills);
             counter++;
         }
         if(unitAbility != null)
         {
             if (counter > 0) description += "\n\n";
-            description += Loc.T(unitAbility.GetDescription());
+            description += FitBracket(Loc.T(unitAbility.GetDescription()), _skills);
             counter++;
         }
         if (myUnit.IsKing())
         {
             if (counter > 0) description += "\n\n";
-            description += Loc.T("Caller [can call Doppelgangers]");
+            description += FitBracket(Loc.T("Caller [can call Doppelgangers]"), _skills);
             counter++;
         }
         if (myUnit.GetArmor() > 0)
         {
             if (counter > 0) description += "\n\n";
-            description += Loc.T("TOUGH [reduce received damage by 1]");
+            description += FitBracket(Loc.T("TOUGH [reduce received damage by 1]"), _skills);
             counter++;
         }
         if (myUnit.GetAttackRange() > 1)
         {
             if (counter > 0) description += "\n\n";
-            description += Loc.T("GUNMAN [range of attack extended by 2 tiles in a straight line]");
+            description += FitBracket(Loc.T("GUNMAN [range of attack extended by 2 tiles in a straight line]"), _skills);
             counter++;
         }
         if (myUnit.GetBaseAttacksCount() > 1)
         {
             if (counter > 0) description += "\n\n";
-            description += Loc.T("BINARY [can attack twice in turn]");
+            description += FitBracket(Loc.T("BINARY [can attack twice in turn]"), _skills);
             counter++;
         }
         if (!myUnit.SummoningSickness())
         {
             if (counter > 0) description += "\n\n";
-            description += Loc.T("SWIFT [can move in the turn it was called]");
+            description += FitBracket(Loc.T("SWIFT [can move in the turn it was called]"), _skills);
             counter++;
         }
         _skills.text = description;
@@ -130,10 +134,57 @@ public class UnitTilePanelController : MonoBehaviour
         foreach (IEffect effect in unitEffects)
         {
             if(counter > 0) description += "\n\n";
-            description += Loc.T(effect.GetDescription());
+            description += FitBracket(Loc.T(effect.GetDescription()), _effects);
             counter++;
         }
         if (_effectsText != null) _effects.text = description;
+        LayoutEffects();
+    }
+
+    // An entry like "NAME [what it does]" that doesn't fit on one line gets the bracket on a line of
+    // its own, instead of being split in the middle of the bracket.
+    private static string FitBracket(string text, TMP_Text target)
+    {
+        int bracket = text.IndexOfAny(new[] { '[', '(' });
+        if (bracket <= 0) return text;
+        float lineWidth = target.rectTransform.rect.width;
+        if (target.GetPreferredValues(text, 100000.0f, 100000.0f).x <= lineWidth) return text;
+        return text.Substring(0, bracket).TrimEnd() + "\n" + text.Substring(bracket);
+    }
+
+    // The "Effects" heading and its text follow the tags text, however long it is. When both together
+    // don't fit in the panel, the blank lines between entries are dropped, and if that isn't enough the
+    // effects move up so nothing reaches below the panel's background.
+    private void LayoutEffects()
+    {
+        if (_effectsText == null) return;
+        RectTransform skills = _skills.rectTransform;
+        RectTransform heading = _effectsText.rectTransform;
+        RectTransform effects = _effects.rectTransform;
+        RectTransform panel = (RectTransform)transform;
+
+        float skillsTop = skills.anchoredPosition.y + (1.0f - skills.pivot.y) * skills.rect.height;
+        float lowest = -panel.rect.height * panel.pivot.y + BottomMargin;
+        float headingTop, effectsTop, effectsBottom;
+        for (int attempt = 0; ; attempt++)
+        {
+            _skills.ForceMeshUpdate();
+            _effects.ForceMeshUpdate();
+            headingTop = skillsTop - _skills.preferredHeight - SectionGap;
+            effectsTop = headingTop - heading.rect.height;
+            effectsBottom = effectsTop - _effects.preferredHeight;
+            if (effectsBottom >= lowest || attempt > 0) break;
+            _skills.text = _skills.text.Replace("\n\n", "\n");
+            _effects.text = _effects.text.Replace("\n\n", "\n");
+        }
+        if (effectsBottom < lowest)
+        {
+            float shift = lowest - effectsBottom;
+            headingTop += shift;
+            effectsTop += shift;
+        }
+        heading.anchoredPosition = new Vector2(heading.anchoredPosition.x, headingTop - (1.0f - heading.pivot.y) * heading.rect.height);
+        effects.anchoredPosition = new Vector2(effects.anchoredPosition.x, effectsTop - (1.0f - effects.pivot.y) * effects.rect.height);
     }
 
     public void ClearDisplay()
