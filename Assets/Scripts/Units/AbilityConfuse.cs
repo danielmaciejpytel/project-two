@@ -8,8 +8,11 @@ public class AbilityConfuse : MonoBehaviour, IAbility, IEndturnable
     [SerializeField] string _myDescription;
     [SerializeField] string _myEffectDescription;
     [SerializeField] private AudioClip _mySound;
+    [Tooltip("Own turns until Confuse can be used again (2 = every other turn).")]
+    [SerializeField, Min(1)] private int _cooldownTurns = 2;
     private UnitController _myUnit;
     private bool _isAvailableThisTurn;
+    private int _turnsUntilReady;
 
     // Start is called before the first frame update
     void Start()
@@ -65,6 +68,7 @@ public class AbilityConfuse : MonoBehaviour, IAbility, IEndturnable
             myEffectConfused.InitializeEffect(_myEffectDescription);
             EventManager.Instance.AbilityUsed(_myUnit, "Confuse", clickedUnit);
             _isAvailableThisTurn = false;
+            _turnsUntilReady = _cooldownTurns;
             myGrid.HideHighlight();
             if (_myUnit.HasMoved) return new AttackSelectedState(_myUnit, myGrid, ui);
             else return new UnitSelectedState(_myUnit, myGrid, ui);
@@ -103,6 +107,9 @@ public class AbilityConfuse : MonoBehaviour, IAbility, IEndturnable
 
     public void EndTurnAction(int playerId)
     {
-        if (playerId != _myUnit.GetPlayerId()) _isAvailableThisTurn = true;
+        // The opponent ended its turn, so ours starts: count the cooldown down.
+        if (playerId == _myUnit.GetPlayerId()) return;
+        if (_turnsUntilReady > 0) _turnsUntilReady--;
+        _isAvailableThisTurn = _turnsUntilReady == 0;
     }
 }

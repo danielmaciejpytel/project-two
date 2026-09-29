@@ -60,6 +60,9 @@ public class UIController : MonoBehaviour
     public void InitializeUnitsPanel(List<UnitController> units, int startingPlayer, GameController myGameController, int timeLimit)
     {
         _myUnitsPanel.InitializePanel(units, startingPlayer);
+        // The scene is laid out for Super Cold; move the turn controls if Super Hot starts.
+        MoveActivePlayerControls(startingPlayer == 1 ? -1.0f : 1.0f);
+        _winnerText.text = "Turn: " + PlayerLabel(startingPlayer);
         if (_turnTimer != null) StopCoroutine(_turnTimer);
         _turnTimer = StartCoroutine(TurnTimer(timeLimit, myGameController));
     }

@@ -51,8 +51,10 @@ public class GameController : MonoBehaviour
     [SerializeField] private float _tileHeight;
     [Tooltip("Every new tile should be added here.")]
     [SerializeField] private GameObject[] _tilePrefabs;
-    [Tooltip("Starting player Id.")]
+    [Tooltip("Starting player Id (used when the start is not random).")]
     [SerializeField] private int _startingPlayer;
+    [Tooltip("Pick the starting player at random, so neither side always gets the first move.")]
+    [SerializeField] private bool _randomStartingPlayer = true;
     [Tooltip("Turn limit in seconds")]
     [SerializeField] private int _timeLimit;
 
@@ -319,6 +321,7 @@ public class GameController : MonoBehaviour
             return;
         }
         _myGrid = new BoardGrid(File.ReadAllLines(configFilePath), _tilePrefabs, _designerTileSize, _tileWidth, _tileHeight);
+        if (_randomStartingPlayer) _startingPlayer = UnityEngine.Random.Range(1, 3);
         _myGameState = new BeginTurnState(_startingPlayer);
         SpawnUnits(_unitPrefabsPlayer1, _myGrid.GetTile(0, _myGrid.GetBoardHeight() - 1));
         SpawnUnits(_unitPrefabsPlayer2, _myGrid.GetTile(_myGrid.GetBoardWidth() - 1, 0));

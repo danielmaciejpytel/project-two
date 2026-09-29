@@ -19,6 +19,10 @@ public class AIController : MonoBehaviour
     private const float ExecutionTimeout = 10.0f;
     // Easy plays a random move or target this often.
     private const float EasyMistakeChance = 0.5f;
+    // Own turns in a row without any damage before the AI stops holding its positions and pushes forward.
+    private const int StallTurnsToPush = 2;
+    // ...and before even the commander joins the push.
+    private const int StallTurnsToPushCommander = 5;
 
     private GameController _game;
     private int _playerId;
@@ -26,6 +30,13 @@ public class AIController : MonoBehaviour
     private AiDifficulty _difficulty = AiDifficulty.Normal;
     // Hard: tiles every enemy can stand on next turn.
     private Dictionary<UnitController, List<GridPosition>> _enemyReach;
+    // Walking distance (around obstacles) from every tile to the enemy commander.
+    private int[,] _distanceToEnemyCommander;
+    // Stalemate detection: board state at the start of the previous turn and how many turns it didn't change.
+    private int _lastBoardSnapshot = -1;
+    private int _stalledTurns;
+
+    private bool IsPushing => _stalledTurns >= StallTurnsToPush;
 
     // Abilities: now and then on Normal, whenever useful on Hard, never on Easy.
     private float AbilityChance => _difficulty == AiDifficulty.Hard ? 1.0f : _difficulty == AiDifficulty.Normal ? 0.35f : 0.0f;
@@ -55,6 +66,7 @@ public class AIController : MonoBehaviour
     private IEnumerator PlayTurn()
     {
         yield return new WaitForSeconds(ThinkDelay);
+        UpdateStalemate();
         // Easy forgets to call reinforcements half of the time.
         if (IsMyTurn && (_difficulty != AiDifficulty.Easy || Random.value < 0.5f)) yield return TryDeploy();
         if (IsMyTurn) yield return TryUseAbilities();
@@ -64,6 +76,7 @@ public class AIController : MonoBehaviour
             if (!IsMyTurn) break;
             if (!unit.IsDeployed || unit.IsKilled || !unit.IsAvailable) continue;
             if (_difficulty == AiDifficulty.Hard) UpdateEnemyReach();
+            UpdateDistanceToEnemyCommander();
             yield return PlayUnit(unit);
         }
 
@@ -168,8 +181,9 @@ public class AIController : MonoBehaviour
         BoardGrid grid = _game.GetGrid();
 
         // The commander losing means losing the game, so it holds its position
-        // (on Hard it steps out of danger when it can).
-        if ((!unit.IsKing() || _difficulty == AiDifficulty.Hard) && !unit.HasMoved)
+        // (on Hard it steps out of danger when it can) unless a long stalemate needs it in the fight.
+        bool commanderMoves = _difficulty == AiDifficulty.Hard || _stalledTurns >= StallTurnsToPushCommander;
+        if ((!unit.IsKing() || commanderMoves) && !unit.HasMoved)
         {
             TileController destination = ChooseDestination(unit);
             if (destination != null)
@@ -277,14 +291,16 @@ public class AIController : MonoBehaviour
         bestTile = null;
         float bestGain = 5.0f;
         BoardGrid grid = _game.GetGrid();
+        AbilityTeleport teleport = caster.GetComponent<AbilityTeleport>();
+        int range = teleport != null ? teleport.Range : 1;
         foreach (UnitController ally in _game.Units)
         {
             if (ally == caster || ally.GetPlayerId() != _playerId || !ally.IsDeployed || ally.IsKilled || ally.CurrentTile == null) continue;
             float current = ScorePosition(ally, ally.CurrentTile);
             GridPosition center = ally.GetGridPosition();
-            for (int dy = -1; dy <= 1; dy++)
+            for (int dy = -range; dy <= range; dy++)
             {
-                for (int dx = -1; dx <= 1; dx++)
+                for (int dx = -range; dx <= range; dx++)
                 {
                     TileController tile = grid.GetTile(center.x + dx, center.y + dy);
                     if (tile == null || tile.IsOccupied || !tile.isWalkable()) continue;
@@ -353,6 +369,9 @@ public class AIController : MonoBehaviour
     {
         GridPosition position = tile.GetGridPosition();
         float score = TileBonus(tile, unit.GetAttackRange() > 1);
+        // In a stalemate good tiles don't justify standing still (the Dead Zone is still avoided).
+        if (IsPushing && score > 0.0f) score *= 0.25f;
+        bool commanderCharges = unit.IsKing() && _stalledTurns >= StallTurnsToPushCommander;
 
         if (_difficulty == AiDifficulty.Hard)
         {
@@ -361,7 +380,7 @@ public class AIController : MonoBehaviour
             score -= danger * (unit.IsKing() ? 12.0f : 4.0f);
             if (danger >= unit.GetHP()) score -= unit.IsKing() ? 2000.0f : 80.0f;
             // The commander only looks for safety, it doesn't charge.
-            if (unit.IsKing()) return score - 0.1f * Distance(position, unit.GetGridPosition());
+            if (unit.IsKing() && !commanderCharges) return score - 0.1f * Distance(position, unit.GetGridPosition());
 
             // While the commander is in danger, guard it: stay next to it and go for the units threatening it.
             UnitController myCommander = _game.GetCommander(_playerId);
@@ -384,11 +403,81 @@ public class AIController : MonoBehaviour
         }
         if (bestTarget > 0.0f) score += 100.0f + bestTarget;
 
-        // Close in on the enemy, above all on its commander.
-        UnitController enemyCommander = _game.GetCommander(GameController.GetOpponent(_playerId));
-        if (enemyCommander != null && !enemyCommander.IsKilled) score -= 1.5f * Distance(position, enemyCommander.GetGridPosition());
-        score -= 0.5f * DistanceToNearestEnemy(position);
+        // Close in on the enemy, above all on its commander (walking around obstacles). Only enemies
+        // this unit can actually hurt count, so it doesn't stay glued to one it can't damage.
+        // In a stalemate everybody pushes on the commander much harder.
+        score -= (IsPushing ? 4.0f : 1.5f) * DistanceToEnemyCommander(position);
+        score -= 0.5f * DistanceToNearestDamageableEnemy(unit, position);
         return score;
+    }
+
+    // Counts own turns in a row in which no unit lost HP, died or joined the board.
+    private void UpdateStalemate()
+    {
+        int snapshot = 0;
+        foreach (UnitController unit in _game.Units)
+        {
+            if (unit.IsKilled) snapshot += 1000;
+            else if (unit.IsDeployed) snapshot += 100 + unit.GetHP();
+        }
+        _stalledTurns = snapshot == _lastBoardSnapshot ? _stalledTurns + 1 : 0;
+        _lastBoardSnapshot = snapshot;
+    }
+
+    private void UpdateDistanceToEnemyCommander()
+    {
+        _distanceToEnemyCommander = null;
+        UnitController enemyCommander = _game.GetCommander(GameController.GetOpponent(_playerId));
+        if (enemyCommander == null || enemyCommander.IsKilled || enemyCommander.CurrentTile == null) return;
+
+        // Breadth-first search from the commander over walkable tiles; units are ignored because they move.
+        BoardGrid grid = _game.GetGrid();
+        int width = grid.GetBoardWidth();
+        int height = grid.GetBoardHeight();
+        int[,] distances = new int[width, height];
+        for (int y = 0; y < height; y++)
+            for (int x = 0; x < width; x++)
+                distances[x, y] = int.MaxValue;
+        GridPosition start = enemyCommander.GetGridPosition();
+        distances[start.x, start.y] = 0;
+        Queue<GridPosition> frontier = new Queue<GridPosition>();
+        frontier.Enqueue(start);
+        GridPosition[] directions = { new GridPosition(1, 0), new GridPosition(-1, 0), new GridPosition(0, 1), new GridPosition(0, -1) };
+        while (frontier.Count > 0)
+        {
+            GridPosition current = frontier.Dequeue();
+            foreach (GridPosition direction in directions)
+            {
+                int nx = current.x + direction.x;
+                int ny = current.y + direction.y;
+                TileController neighbour = grid.GetTile(nx, ny);
+                if (neighbour == null || !neighbour.isWalkable() || distances[nx, ny] != int.MaxValue) continue;
+                distances[nx, ny] = distances[current.x, current.y] + 1;
+                frontier.Enqueue(new GridPosition(nx, ny));
+            }
+        }
+        _distanceToEnemyCommander = distances;
+    }
+
+    private float DistanceToEnemyCommander(GridPosition position)
+    {
+        UnitController enemyCommander = _game.GetCommander(GameController.GetOpponent(_playerId));
+        if (enemyCommander == null || enemyCommander.IsKilled || enemyCommander.CurrentTile == null) return 0.0f;
+        if (_distanceToEnemyCommander == null) UpdateDistanceToEnemyCommander();
+        int distance = _distanceToEnemyCommander[position.x, position.y];
+        // Cut off by obstacles: fall back to the straight distance with a penalty.
+        return distance == int.MaxValue ? Distance(position, enemyCommander.GetGridPosition()) + 10.0f : distance;
+    }
+
+    private float DistanceToNearestDamageableEnemy(UnitController unit, GridPosition position)
+    {
+        float best = 100.0f;
+        foreach (UnitController enemy in Enemies())
+        {
+            if (!unit.IsTargetValid(enemy) || enemy.CalculateDamage(unit.GetCalculatedAttack(enemy)) <= 0) continue;
+            best = Mathf.Min(best, Distance(position, enemy.GetGridPosition()));
+        }
+        return best;
     }
 
     private UnitController ChooseTarget(UnitController unit)

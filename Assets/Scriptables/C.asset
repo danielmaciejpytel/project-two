@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: C
   m_EditorClassIdentifier: 
   unitName: Repeater
-  unitHealth: 6
+  unitHealth: 7
   moveRange: 4
   attackDamage: 1
   attackRange: 3

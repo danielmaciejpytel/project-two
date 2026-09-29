@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _myButtonDescription: Teleport
-  _myDescription: Teleporter (can move friendly unit 1 tile)
+  _myDescription: Teleporter (can move friendly unit up to 2 tiles)
   _mySound: {fileID: 8300000, guid: 6f33a090276e12b4a9b0ee38c1c165b4, type: 3}
 --- !u!1001 &7013128006876680992
 PrefabInstance:

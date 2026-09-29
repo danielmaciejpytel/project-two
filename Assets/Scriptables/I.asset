@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: I
   m_EditorClassIdentifier: 
   unitName: Tormentor
-  unitHealth: 6
+  unitHealth: 7
   moveRange: 3
   attackDamage: 1
   attackRange: 3

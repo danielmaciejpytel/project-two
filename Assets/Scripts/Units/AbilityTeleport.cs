@@ -7,6 +7,8 @@ public class AbilityTeleport : MonoBehaviour, IAbility, IEndturnable
     [SerializeField] private string _myButtonDescription;
     [SerializeField] private string _myDescription;
     [SerializeField] private AudioClip _mySound;
+    [Tooltip("How many tiles (in any direction) the ally can be moved.")]
+    [SerializeField, Min(1)] private int _range = 2;
     private UnitController _myUnit;
     private UnitController _unitToTeleport;
     private bool _isAvailableThisTurn;
@@ -19,13 +21,29 @@ public class AbilityTeleport : MonoBehaviour, IAbility, IEndturnable
         _isAvailableThisTurn = true;
     }
 
+    public int Range => _range;
+
     private bool IsTileInTeleportZone(TileController startingTile, TileController checkedTile)
     {
-        GridPosition startingPosition, checkedPosition;
-        startingPosition = startingTile.GetGridPosition();
-        checkedPosition = checkedTile.GetGridPosition();
-        if (Mathf.Abs(startingPosition.x - checkedPosition.x) <= 1 && Mathf.Abs(startingPosition.y - checkedPosition.y) <= 1 && !checkedTile.IsOccupied && checkedTile.isWalkable()) return true;
-        else return false;
+        GridPosition startingPosition = startingTile.GetGridPosition();
+        GridPosition checkedPosition = checkedTile.GetGridPosition();
+        return Mathf.Abs(startingPosition.x - checkedPosition.x) <= _range
+            && Mathf.Abs(startingPosition.y - checkedPosition.y) <= _range
+            && !checkedTile.IsOccupied
+            && checkedTile.isWalkable();
+    }
+
+    private void ShowTeleportZone(BoardGrid grid, TileController center)
+    {
+        GridPosition position = center.GetGridPosition();
+        for (int dy = -_range; dy <= _range; dy++)
+        {
+            for (int dx = -_range; dx <= _range; dx++)
+            {
+                TileController tile = grid.GetTile(position.x + dx, position.y + dy);
+                if (tile != null && IsTileInTeleportZone(center, tile)) tile.Highlight(HighlightType.MoveRange, false);
+            }
+        }
     }
 
     public bool IsAvailableThisTurn()
@@ -87,7 +105,8 @@ public class AbilityTeleport : MonoBehaviour, IAbility, IEndturnable
         if (clickedUnit.IsDeployed && clickedUnit.GetPlayerId() == _myUnit.GetPlayerId() && clickedUnit != _myUnit)
         { 
             _unitToTeleport = clickedUnit;
-            myGrid.ShowZone(clickedUnit.CurrentTile, HighlightType.MoveRange);
+            myGrid.HideHighlight();
+            ShowTeleportZone(myGrid, clickedUnit.CurrentTile);
         }
         return null;
     }
