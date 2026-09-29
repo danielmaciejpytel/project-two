@@ -25,6 +25,10 @@ public class BattleLogController : MonoBehaviour
     [SerializeField] private Button _toggleButton;
     [SerializeField] private TMP_Text _toggleLabel;
     [SerializeField] private int _maxEntries = 6;
+    [Tooltip("Height of the panel when collapsed to the title bar.")]
+    [SerializeField] private float _collapsedHeight = 44.0f;
+    [Tooltip("Position of the toggle button in the title bar when collapsed.")]
+    [SerializeField] private Vector2 _collapsedButtonPosition = new Vector2(-10.0f, -8.0f);
     [SerializeField] private Color _hotColor = new Color32(0xE8, 0x17, 0x3F, 0xFF);
     [SerializeField] private Color _coldColor = new Color32(0x10, 0xBF, 0xD3, 0xFF);
     [SerializeField] private Color _hotNameColor = new Color32(0xFF, 0xD0, 0xDA, 0xFF);
@@ -35,11 +39,21 @@ public class BattleLogController : MonoBehaviour
     private readonly StringBuilder _builder = new StringBuilder();
     private int _turn;
     private int _turnPlayer;
+    private RectTransform _rect;
+    private RectTransform _buttonRect;
+    private float _expandedHeight;
+    private Vector2 _expandedButtonPosition;
 
     private void Awake()
     {
         // Hidden while players are still choosing units.
         _panel.SetActive(false);
+        _rect = (RectTransform)transform;
+        _buttonRect = (RectTransform)_toggleButton.transform;
+        _expandedHeight = _rect.sizeDelta.y;
+        _expandedButtonPosition = _buttonRect.anchoredPosition;
+        // The label must catch clicks too, otherwise a button without a visible background can't be pressed.
+        _toggleLabel.raycastTarget = true;
         _toggleButton.onClick.AddListener(ToggleBody);
     }
 
@@ -75,8 +89,16 @@ public class BattleLogController : MonoBehaviour
     private void ToggleBody()
     {
         if (SoundController.Instance != null) SoundController.Instance.PlayClick();
-        _body.SetActive(!_body.activeSelf);
-        _toggleLabel.text = _body.activeSelf ? "Hide" : "Show";
+        SetExpanded(!_body.activeSelf);
+    }
+
+    // Collapsed: only the "Battle log" title with "Show" on its right.
+    private void SetExpanded(bool expanded)
+    {
+        _body.SetActive(expanded);
+        _rect.sizeDelta = new Vector2(_rect.sizeDelta.x, expanded ? _expandedHeight : _collapsedHeight);
+        _buttonRect.anchoredPosition = expanded ? _expandedButtonPosition : _collapsedButtonPosition;
+        _toggleLabel.text = expanded ? "Hide" : "Show";
     }
 
     private void OnTurnStarted(int playerId)
