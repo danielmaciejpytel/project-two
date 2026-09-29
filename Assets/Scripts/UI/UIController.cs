@@ -101,19 +101,21 @@ public class UIController : MonoBehaviour
         SoundController.Instance.PlayEndTurn();
     }
 
-    // Moves the turn controls to the active player's side. Offsets are in canvas units (1920x1080 reference),
-    // so they stay correct at any resolution instead of shifting by raw screen pixels.
+    // Moves the turn controls to the active player's side: left half for Super Hot, right half for Super Cold.
+    // Mirroring (instead of shifting by fixed offsets) keeps them in place whatever their size.
     private void MoveActivePlayerControls(float direction)
     {
-        ShiftX(_timerImage.rectTransform, 1670.0f * direction);
-        ShiftX((RectTransform)_endTurnButton.transform, 1750.0f * direction);
-        ShiftX((RectTransform)_deployMinionButton.transform, 1420.0f * direction);
-        ShiftX((RectTransform)_abilityButton.transform, 1092.0f * direction);
+        MirrorToSide(_timerImage.rectTransform, direction);
+        MirrorToSide((RectTransform)_endTurnButton.transform, direction);
+        MirrorToSide((RectTransform)_deployMinionButton.transform, direction);
+        MirrorToSide((RectTransform)_abilityButton.transform, direction);
     }
 
-    private static void ShiftX(RectTransform target, float offset)
+    private static void MirrorToSide(RectTransform target, float direction)
     {
-        target.anchoredPosition += new Vector2(offset, 0.0f);
+        Vector2 position = target.anchoredPosition;
+        position.x = Mathf.Abs(position.x) * Mathf.Sign(direction);
+        target.anchoredPosition = position;
     }
 
     // Player name in the team color, e.g. "Super Cold" in cyan.
