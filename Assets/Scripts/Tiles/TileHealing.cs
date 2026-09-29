@@ -19,7 +19,7 @@ public class TileHealing : MonoBehaviour, IEndturnable
         myUnit = _myTileController.Unit;
         if (myUnit != null && myUnit.GetPlayerId() == playerId)
         {
-            myUnit.HealUnit(_healAmount);
+            myUnit.HealUnit(_healAmount, _myTileController.GetTileName());
         }
     }
 }

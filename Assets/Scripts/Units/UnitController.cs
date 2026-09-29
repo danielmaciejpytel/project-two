@@ -83,6 +83,7 @@ public class UnitController : MonoBehaviour, IClickable, IHoverable, IEndturnabl
         }
         CurrentTile.Unit = this;
         CurrentTile.IsOccupied = true;
+        EventManager.Instance.UnitMoved(this, CurrentTile);
         myTileBehaviour = CurrentTile.gameObject.GetComponent<ITileBehaviour>();
         if(myTileBehaviour != null) myTileBehaviour.EnterTileAction(this);
         enterTileReactors = GetComponents<IEnterTile>();
@@ -107,7 +108,7 @@ public class UnitController : MonoBehaviour, IClickable, IHoverable, IEndturnabl
         return result;
     }
 
-    private int CalculateDamage(int damage)
+    public int CalculateDamage(int damage)
     {
         int damageTaken;
         int damageModifier = 0;
@@ -237,7 +238,9 @@ public class UnitController : MonoBehaviour, IClickable, IHoverable, IEndturnabl
     public void AttackEnded()
     {
         IAddEffect[] myEffectGivers;
-        _myTarget.DamageUnit(CalculateAttack(_myTarget));
+        int attackPower = CalculateAttack(_myTarget);
+        EventManager.Instance.UnitAttacked(this, _myTarget, attackPower, Mathf.Min(_myTarget.CalculateDamage(attackPower), _myTarget.GetHP()));
+        _myTarget.DamageUnit(attackPower);
         myEffectGivers = GetComponents<IAddEffect>();
         foreach (IAddEffect giver in myEffectGivers)
         {
@@ -264,11 +267,13 @@ public class UnitController : MonoBehaviour, IClickable, IHoverable, IEndturnabl
         return _unit.attackRange + rangeModifier;
     }
 
-    public void DamageUnit(int damage)
+    /// <param name="source">Name shown in the battle log for damage that doesn't come from an attack (tiles, burning).</param>
+    public void DamageUnit(int damage, string source = null)
     {
         int damageTaken;
 
         damageTaken = CalculateDamage(damage);
+        if (source != null) EventManager.Instance.UnitDamaged(this, Mathf.Min(damageTaken, GetHP()), source);
         if (_myHealth.ChangeHealth(-damageTaken))
         {
             Kill();
@@ -305,9 +310,12 @@ public class UnitController : MonoBehaviour, IClickable, IHoverable, IEndturnabl
         EventManager.Instance.UnitKilled(this);
     }
 
-    public void HealUnit(int healPoints)
+    public void HealUnit(int healPoints, string source = null)
     {
+        int before = GetHP();
         _myHealth.ChangeHealth(healPoints);
+        int healed = GetHP() - before;
+        if (healed > 0 && source != null) EventManager.Instance.UnitHealed(this, healed, source);
     }
 
     public void SetReticle(bool visible)

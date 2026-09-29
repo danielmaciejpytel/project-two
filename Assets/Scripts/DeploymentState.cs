@@ -48,6 +48,7 @@ public class DeploymentState : IGameState
             _unitToDeploy.IsAvailable = false;
         }
         _unitToDeploy.IsDeployed = true;
+        EventManager.Instance.UnitDeployed(_unitToDeploy);
         clickedTile.ClearTile();
         ui.EndDeployment();
         myGrid.HideHighlight();

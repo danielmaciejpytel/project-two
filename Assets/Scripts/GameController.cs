@@ -266,6 +266,7 @@ public class GameController : MonoBehaviour
         }
         _myGrid.MakeEndTurnActions(playerId);
         _myUIController.StartPlayerTurn(GetOpponent(playerId));
+        EventManager.Instance.TurnStarted(GetOpponent(playerId));
     }
 
     public void AddUnitPrefab(GameObject unitPrefab, int playerId)
@@ -296,6 +297,7 @@ public class GameController : MonoBehaviour
             }
         }
         _myUIController.InitializeUnitsPanel(_units, _startingPlayer, this, _timeLimit);
+        EventManager.Instance.TurnStarted(_startingPlayer);
     }
 
     private void SpawnUnits(List<GameObject> unitPrefabs, TileController commanderTile)

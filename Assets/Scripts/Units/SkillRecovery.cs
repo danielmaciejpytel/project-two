@@ -16,7 +16,7 @@ public class SkillRecovery : MonoBehaviour, IEndturnable, ISkill
 
     public void EndTurnAction(int playerId)
     {
-        if(_myUnitController.GetPlayerId() == playerId) _myUnitController.HealUnit(_recoveryRate);
+        if(_myUnitController.GetPlayerId() == playerId) _myUnitController.HealUnit(_recoveryRate, "Recovery");
     }
 
     public string GetDescription()

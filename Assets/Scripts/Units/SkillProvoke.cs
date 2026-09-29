@@ -26,6 +26,7 @@ public class SkillProvoke : MonoBehaviour, IEnterTile, ISkill
             {
                 myEffect = neighbourTile.Unit.gameObject.AddComponent<EffectProvoked>();
                 myEffect.InitializeEffect(_myUnitController, _effectDescription);
+                EventManager.Instance.EffectApplied(neighbourUnit, "Provoked", _myUnitController);
             }
         }
     }

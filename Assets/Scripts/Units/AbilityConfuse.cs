@@ -63,6 +63,7 @@ public class AbilityConfuse : MonoBehaviour, IAbility, IEndturnable
             _myUnit.PlaySound(_mySound);
             myEffectConfused = clickedUnit.gameObject.AddComponent<EffectConfused>();
             myEffectConfused.InitializeEffect(_myEffectDescription);
+            EventManager.Instance.AbilityUsed(_myUnit, "Confuse", clickedUnit);
             _isAvailableThisTurn = false;
             myGrid.HideHighlight();
             if (_myUnit.HasMoved) return new AttackSelectedState(_myUnit, myGrid, ui);

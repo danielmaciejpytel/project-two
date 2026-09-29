@@ -23,6 +23,7 @@ public class SkillPoison : MonoBehaviour, IAddEffect, ISkill
         {
             myPoisonEffect = target.gameObject.AddComponent<EffectPoison>();
             myPoisonEffect.InitializeEffect(_weaknessAmount, _weaknessTurns, _effectDescription);
+            EventManager.Instance.EffectApplied(target, $"Poisoned for {_weaknessTurns} turns", _myUnitController);
         }
     }
 

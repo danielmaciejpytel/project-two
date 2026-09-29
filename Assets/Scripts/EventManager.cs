@@ -13,6 +13,16 @@ public class EventManager : MonoBehaviour
     public event Action<UnitController> OnExecutionEnd;
     public event Action<UnitController> OnUnitKilled;
 
+    // Battle log feed: these only report what happened, game rules don't listen to them.
+    public event Action<int> OnTurnStarted;
+    public event Action<UnitController> OnUnitDeployed;
+    public event Action<UnitController, TileController> OnUnitMoved;
+    public event Action<UnitController, UnitController, int, int> OnUnitAttacked;
+    public event Action<UnitController, int, string> OnUnitDamaged;
+    public event Action<UnitController, int, string> OnUnitHealed;
+    public event Action<UnitController, string, UnitController> OnEffectApplied;
+    public event Action<UnitController, string, UnitController> OnAbilityUsed;
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -41,4 +51,21 @@ public class EventManager : MonoBehaviour
     public void ExecutionEnded(UnitController unit) => OnExecutionEnd?.Invoke(unit);
 
     public void UnitKilled(UnitController killedUnit) => OnUnitKilled?.Invoke(killedUnit);
+
+    public void TurnStarted(int playerId) => OnTurnStarted?.Invoke(playerId);
+
+    public void UnitDeployed(UnitController unit) => OnUnitDeployed?.Invoke(unit);
+
+    public void UnitMoved(UnitController unit, TileController tile) => OnUnitMoved?.Invoke(unit, tile);
+
+    public void UnitAttacked(UnitController attacker, UnitController target, int attackPower, int damageTaken)
+        => OnUnitAttacked?.Invoke(attacker, target, attackPower, damageTaken);
+
+    public void UnitDamaged(UnitController unit, int damageTaken, string source) => OnUnitDamaged?.Invoke(unit, damageTaken, source);
+
+    public void UnitHealed(UnitController unit, int amount, string source) => OnUnitHealed?.Invoke(unit, amount, source);
+
+    public void EffectApplied(UnitController unit, string effectName, UnitController source) => OnEffectApplied?.Invoke(unit, effectName, source);
+
+    public void AbilityUsed(UnitController user, string abilityName, UnitController target) => OnAbilityUsed?.Invoke(user, abilityName, target);
 }

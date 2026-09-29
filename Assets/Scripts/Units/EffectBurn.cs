@@ -22,7 +22,7 @@ public class EffectBurn : MonoBehaviour, IEndturnable, IEffect
     {
         if (playerId == _myUnitController.GetPlayerId())
         {
-            if (_duration > 0) _myUnitController.DamageUnit(_damage);
+            if (_duration > 0) _myUnitController.DamageUnit(_damage, "Burn");
             _duration--;
             if (_duration == 0) Destroy(this);
         }

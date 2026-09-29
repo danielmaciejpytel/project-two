@@ -67,6 +67,7 @@ public class AbilityTeleport : MonoBehaviour, IAbility, IEndturnable
             _myUnit.PlaySound(_mySound);
             unitTile = _unitToTeleport.CurrentTile;
             _unitToTeleport.DeployUnit(clickedTile);
+            EventManager.Instance.AbilityUsed(_myUnit, "Teleport", _unitToTeleport);
             unitTile.IsOccupied = false;
             unitTile.Unit = null;
             myGrid.HideHighlight();
