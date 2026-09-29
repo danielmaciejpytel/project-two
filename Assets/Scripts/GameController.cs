@@ -62,11 +62,21 @@ public class GameController : MonoBehaviour
     private readonly RaycastHit2D[] _clickHits = new RaycastHit2D[16];
     private IHoverable _hovered;
     private IGameState _myGameState;
+    private int _activePlayer;
+    private bool _bypassInputLock;
     private BoardGrid _myGrid;
     private Camera _myCamera;
     private bool _gameEnded;
 
     public static GameController Instance { get; private set; }
+
+    public IGameState CurrentState => _myGameState;
+    public int ActivePlayer => _activePlayer;
+    public bool IsGameOver => _gameEnded;
+    public IReadOnlyList<UnitController> Units => _units;
+
+    // During the computer's turn the human's clicks, hovers and HUD buttons are ignored.
+    private bool IsInputLocked => GameSession.IsAiPlayer(_activePlayer) && !_bypassInputLock;
 
     public static int GetOpponent(int playerId) => playerId == 1 ? 2 : 1;
 
@@ -87,26 +97,31 @@ public class GameController : MonoBehaviour
 
     private void OnUnitClicked(UnitController clickedUnit)
     {
+        if (IsInputLocked) return;
         if (_myGameState != null) SetState(_myGameState.UnitClicked(this, clickedUnit));
     }
 
     private void OnUnitHovered(UnitController hoveredUnit)
     {
+        if (IsInputLocked) return;
         if (_myGameState != null) SetState(_myGameState.UnitHovered(this, hoveredUnit));
     }
 
     private void OnUnitUnhovered(UnitController unhoveredUnit)
     {
+        if (IsInputLocked) return;
         if (_myGameState != null) SetState(_myGameState.UnitUnhovered(this, unhoveredUnit));
     }
 
     private void OnTileClicked(TileController clickedTile)
     {
+        if (IsInputLocked) return;
         if (_myGameState != null) SetState(_myGameState.TileClicked(this, clickedTile));
     }
 
     private void OnTileHovered(TileController hoveredTile)
     {
+        if (IsInputLocked) return;
         if (_myGameState != null) SetState(_myGameState.TileHovered(this, hoveredTile));
     }
 
@@ -235,24 +250,43 @@ public class GameController : MonoBehaviour
 
     public void EndTurnAction()
     {
-        if (_myGameState == null) return;
+        if (_myGameState == null || IsInputLocked) return;
         SoundController.Instance.PlayClick();
         SetState(_myGameState.EndTurnPressed(this));
     }
 
     public void DeployAction()
     {
-        if (_myGameState == null) return;
+        if (_myGameState == null || IsInputLocked) return;
         SoundController.Instance.PlayClick();
         SetState(_myGameState.DeploymentPressed(this));
     }
 
     public void AbilityAction()
     {
-        if (_myGameState == null) return;
+        if (_myGameState == null || IsInputLocked) return;
         SoundController.Instance.PlayClick();
         SetState(_myGameState.AbilityPressed(this));
     }
+
+    /// <summary>
+    /// Runs a game action on behalf of the computer player (or the turn timer) while human input is locked.
+    /// </summary>
+    public void RunWithoutInputLock(Action action)
+    {
+        _bypassInputLock = true;
+        try
+        {
+            action();
+        }
+        finally
+        {
+            _bypassInputLock = false;
+        }
+    }
+
+    // The turn timer ends the turn for whoever is playing, including the computer.
+    public void TurnTimeExpired() => RunWithoutInputLock(EndTurnAction);
 
     public void EndPlayerTurn(int playerId)
     {
@@ -265,8 +299,9 @@ public class GameController : MonoBehaviour
             }
         }
         _myGrid.MakeEndTurnActions(playerId);
-        _myUIController.StartPlayerTurn(GetOpponent(playerId));
-        EventManager.Instance.TurnStarted(GetOpponent(playerId));
+        _activePlayer = GetOpponent(playerId);
+        _myUIController.StartPlayerTurn(_activePlayer);
+        EventManager.Instance.TurnStarted(_activePlayer);
     }
 
     public void AddUnitPrefab(GameObject unitPrefab, int playerId)
@@ -297,6 +332,8 @@ public class GameController : MonoBehaviour
             }
         }
         _myUIController.InitializeUnitsPanel(_units, _startingPlayer, this, _timeLimit);
+        _activePlayer = _startingPlayer;
+        if (GameSession.AiPlayerId != GameSession.NoAi) gameObject.AddComponent<AIController>().Initialize(this, GameSession.AiPlayerId);
         EventManager.Instance.TurnStarted(_startingPlayer);
     }
 

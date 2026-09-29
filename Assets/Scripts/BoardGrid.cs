@@ -208,6 +208,24 @@ public class BoardGrid
         }
     }
 
+    /// <summary>
+    /// Tiles the unit can move to this turn (its own tile excluded).
+    /// </summary>
+    public List<TileController> GetReachableTiles(UnitController unit)
+    {
+        int range = unit.GetMoveRange();
+        int[,] distances = CalculateDistances(unit.GetGridPosition(), range);
+        List<TileController> result = new List<TileController>();
+        for (int y = 0; y < _height; y++)
+        {
+            for (int x = 0; x < _width; x++)
+            {
+                if (distances[x, y] > 0 && distances[x, y] <= range) result.Add(_gridArray[x, y]);
+            }
+        }
+        return result;
+    }
+
     public bool IsTileInMoveRange(UnitController myUnit, TileController myTile)
     {
         int range = myUnit.GetMoveRange();

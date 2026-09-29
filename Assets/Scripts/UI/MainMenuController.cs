@@ -9,6 +9,7 @@ using DG.Tweening;
 public class MainMenuController : MonoBehaviour
 {
     [SerializeField] private Button _playButton;
+    [SerializeField] private Button _playVsAiButton;
     [SerializeField] private Button _instructionsButton;
     [SerializeField] private Button _optionsButton;
     [SerializeField] private Button _creditsButton;
@@ -31,7 +32,29 @@ public class MainMenuController : MonoBehaviour
         _barImage.transform.localPosition = localPosition;
     }
 
+    private void SetMainButtonsActive(bool active)
+    {
+        _playButton.gameObject.SetActive(active);
+        if (_playVsAiButton != null) _playVsAiButton.gameObject.SetActive(active);
+        _instructionsButton.gameObject.SetActive(active);
+        _optionsButton.gameObject.SetActive(active);
+        _creditsButton.gameObject.SetActive(active);
+        _exitButton.gameObject.SetActive(active);
+    }
+
     public void StartGame()
+    {
+        GameSession.AiPlayerId = GameSession.NoAi;
+        LoadGame();
+    }
+
+    public void StartGameVsAI()
+    {
+        GameSession.AiPlayerId = GameSession.DefaultAiPlayer;
+        LoadGame();
+    }
+
+    private void LoadGame()
     {
         DOTween.KillAll(false);
         SceneManager.LoadScene("MainScene");
@@ -40,11 +63,7 @@ public class MainMenuController : MonoBehaviour
     public void DisplayCredits()
     {
         SoundController.Instance.PlayClick();
-        _playButton.gameObject.SetActive(false);
-        _instructionsButton.gameObject.SetActive(false);
-        _optionsButton.gameObject.SetActive(false);
-        _creditsButton.gameObject.SetActive(false);
-        _exitButton.gameObject.SetActive(false);
+        SetMainButtonsActive(false);
         _backButton.gameObject.SetActive(true);
         _creditsImage.gameObject.SetActive(true);
         HideBar();
@@ -53,11 +72,7 @@ public class MainMenuController : MonoBehaviour
     public void HideCredits()
     {
         SoundController.Instance.PlayClick();
-        _playButton.gameObject.SetActive(true);
-        _instructionsButton.gameObject.SetActive(true);
-        _optionsButton.gameObject.SetActive(true);
-        _creditsButton.gameObject.SetActive(true);
-        _exitButton.gameObject.SetActive(true);
+        SetMainButtonsActive(true);
         _backButton.gameObject.SetActive(false);
         _creditsImage.gameObject.SetActive(false);
         _instructionText.gameObject.SetActive(false);
@@ -67,11 +82,7 @@ public class MainMenuController : MonoBehaviour
     public void DisplayOptions()
     {
         SoundController.Instance.PlayClick();
-        _playButton.gameObject.SetActive(false);
-        _instructionsButton.gameObject.SetActive(false);
-        _optionsButton.gameObject.SetActive(false);
-        _creditsButton.gameObject.SetActive(false);
-        _exitButton.gameObject.SetActive(false);
+        SetMainButtonsActive(false);
         _optionsPanel.SetActive(true);
         HideBar();
         _soundToggle.isOn = SoundController.Instance.SoundOn;
@@ -81,11 +92,7 @@ public class MainMenuController : MonoBehaviour
     public void HideOptions()
     {
         SoundController.Instance.PlayClick();
-        _playButton.gameObject.SetActive(true);
-        _instructionsButton.gameObject.SetActive(true);
-        _optionsButton.gameObject.SetActive(true);
-        _creditsButton.gameObject.SetActive(true);
-        _exitButton.gameObject.SetActive(true);
+        SetMainButtonsActive(true);
         _optionsPanel.SetActive(false);
         HideBar();
     }
@@ -93,11 +100,7 @@ public class MainMenuController : MonoBehaviour
     public void DisplayInstructions()
     {
         SoundController.Instance.PlayClick();
-        _playButton.gameObject.SetActive(false);
-        _instructionsButton.gameObject.SetActive(false);
-        _optionsButton.gameObject.SetActive(false);
-        _creditsButton.gameObject.SetActive(false);
-        _exitButton.gameObject.SetActive(false);
+        SetMainButtonsActive(false);
         _backButton.gameObject.SetActive(true);
         _instructionText.gameObject.SetActive(true);
         HideBar();

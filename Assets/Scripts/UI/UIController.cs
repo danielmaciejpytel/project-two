@@ -39,7 +39,7 @@ public class UIController : MonoBehaviour
         {
             if (_myTimer >= timeLimit)
             {
-                myGameController.EndTurnAction();
+                myGameController.TurnTimeExpired();
                 _myTimer = 0;
             }
             _timerText.text = (timeLimit - _myTimer).ToString();

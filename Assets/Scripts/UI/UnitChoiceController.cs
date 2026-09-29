@@ -45,6 +45,7 @@ public class UnitChoiceController : MonoBehaviour
     private int _currentPanelIndex;
     private int _currentPlayer;
     private int _currentUnitIndex;
+    private bool _aiPicking;
 
     private void Start()
     {
@@ -88,6 +89,7 @@ public class UnitChoiceController : MonoBehaviour
         _player1InfoPanel.DisplayUnit(_player1UnitPrefabs[1].GetComponent<UnitController>());
         _player2InfoPanel.DisplayUnit(_player2UnitPrefabs[1].GetComponent<UnitController>());
         _chosenUnits = new List<ChosenUnit>();
+        StartAiPickIfNeeded();
     }
 
     private GameObject GetOpposingUnit(int lookForType, string unitName)
@@ -112,12 +114,44 @@ public class UnitChoiceController : MonoBehaviour
         return null;
     }
 
+    // Ignore the human pressing buttons while the computer is choosing.
+    private bool IsBlockedByAi() => GameSession.IsAiPlayer(_currentPlayer) && !_aiPicking;
+
+    private void StartAiPickIfNeeded()
+    {
+        if (GameSession.IsAiPlayer(_currentPlayer)) StartCoroutine(AiPick());
+    }
+
+    private IEnumerator AiPick()
+    {
+        _nextButton.interactable = false;
+        yield return new WaitForSeconds(0.6f);
+        _aiPicking = true;
+        int unitCount = _currentPlayer == 1 ? _player1UnitPrefabs.Length : _player2UnitPrefabs.Length;
+        int steps = UnityEngine.Random.Range(0, Mathf.Max(1, unitCount - 1));
+        _aiPicking = false;
+        for (int i = 0; i < steps; i++)
+        {
+            _aiPicking = true;
+            NextUnit("right");
+            _aiPicking = false;
+            yield return new WaitForSeconds(0.25f);
+        }
+        yield return new WaitForSeconds(0.5f);
+        _nextButton.interactable = true;
+        _aiPicking = true;
+        NextUnitPanel();
+        _aiPicking = false;
+    }
+
     public void NextUnitPanel()
     {
         TMP_Text buttonText;
         UnitController currentUnitController;
         GameObject opposingUnit;
         bool unitValid;
+
+        if (IsBlockedByAi()) return;
 
         SoundController.Instance.PlayClick();
         currentUnitController = _currentUnitPanel.GetUnitPrefab().GetComponent<UnitController>();
@@ -209,6 +243,8 @@ public class UnitChoiceController : MonoBehaviour
             buttonText.text = "Done";
         }
         _currentUnitPanel.EnableMe();
+        if (GameSession.IsAiPlayer(_currentPlayer)) _currentUnitPanel.DisableButtons();
+        StartAiPickIfNeeded();
     }
 
     public void NextUnit(string direction)
@@ -217,6 +253,7 @@ public class UnitChoiceController : MonoBehaviour
         UnitController currentUnitController;
         bool unitValid;
 
+        if (IsBlockedByAi()) return;
         SoundController.Instance.PlayClick();
         unitValid = false;
         while (!unitValid)
