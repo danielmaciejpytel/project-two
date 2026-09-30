@@ -6,7 +6,7 @@ public enum Language { English, Polish }
 
 /// <summary>
 /// Translations of the game's texts. The English text is the key, so code and scenes keep their
-/// English strings and Loc.T returns the Polish one from Resources/Localization/pl.txt.
+/// English strings and Loc.T returns the Polish one from Resources/Localization/Polish.txt.
 /// Texts without a translation stay in English. The language is chosen in Options (menu only).
 /// </summary>
 public static class Loc
@@ -67,10 +67,10 @@ public static class Loc
     private static void Load()
     {
         _polish = new Dictionary<string, string>();
-        TextAsset file = Resources.Load<TextAsset>("Localization/pl");
+        TextAsset file = Resources.Load<TextAsset>("Localization/Polish");
         if (file == null)
         {
-            Debug.LogError("Missing Resources/Localization/pl.txt");
+            Debug.LogError("Missing Resources/Localization/Polish.txt");
             return;
         }
         // One entry per line: English text, a tab, the translation. "\n" stands for a line break.

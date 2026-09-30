@@ -36,7 +36,7 @@ public enum HighlightType { MoveRange, Path, Hover, AttackRange, Deployment, Uni
 
 public class GameController : MonoBehaviour
 {
-    private const string GridFileName = "grid.csv";
+    private const string GridFileName = "Grid.csv";
     private const string MenuSceneName = "MenuScene";
 
     [Header("Technical:")]
