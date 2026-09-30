@@ -24,7 +24,6 @@ Choose Doppelgangers and build a team to defeat the opposing Superior.\n\nPLAYER
 <line-height=2.375em>CODE<pos=3.125em><color=#D72E66>KAROL ŁAWICKI</color>\nART<pos=3.125em><color=#D72E66>DANIEL PYTEL</color>\nDESIGN<pos=4.0625em><color=#D72E66>MATT MATUSZEWSKI</color><line-height=1.1875em>\n<pos=4.0625em><color=#D72E66>MATEUSZ NIZIOŁEK</color>	<line-height=2.375em>KOD<pos=5em><color=#D72E66>KAROL ŁAWICKI</color>\nGRAFIKA<pos=5em><color=#D72E66>DANIEL PYTEL</color>\nPROJEKT<pos=5em><color=#D72E66>MATT MATUSZEWSKI</color><line-height=1.1875em>\n<pos=5em><color=#D72E66>MATEUSZ NIZIOŁEK</color>
 End Turn	Zakończ
 Call	Wezwij
-Mode	Tryb
 Quit	Wyjdź
 Turn ends in:	Koniec tury za:
 Turn: {0}	Tura: {0}

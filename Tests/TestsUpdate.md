@@ -152,5 +152,6 @@ Razem: **36** testów w 6 plikach.
 Wpis dodaje się przy każdym commicie, który zmienia pliki z tabeli powyżej (najnowsze na górze, ostatnie 15).
 
 <!-- AUTO:LOG:START -->
+- 2026-09-30: `Assets/Resources/Localization/Polish.txt`, `Assets/Scenes/MainScene.unity`, `Assets/Scripts/GameController.cs`, `Assets/Scripts/UI/EndGameController.cs` → sprawdź: LocalizationTests, GameplayTests, BattleLogTests, EndScreenTests · **bez testów:** `Assets/Scripts/SoundController.cs`, `Assets/Scripts/UI/UnitChoiceController.cs`, `Assets/Scripts/UI/UnitChoiceControllerOld.cs`, `Assets/Scripts/UI/UnitPanelController.cs`
 - 2026-09-30: `Assets/Plugins/Demigiant/DOTween/Modules/DOTween.Modules.asmdef`, `Assets/Scripts/Game.asmdef` → sprawdź: EditModeTests, PlayModeTests
 <!-- AUTO:LOG:END -->

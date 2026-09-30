@@ -3,14 +3,12 @@ using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 // The screen after the game (also the pause menu opened with Escape): the rest of the HUD is dimmed, the winner banner moves to the middle of the
 // screen and four buttons appear under it. Settings replaces the buttons with a small options panel.
 public class EndGameController : MonoBehaviour
 {
-    private const string MenuSceneName = "MenuScene";
     // Share of the settings panel's rect that its image really covers (792 of 812 pixels).
     private const float PanelVisibleWidth = 792.0f / 812.0f;
 
@@ -124,25 +122,9 @@ public class EndGameController : MonoBehaviour
         _buttons.gameObject.SetActive(!show);
     }
 
-    private void PlayAgain()
-    {
-        SoundController.Instance?.PlayClick();
-        LeaveScene(SceneManager.GetActiveScene().name);
-    }
+    private void PlayAgain() => GameController.Instance.RestartGame();
 
-    private void BackToMenu()
-    {
-        SoundController.Instance?.PlayClick();
-        LeaveScene(MenuSceneName);
-    }
-
-    private static void LeaveScene(string sceneName)
-    {
-        Time.timeScale = 1.0f;
-        DOTween.KillAll(false);
-        UnitAnimators.Release();
-        SceneManager.LoadScene(sceneName);
-    }
+    private void BackToMenu() => GameController.Instance.ReturnToMenu();
 
     private void QuitGame()
     {

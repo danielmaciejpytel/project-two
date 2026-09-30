@@ -37,7 +37,7 @@ public enum HighlightType { MoveRange, Path, Hover, AttackRange, Deployment, Uni
 public class GameController : MonoBehaviour
 {
     private const string GridFileName = "Grid.csv";
-    private const string MenuSceneName = "MenuScene";
+    public const string MenuSceneName = "MenuScene";
 
     [Header("Technical:")]
     [SerializeField] private UIController _myUIController;
@@ -378,12 +378,27 @@ public class GameController : MonoBehaviour
 
     public bool DeployedThisTurn() => _myUIController.DeployedThisTurn();
 
-    public void QuitPressed()
+    // Leaving the game scene, whether to the menu or into a new game, always goes through here.
+    public void ReturnToMenu()
     {
         SoundController.Instance?.PlayClick();
+        LoadScene(MenuSceneName);
+    }
+
+    // A new game in the same mode: the unit draft starts again.
+    public void RestartGame()
+    {
+        SoundController.Instance?.PlayClick();
+        LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    private static void LoadScene(string sceneName)
+    {
+        // The pause menu stops the time; the next scene must not start frozen.
+        Time.timeScale = 1.0f;
         DOTween.KillAll(false);
         UnitAnimators.Release();
-        SceneManager.LoadScene(MenuSceneName);
+        SceneManager.LoadScene(sceneName);
     }
 
     public void HighlightUnits(int playerId, bool highlightKing)

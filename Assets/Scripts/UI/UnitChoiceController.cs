@@ -210,7 +210,7 @@ public class UnitChoiceController : MonoBehaviour
     {
         StopAllCoroutines();
         GameSession.OpenPlayMenu = true;
-        _myGameController.QuitPressed();
+        _myGameController.ReturnToMenu();
     }
 
     private void StartAiPickIfNeeded()

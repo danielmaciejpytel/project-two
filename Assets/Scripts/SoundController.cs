@@ -3,7 +3,6 @@ using UnityEngine.SceneManagement;
 
 public class SoundController : MonoBehaviour
 {
-    private const string MenuSceneName = "MenuScene";
     private const string SoundVolumePrefKey = "Options.SoundVolume";
     private const string MusicVolumePrefKey = "Options.MusicVolume";
     // Older versions saved on/off switches instead of volumes.
@@ -94,7 +93,7 @@ public class SoundController : MonoBehaviour
         if (_gameMusic == null || _gameMusic.Length == 0) return;
 
         int song = 0;
-        if (SceneManager.GetActiveScene().name != MenuSceneName && _gameMusic.Length > 1)
+        if (SceneManager.GetActiveScene().name != GameController.MenuSceneName && _gameMusic.Length > 1)
             song = Random.Range(1, _gameMusic.Length);
         _myMusicSource.clip = _gameMusic[song];
         _myMusicSource.Play();
