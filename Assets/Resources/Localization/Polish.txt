@@ -121,3 +121,13 @@ Long reach (+1 attack range in a straight line)	Daleki zasięg (+1 do zasięgu a
 Implaled (1 damage/turn)	Przebity (1 obrażenie na turę)
 Impaled (1 damage/turn)	Przebity (1 obrażenie na turę)
 Covered (Reduce received damage by 1)	Osłonięty (zmniejsza otrzymywane obrażenia o 1)
+TEAM RED	DRUŻYNA CZERWONA
+TEAM BLUE	DRUŻYNA NIEBIESKA
+CHOOSE <color=#D72E66>DOPPELGANGER</color>	WYBIERZ <color=#D72E66>SOBOWTÓRA</color>
+YOUR	SWOJĄ
+PICK {0} CREW {1} OF {2}	WYBIERZ {0} EKIPĘ {1} Z {2}
+NEXT	DALEJ
+DONE	GOTOWE
+SUPERIOR	DOWÓDCA
+Move	Ruch
+Attack	Atak

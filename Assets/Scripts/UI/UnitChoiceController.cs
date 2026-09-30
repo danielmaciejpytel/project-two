@@ -1,327 +1,235 @@
-﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
-public readonly struct ChosenUnit : IEquatable<ChosenUnit>
-{
-    public readonly int playerId;
-    public readonly int unitType;
-
-    public ChosenUnit(int p, int t)
-    {
-        playerId = p;
-        unitType = t;
-    }
-
-    public bool Equals(ChosenUnit other) => playerId == other.playerId && unitType == other.unitType;
-
-    public override bool Equals(object obj) => obj is ChosenUnit other && Equals(other);
-
-    public override int GetHashCode() => HashCode.Combine(playerId, unitType);
-
-    public static bool operator ==(ChosenUnit cu1, ChosenUnit cu2) => cu1.Equals(cu2);
-
-    public static bool operator !=(ChosenUnit cu1, ChosenUnit cu2) => !cu1.Equals(cu2);
-}
-
+// The unit choice screen: the two teams choose four doppelgangers in turn (Super Hot, Super Cold, Super Hot,
+// Super Cold). Choosing one also gives the other team its counterpart, and the chosen kind leaves the list.
 public class UnitChoiceController : MonoBehaviour
 {
-    [SerializeField] private UnitPanelController[] _player1Panels;
-    [SerializeField] private GameObject[] _player1UnitPrefabs;
-    [SerializeField] private UnitTilePanelController _player1InfoPanel;
-    [SerializeField] private UnitPanelController[] _player2Panels;
-    [SerializeField] private GameObject[] _player2UnitPrefabs;
-    [SerializeField] private UnitTilePanelController _player2InfoPanel;
-    [SerializeField] private Button _nextButton;
-    [SerializeField] private GameController _myGameController;
-    [SerializeField] private TMP_Text _myDescription;
+    private const int Picks = 4;
+    private const string HotColor = "#FF2A52";
+    private const string ColdColor = "#22D3E6";
 
-    private UnitPanelController _currentUnitPanel;
-    private UnitPanelController _currentOpponentUnitPanel;
-    private List<ChosenUnit> _chosenUnits;
-    private int _currentPanelIndex;
-    private int _currentPlayer;
-    private int _currentUnitIndex;
-    private bool _aiPicking;
+    private static readonly Color Hot = new Color(1.0f, 0.165f, 0.322f);
+    private static readonly Color Cold = new Color(0.133f, 0.827f, 0.902f);
+    private static readonly Color DotEmpty = new Color(0.118f, 0.118f, 0.118f, 0.45f);
+
+    [SerializeField] private ChoiceTeamView[] _teams;
+    [SerializeField] private GameObject[] _player1UnitPrefabs;
+    [SerializeField] private GameObject[] _player2UnitPrefabs;
+    [SerializeField] private TMP_Text _title;
+    [SerializeField] private TMP_Text _turnText;
+    [SerializeField] private RectTransform _dotsRoot;
+    [SerializeField] private Image[] _dots;
+    [SerializeField] private RectTransform _dotRing;
+    [SerializeField] private TMP_Text _hint;
+    [SerializeField] private ChoiceButton _backButton;
+    [SerializeField] private ChoiceButton _nextButton;
+    [SerializeField] private GameController _myGameController;
+
+    // Picks made so far: index into the picking player's prefab list.
+    private readonly List<int> _picked = new List<int>();
+    private readonly int[] _hovered = { -1, -1 };
+    private int _round;
+    private int _cursor;
+    private Coroutine _aiPick;
+
+    private GameObject[] Prefabs(int player) => player == 1 ? _player1UnitPrefabs : _player2UnitPrefabs;
+
+    private static int PickerOf(int pick) => pick % 2 == 0 ? 1 : 2;
+
+    private static UnitController Unit(GameObject prefab) => prefab.GetComponent<UnitController>();
+
+    private void Awake()
+    {
+        _backButton.Clicked += BackToModeSelection;
+        _nextButton.Clicked += ConfirmPick;
+        for (int team = 0; team < _teams.Length; team++)
+        {
+            int side = team;
+            ChoiceSlotView[] slots = _teams[team].Slots;
+            for (int i = 0; i < slots.Length; i++)
+            {
+                slots[i].Index = i;
+                slots[i].HoverChanged += (slot, hovered) => OnSlotHover(side, slot.Index, hovered);
+                slots[i].ArrowPressed += direction => Step(direction);
+            }
+        }
+    }
 
     private void Start()
     {
-        int i = 0;
-        foreach(UnitPanelController unitPanel in _player1Panels)
-        {
-            if (i <= 1)
-            {
-                if (i == 0)
-                {
-                    unitPanel.SetUnit(_player1UnitPrefabs[0]);
-                    unitPanel.DisableButtons();
-                    _myGameController.AddUnitPrefab(unitPanel.GetUnitPrefab(), 1);
-                }
-                else _currentUnitPanel = unitPanel;
-            }
-            else unitPanel.DisableMe();
-            i++;
-        }
-        i = 0;
-        foreach (UnitPanelController unitPanel in _player2Panels)
-        {
-            if (i <= 1)
-            {
-                if (i == 0)
-                {
-                    unitPanel.SetUnit(_player2UnitPrefabs[0]);
-                    _myGameController.AddUnitPrefab(unitPanel.GetUnitPrefab(), 2);
-                }
-                else _currentOpponentUnitPanel = unitPanel;
-                unitPanel.DisableButtons();
-            }
-            else unitPanel.DisableMe();
-            i++;
-        }
-        _currentPanelIndex = 1;
-        _currentPlayer = 1;
-        _currentUnitIndex = 1;
-        _currentUnitPanel.SetUnit(_player1UnitPrefabs[1]);
-        _currentOpponentUnitPanel.SetUnit(_player2UnitPrefabs[1]);
-        _player1InfoPanel.DisplayUnit(_player1UnitPrefabs[1].GetComponent<UnitController>());
-        _player2InfoPanel.DisplayUnit(_player2UnitPrefabs[1].GetComponent<UnitController>());
-        _chosenUnits = new List<ChosenUnit>();
+        _myGameController.AddUnitPrefab(_player1UnitPrefabs[0], 1);
+        _myGameController.AddUnitPrefab(_player2UnitPrefabs[0], 2);
+        Refresh();
         StartAiPickIfNeeded();
     }
 
-    // Both lines stay visible during the whole draft.
-    private static string ChoicePrompt(string firstLine) => Loc.T(firstLine) + " \n" + Loc.T("By choosing one, you also make a choice for your enemy.");
-
-    private GameObject GetOpposingUnit(int lookForType, string unitName)
+    // Unit types that are already taken (by either team) are not offered again.
+    private List<int> AvailableIndexes(int player)
     {
-        UnitController myUnitController;    
-        if(_currentPlayer == 1)
+        var taken = new HashSet<int>();
+        for (int i = 0; i < _picked.Count; i++) taken.Add(Unit(Prefabs(PickerOf(i))[_picked[i]]).GetUnitType());
+        var indexes = new List<int>();
+        GameObject[] prefabs = Prefabs(player);
+        for (int i = 1; i < prefabs.Length; i++)
         {
-            foreach(GameObject myGO in _player2UnitPrefabs)
-            {
-                myUnitController = myGO.GetComponent<UnitController>();
-                if (myUnitController.GetUnitType() == lookForType && myUnitController.GetUnitName() != unitName) return myGO;
-            }
+            if (!taken.Contains(Unit(prefabs[i]).GetUnitType())) indexes.Add(i);
         }
-        else
+        return indexes;
+    }
+
+    // The unit of the other team that goes with the given one: the same type, the other variant.
+    private GameObject GetOpposingUnit(int picker, GameObject prefab)
+    {
+        UnitController chosen = Unit(prefab);
+        foreach (GameObject candidate in Prefabs(picker == 1 ? 2 : 1))
         {
-            foreach (GameObject myGO in _player1UnitPrefabs)
-            {
-                myUnitController = myGO.GetComponent<UnitController>();
-                if (myUnitController.GetUnitType() == lookForType && myUnitController.GetUnitName() != unitName) return myGO;
-            }
+            UnitController unit = Unit(candidate);
+            if (unit.GetUnitType() == chosen.GetUnitType() && unit.GetUnitName() != chosen.GetUnitName()) return candidate;
         }
         return null;
     }
 
-    // Ignore the human pressing buttons while the computer is choosing.
-    private bool IsBlockedByAi() => GameSession.IsAiPlayer(_currentPlayer) && !_aiPicking;
-
-    private void StartAiPickIfNeeded()
+    private GameObject CurrentPick(int picker)
     {
-        if (GameSession.IsAiPlayer(_currentPlayer)) StartCoroutine(AiPick());
+        List<int> available = AvailableIndexes(picker);
+        return Prefabs(picker)[available[_cursor % available.Count]];
     }
 
-    private IEnumerator AiPick()
+    // What a team shows in a place: 0 is its Superior, 1 to 4 the doppelgangers, places after the current one stay empty.
+    private GameObject UnitAt(int team, int slot)
     {
-        _nextButton.interactable = false;
-        yield return new WaitForSeconds(0.6f);
-        _aiPicking = true;
-        int unitCount = _currentPlayer == 1 ? _player1UnitPrefabs.Length : _player2UnitPrefabs.Length;
-        int steps = UnityEngine.Random.Range(0, Mathf.Max(1, unitCount - 1));
-        _aiPicking = false;
-        for (int i = 0; i < steps; i++)
+        int player = team + 1;
+        if (slot == 0) return Prefabs(player)[0];
+        if (slot > _round + 1 || slot > Picks) return null;
+        int picker = PickerOf(slot - 1);
+        GameObject pick = slot <= _round ? Prefabs(picker)[_picked[slot - 1]] : CurrentPick(picker);
+        return player == picker ? pick : GetOpposingUnit(picker, pick);
+    }
+
+    private bool IsAiTurn() => _round < Picks && GameSession.IsAiPlayer(PickerOf(_round));
+
+    private void Refresh()
+    {
+        int current = Mathf.Min(_round, Picks - 1);
+        int picker = PickerOf(current);
+        bool arrowsAllowed = !IsAiTurn();
+        for (int team = 0; team < _teams.Length; team++)
         {
-            _aiPicking = true;
-            NextUnit("right");
-            _aiPicking = false;
-            yield return new WaitForSeconds(0.25f);
+            Color color = team == 0 ? Hot : Cold;
+            ChoiceTeamView view = _teams[team];
+            _hovered[team] = -1;
+            view.SetIdle(picker != team + 1);
+            view.SetTexts(Loc.T(team == 0 ? "TEAM RED" : "TEAM BLUE"), Loc.T("Player " + (team + 1)));
+            Sprite ghost = Unit(Prefabs(team + 1)[0]).GetUnitPortrait();
+            for (int slot = 0; slot < view.Slots.Length; slot++)
+            {
+                GameObject prefab = UnitAt(team, slot);
+                bool isCurrent = slot == _round + 1;
+                view.Slots[slot].Show(prefab != null ? Unit(prefab) : null, ghost, slot == 0,
+                    isCurrent && picker == team + 1, isCurrent && picker == team + 1 && arrowsAllowed, color);
+            }
+            ShowInfo(team, _round + 1);
         }
-        yield return new WaitForSeconds(0.5f);
-        _nextButton.interactable = true;
-        _aiPicking = true;
-        NextUnitPanel();
-        _aiPicking = false;
+        RefreshHeader(current, picker);
+        bool last = _round == Picks - 1;
+        _hint.text = Loc.T("By choosing one, you also make a choice for your enemy.");
+        _nextButton.SetText(Loc.T(last ? "DONE" : "NEXT"));
+        _nextButton.SetPulsing(last);
+        _nextButton.SetInteractable(!IsAiTurn());
+        _backButton.SetText(Loc.T("BACK"));
+    }
+
+    private void RefreshHeader(int current, int picker)
+    {
+        _title.text = Loc.T("CHOOSE <color=#D72E66>DOPPELGANGER</color>");
+        string who = "<color=" + (picker == 1 ? HotColor : ColdColor) + ">" + Loc.T("YOUR") + "</color>";
+        _turnText.text = string.Format(Loc.T("PICK {0} CREW {1} OF {2}"), who, current + 1, Picks);
+        _turnText.ForceMeshUpdate();
+        _dotsRoot.anchoredPosition = new Vector2(_turnText.rectTransform.anchoredPosition.x + _turnText.preferredWidth + 16.0f, _dotsRoot.anchoredPosition.y);
+        for (int i = 0; i < _dots.Length; i++)
+        {
+            _dots[i].color = i < _round ? (PickerOf(i) == 1 ? Hot : Cold) : DotEmpty;
+        }
+        _dotRing.gameObject.SetActive(_round < Picks);
+        if (_round < Picks) _dotRing.anchoredPosition = _dots[current].rectTransform.anchoredPosition;
+    }
+
+    private void ShowInfo(int team, int slot)
+    {
+        GameObject prefab = UnitAt(team, slot);
+        if (prefab == null) prefab = UnitAt(team, Mathf.Min(slot, Picks));
+        _teams[team].Info.Show(Unit(prefab), team == 0 ? Hot : Cold);
+    }
+
+    private void OnSlotHover(int team, int slot, bool hovered)
+    {
+        if (hovered && UnitAt(team, slot) == null) return;
+        _hovered[team] = hovered ? slot : -1;
+        if (hovered) SoundController.Instance?.PlayHover();
+        ShowInfo(team, hovered ? slot : _round + 1);
+    }
+
+    private void Step(int direction)
+    {
+        if (IsAiTurn() && _aiPick == null) return;
+        int count = AvailableIndexes(PickerOf(_round)).Count;
+        _cursor = (_cursor + direction + count) % count;
+        SoundController.Instance?.PlayClick();
+        Refresh();
+    }
+
+    private void ConfirmPick()
+    {
+        if (IsAiTurn() && _aiPick == null) return;
+        int picker = PickerOf(_round);
+        SoundController.Instance?.PlayClick();
+        GameObject pick = CurrentPick(picker);
+        GameObject opposing = GetOpposingUnit(picker, pick);
+        _myGameController.AddUnitPrefab(pick, picker);
+        _myGameController.AddUnitPrefab(opposing, picker == 1 ? 2 : 1);
+        if (_round == Picks - 1)
+        {
+            gameObject.SetActive(false);
+            _myGameController.StartGame();
+            return;
+        }
+        List<int> available = AvailableIndexes(picker);
+        _picked.Add(available[_cursor % available.Count]);
+        _round++;
+        _cursor = 0;
+        Refresh();
+        StartAiPickIfNeeded();
     }
 
     // Back: return to the game mode choice in the menu (works for the computer's picks too).
-    public void BackToModeSelection()
+    private void BackToModeSelection()
     {
         StopAllCoroutines();
         GameSession.OpenPlayMenu = true;
         _myGameController.QuitPressed();
     }
 
-    public void NextUnitPanel()
+    private void StartAiPickIfNeeded()
     {
-        TMP_Text buttonText;
-        UnitController currentUnitController;
-        GameObject opposingUnit;
-        bool unitValid;
-
-        if (IsBlockedByAi()) return;
-
-        SoundController.Instance.PlayClick();
-        currentUnitController = _currentUnitPanel.GetUnitPrefab().GetComponent<UnitController>();
-        _chosenUnits.Add(new ChosenUnit(currentUnitController.GetPlayerId(), currentUnitController.GetUnitType()));
-        _myGameController.AddUnitPrefab(_currentUnitPanel.GetUnitPrefab(), _currentPlayer);
-        _currentUnitPanel.DisableButtons();
-        if (_currentPanelIndex != 0)    // if minion was chosen
-        {
-            currentUnitController = _currentOpponentUnitPanel.GetUnitPrefab().GetComponent<UnitController>();
-            _chosenUnits.Add(new ChosenUnit(currentUnitController.GetPlayerId(), currentUnitController.GetUnitType()));
-            _myGameController.AddUnitPrefab(_currentOpponentUnitPanel.GetUnitPrefab(), _currentPlayer == 1 ? 2 : 1);
-            _currentOpponentUnitPanel.DisableButtons();
-        }
-        /*else
-        {
-            // if commander was chosen
-        }
-        {
-            _player2Panels[0].gameObject.SetActive(true);
-            _player2InfoPanel.gameObject.SetActive(true);
-            _player2InfoPanel.DisplayUnit(_player2UnitPrefabs[0].GetComponent<UnitController>());
-            _myDescription.text = Loc.T("Player 2: Choose your commander");
-        }*/
-        if (_currentPlayer == 2 && _currentPanelIndex >= _player1Panels.Length-1)
-        {
-            gameObject.SetActive(false);
-            _myGameController.StartGame();
-            return;
-        }
-        if (_currentPlayer == 1)
-        {
-            _currentPlayer = 2;
-            _currentUnitIndex = 1;
-            if (_currentPanelIndex != 0)    // if minion is being chosen
-            {
-                unitValid = false;
-                while (!unitValid)
-                {
-                    currentUnitController = _player2UnitPrefabs[_currentUnitIndex].GetComponent<UnitController>();
-                    if (!_chosenUnits.Contains(new ChosenUnit(currentUnitController.GetPlayerId(), currentUnitController.GetUnitType()))) unitValid = true;
-                    else _currentUnitIndex++;
-                }
-                _currentPanelIndex++;
-                _currentOpponentUnitPanel = _player1Panels[_currentPanelIndex];
-                _currentOpponentUnitPanel.EnableMe();
-                _currentOpponentUnitPanel.DisableButtons();
-                opposingUnit = GetOpposingUnit(currentUnitController.GetUnitType(), currentUnitController.GetUnitName());
-                _currentOpponentUnitPanel.SetUnit(opposingUnit);
-                _player1InfoPanel.DisplayUnit(opposingUnit.GetComponent<UnitController>());
-                _myDescription.text = ChoicePrompt("Super Cold: Choose doppelganger.");
-                _currentUnitPanel = _player2Panels[_currentPanelIndex];
-                _currentUnitPanel.SetUnit(_player2UnitPrefabs[_currentUnitIndex]);
-                _player2InfoPanel.DisplayUnit(currentUnitController);
-            }
-            else
-            {
-                currentUnitController = _player2UnitPrefabs[0].GetComponent<UnitController>();
-                _currentUnitPanel = _player2Panels[_currentPanelIndex];
-                _currentUnitPanel.SetUnit(_player2UnitPrefabs[0]);
-                _player2InfoPanel.DisplayUnit(currentUnitController);
-            }
-        }
-        else
-        {
-            _currentPlayer = 1;
-            _currentUnitIndex = 1;
-            unitValid = false;
-            while (!unitValid)
-            {
-                currentUnitController = _player1UnitPrefabs[_currentUnitIndex].GetComponent<UnitController>();
-                if (!_chosenUnits.Contains(new ChosenUnit(currentUnitController.GetPlayerId(), currentUnitController.GetUnitType()))) unitValid = true;
-                else _currentUnitIndex++;
-            }
-            _currentPanelIndex++;
-            _currentOpponentUnitPanel = _player2Panels[_currentPanelIndex];
-            _currentOpponentUnitPanel.EnableMe();
-            _currentOpponentUnitPanel.DisableButtons();
-            opposingUnit = GetOpposingUnit(currentUnitController.GetUnitType(), currentUnitController.GetUnitName());
-            _currentOpponentUnitPanel.SetUnit(opposingUnit);
-            _currentUnitPanel = _player1Panels[_currentPanelIndex];
-            _currentUnitPanel.SetUnit(_player1UnitPrefabs[_currentUnitIndex]);
-            _player2InfoPanel.DisplayUnit(opposingUnit.GetComponent<UnitController>());
-            _player1InfoPanel.DisplayUnit(currentUnitController);
-            _myDescription.text = ChoicePrompt("Super Hot: Choose doppelganger.");
-        }
-        if (_currentPlayer == 2 && _currentPanelIndex + 1 == _player2Panels.Length)
-        {
-            buttonText = _nextButton.GetComponentInChildren<TMP_Text>();
-            buttonText.text = Loc.T("Done");
-        }
-        _currentUnitPanel.EnableMe();
-        if (GameSession.IsAiPlayer(_currentPlayer)) _currentUnitPanel.DisableButtons();
-        StartAiPickIfNeeded();
+        if (IsAiTurn()) _aiPick = StartCoroutine(AiPick());
     }
 
-    public void NextUnit(string direction)
+    private IEnumerator AiPick()
     {
-        GameObject opposingUnit;
-        UnitController currentUnitController;
-        bool unitValid;
-
-        if (IsBlockedByAi()) return;
-        SoundController.Instance.PlayClick();
-        unitValid = false;
-        while (!unitValid)
+        yield return new WaitForSeconds(0.6f);
+        int steps = Random.Range(0, Mathf.Max(1, AvailableIndexes(PickerOf(_round)).Count - 1));
+        for (int i = 0; i < steps; i++)
         {
-            if (direction == "right")
-            {
-                if (_currentPlayer == 1)
-                {
-                    if (_currentUnitIndex == _player1UnitPrefabs.Length - 1) _currentUnitIndex = 1;
-                    else _currentUnitIndex++;
-                }
-                else
-                {
-                    if (_currentUnitIndex == _player2UnitPrefabs.Length - 1) _currentUnitIndex = 1;
-                    else _currentUnitIndex++;
-                }
-            }
-            else
-            {
-                if (_currentPlayer == 1)
-                {
-                    if (_currentUnitIndex == 1) _currentUnitIndex = _player1UnitPrefabs.Length - 1;
-                    else _currentUnitIndex--;
-                }
-                else
-                {
-                    if (_currentUnitIndex == 1) _currentUnitIndex = _player2UnitPrefabs.Length - 1;
-                    else _currentUnitIndex--;
-                }
-            }
-            if (_currentPlayer == 1)
-            {
-                currentUnitController = _player1UnitPrefabs[_currentUnitIndex].GetComponent<UnitController>();
-            }
-            else
-            {
-                currentUnitController = _player2UnitPrefabs[_currentUnitIndex].GetComponent<UnitController>();
-            }
-            if (!_chosenUnits.Contains(new ChosenUnit(currentUnitController.GetPlayerId(), currentUnitController.GetUnitType()))) unitValid = true;
+            Step(1);
+            yield return new WaitForSeconds(0.25f);
         }
-        if(_currentPlayer == 1)
-        {
-            _currentUnitPanel.SetUnit(_player1UnitPrefabs[_currentUnitIndex]);
-            currentUnitController = _player1UnitPrefabs[_currentUnitIndex].GetComponent<UnitController>();
-            _player1InfoPanel.DisplayUnit(currentUnitController);
-            opposingUnit = GetOpposingUnit(currentUnitController.GetUnitType(), currentUnitController.GetUnitName());
-            _currentOpponentUnitPanel.SetUnit(opposingUnit);
-            _player2InfoPanel.DisplayUnit(opposingUnit.GetComponent<UnitController>()); 
-        }
-        else
-        {
-            _currentUnitPanel.SetUnit(_player2UnitPrefabs[_currentUnitIndex]);
-            currentUnitController = _player2UnitPrefabs[_currentUnitIndex].GetComponent<UnitController>();
-            _player2InfoPanel.DisplayUnit(currentUnitController);
-            opposingUnit = GetOpposingUnit(currentUnitController.GetUnitType(), currentUnitController.GetUnitName());
-            _currentOpponentUnitPanel.SetUnit(opposingUnit);
-            _player1InfoPanel.DisplayUnit(opposingUnit.GetComponent<UnitController>());
-        }
+        yield return new WaitForSeconds(0.5f);
+        Coroutine self = _aiPick;
+        ConfirmPick();
+        if (_aiPick == self) _aiPick = null;
     }
 }

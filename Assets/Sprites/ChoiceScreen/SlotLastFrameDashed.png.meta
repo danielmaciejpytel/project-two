@@ -1,0 +1,2210 @@
+fileFormatVersion: 2
+guid: 5dca0319f0d74164095f81acd26efd61
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 3083844327886798719
+    second: SlotLastFrameDashed_0
+  - first:
+      213: 952197401738352790
+    second: SlotLastFrameDashed_1
+  - first:
+      213: -2187227890335786035
+    second: SlotLastFrameDashed_2
+  - first:
+      213: 8875281566878046936
+    second: SlotLastFrameDashed_3
+  - first:
+      213: 1718409767442300560
+    second: SlotLastFrameDashed_4
+  - first:
+      213: 8326044237188090251
+    second: SlotLastFrameDashed_5
+  - first:
+      213: -2826730826754530533
+    second: SlotLastFrameDashed_6
+  - first:
+      213: 2080875345210126484
+    second: SlotLastFrameDashed_7
+  - first:
+      213: 671015357036212858
+    second: SlotLastFrameDashed_8
+  - first:
+      213: 2762514468313449297
+    second: SlotLastFrameDashed_9
+  - first:
+      213: 59460183279555982
+    second: SlotLastFrameDashed_10
+  - first:
+      213: 6793817750617442169
+    second: SlotLastFrameDashed_11
+  - first:
+      213: 4811376010358202428
+    second: SlotLastFrameDashed_12
+  - first:
+      213: -5586729281952645840
+    second: SlotLastFrameDashed_13
+  - first:
+      213: -2984944227351407214
+    second: SlotLastFrameDashed_14
+  - first:
+      213: -3326128082773261930
+    second: SlotLastFrameDashed_15
+  - first:
+      213: -3944734430750770307
+    second: SlotLastFrameDashed_16
+  - first:
+      213: 3498024481066074262
+    second: SlotLastFrameDashed_17
+  - first:
+      213: 7145676006724274173
+    second: SlotLastFrameDashed_18
+  - first:
+      213: -5751715877065809945
+    second: SlotLastFrameDashed_19
+  - first:
+      213: 7237694647602956947
+    second: SlotLastFrameDashed_20
+  - first:
+      213: 4205752264560529256
+    second: SlotLastFrameDashed_21
+  - first:
+      213: -4934529736234551951
+    second: SlotLastFrameDashed_22
+  - first:
+      213: -6216464959071153954
+    second: SlotLastFrameDashed_23
+  - first:
+      213: 4989021840244549934
+    second: SlotLastFrameDashed_24
+  - first:
+      213: 3226600916923887550
+    second: SlotLastFrameDashed_25
+  - first:
+      213: 557206021082391439
+    second: SlotLastFrameDashed_26
+  - first:
+      213: 2410102469588375996
+    second: SlotLastFrameDashed_27
+  - first:
+      213: -1699093231298455552
+    second: SlotLastFrameDashed_28
+  - first:
+      213: -78143644656743556
+    second: SlotLastFrameDashed_29
+  - first:
+      213: -4697354937004654392
+    second: SlotLastFrameDashed_30
+  - first:
+      213: -2488564626831421256
+    second: SlotLastFrameDashed_31
+  - first:
+      213: -1785656368524577225
+    second: SlotLastFrameDashed_32
+  - first:
+      213: -3445815463926839036
+    second: SlotLastFrameDashed_33
+  - first:
+      213: -5163839443038838682
+    second: SlotLastFrameDashed_34
+  - first:
+      213: -1475451771467540058
+    second: SlotLastFrameDashed_35
+  - first:
+      213: 8874419264253224604
+    second: SlotLastFrameDashed_36
+  - first:
+      213: 6485930847790683384
+    second: SlotLastFrameDashed_37
+  - first:
+      213: -5667049133722330100
+    second: SlotLastFrameDashed_38
+  - first:
+      213: -2080965720573006763
+    second: SlotLastFrameDashed_39
+  - first:
+      213: 2428783860713464300
+    second: SlotLastFrameDashed_40
+  - first:
+      213: 7950931192315169317
+    second: SlotLastFrameDashed_41
+  - first:
+      213: 3911314509519828363
+    second: SlotLastFrameDashed_42
+  - first:
+      213: 3460494203447943261
+    second: SlotLastFrameDashed_43
+  - first:
+      213: -1475667707695907220
+    second: SlotLastFrameDashed_44
+  - first:
+      213: -1795384617048458291
+    second: SlotLastFrameDashed_45
+  - first:
+      213: 1867631084725238819
+    second: SlotLastFrameDashed_46
+  - first:
+      213: -2444154169967490843
+    second: SlotLastFrameDashed_47
+  - first:
+      213: 2712688431239734967
+    second: SlotLastFrameDashed_48
+  - first:
+      213: 4977362722941687423
+    second: SlotLastFrameDashed_49
+  - first:
+      213: -4104379537613838405
+    second: SlotLastFrameDashed_50
+  - first:
+      213: -4944133931925631130
+    second: SlotLastFrameDashed_51
+  - first:
+      213: 1819053155348245089
+    second: SlotLastFrameDashed_52
+  - first:
+      213: -1984453847405795432
+    second: SlotLastFrameDashed_53
+  - first:
+      213: -8842568678721495228
+    second: SlotLastFrameDashed_54
+  - first:
+      213: -4821199829839903436
+    second: SlotLastFrameDashed_55
+  - first:
+      213: 9020398628514224381
+    second: SlotLastFrameDashed_56
+  - first:
+      213: 9100775969830540976
+    second: SlotLastFrameDashed_57
+  - first:
+      213: -1461547005152769727
+    second: SlotLastFrameDashed_58
+  - first:
+      213: -6024904159575037139
+    second: SlotLastFrameDashed_59
+  - first:
+      213: -9107279737009746801
+    second: SlotLastFrameDashed_60
+  - first:
+      213: -1652379124185014151
+    second: SlotLastFrameDashed_61
+  - first:
+      213: -3622704930250286037
+    second: SlotLastFrameDashed_62
+  - first:
+      213: 1538095202198728608
+    second: SlotLastFrameDashed_63
+  - first:
+      213: -3026482634372666482
+    second: SlotLastFrameDashed_64
+  - first:
+      213: 6308109086976272746
+    second: SlotLastFrameDashed_65
+  - first:
+      213: -196564468071218685
+    second: SlotLastFrameDashed_66
+  - first:
+      213: -4060896711630787653
+    second: SlotLastFrameDashed_67
+  - first:
+      213: -1146942304000184544
+    second: SlotLastFrameDashed_68
+  - first:
+      213: 3764719127175590020
+    second: SlotLastFrameDashed_69
+  - first:
+      213: -7142494665905777023
+    second: SlotLastFrameDashed_70
+  - first:
+      213: -1709860832131648314
+    second: SlotLastFrameDashed_71
+  - first:
+      213: -1563633128338192358
+    second: SlotLastFrameDashed_72
+  - first:
+      213: 1781586987644950742
+    second: SlotLastFrameDashed_73
+  - first:
+      213: -5866564764067255707
+    second: SlotLastFrameDashed_74
+  - first:
+      213: -4092729619133252736
+    second: SlotLastFrameDashed_75
+  - first:
+      213: 7104309800399689885
+    second: SlotLastFrameDashed_76
+  - first:
+      213: 8130979738949409381
+    second: SlotLastFrameDashed_77
+  - first:
+      213: -1533782926125002789
+    second: SlotLastFrameDashed_78
+  - first:
+      213: -5911282016334735113
+    second: SlotLastFrameDashed_79
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 1
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 2
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 4096
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: SlotLastFrameDashed_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 561
+        width: 15
+        height: 5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f7fbb4ac3140cca20800000000000000
+      internalID: 3083844327886798719
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SlotLastFrameDashed_1
+      rect:
+        serializedVersion: 2
+        x: 21
+        y: 561
+        width: 14
+        height: 5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6981aaeed72e63d00800000000000000
+      internalID: 952197401738352790
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SlotLastFrameDashed_2
+      rect:
+        serializedVersion: 2
+        x: 41
+        y: 561
+        width: 14
+        height: 5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dcb55b972d765a1e0800000000000000
+      internalID: -2187227890335786035
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SlotLastFrameDashed_3
+      rect:
+        serializedVersion: 2
+        x: 60
+        y: 561
+        width: 15
+        height: 5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8da9653df855b2b70800000000000000
+      internalID: 8875281566878046936
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SlotLastFrameDashed_4
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 561
+        width: 14
+        height: 5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 09eb5f6349409d710800000000000000
+      internalID: 1718409767442300560
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SlotLastFrameDashed_5
+      rect:
+        serializedVersion: 2
+        x: 101
+        y: 561
+        width: 14
+        height: 5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b89c8c5de1d0c8370800000000000000
+      internalID: 8326044237188090251
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SlotLastFrameDashed_6
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 561
+        width: 15
+        height: 5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b1366ab2a4f65c8d0800000000000000
+      internalID: -2826730826754530533
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SlotLastFrameDashed_7
+      rect:
+        serializedVersion: 2
+        x: 141
+        y: 561
+        width: 14
+        height: 5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4903e1df911c0ec10800000000000000
+      internalID: 2080875345210126484
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SlotLastFrameDashed_8
+      rect:
+        serializedVersion: 2
+        x: 161
+        y: 561
+        width: 14
+        height: 5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a72b9fa79ecef4900800000000000000
+      internalID: 671015357036212858
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SlotLastFrameDashed_9
+      rect:
+        serializedVersion: 2
+        x: 181
+        y: 560
+        width: 15
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 15343b2c54c665620800000000000000
+      internalID: 2762514468313449297
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SlotLastFrameDashed_10
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 542
+        width: 5
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e8558aeb8be33d000800000000000000
+      internalID: 59460183279555982
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SlotLastFrameDashed_11
+      rect:
+        serializedVersion: 2
+        x: 196
+        y: 546
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 977cb4ebf3d784e50800000000000000
+      internalID: 6793817750617442169
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SlotLastFrameDashed_12
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 532
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c30ac3a5df075c240800000000000000
+      internalID: 4811376010358202428
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SlotLastFrameDashed_13
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 522
+        width: 5
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 03d70fc5153f772b0800000000000000
+      internalID: -5586729281952645840
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SlotLastFrameDashed_14
+      rect:
+        serializedVersion: 2
+        x: 225
+        y: 517
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 295dd564a095396d0800000000000000
+      internalID: -2984944227351407214
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SlotLastFrameDashed_15
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 502
+        width: 5
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 69149dc912837d1d0800000000000000
+      internalID: -3326128082773261930
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SlotLastFrameDashed_16
+      rect:
+        serializedVersion: 2
+        x: 239
+        y: 503
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d7bf8d17fec7149c0800000000000000
+      internalID: -3944734430750770307
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SlotLastFrameDashed_17
+      rect:
+        serializedVersion: 2
+        x: 253
+        y: 489
+        width: 9
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 69040917bba7b8030800000000000000
+      internalID: 3498024481066074262
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SlotLastFrameDashed_18
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 482
+        width: 5
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: df705dcf77a8a2360800000000000000
+      internalID: 7145676006724274173
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SlotLastFrameDashed_19
+      rect:
+        serializedVersion: 2
+        x: 257
+        y: 469
+        width: 5
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7ef948a32eccd20b0800000000000000
+      internalID: -5751715877065809945
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SlotLastFrameDashed_20
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 462
+        width: 5
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 39ace1f5fe4717460800000000000000
+      internalID: 7237694647602956947
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SlotLastFrameDashed_21
+      rect:
+        serializedVersion: 2
+        x: 257
+        y: 449
+        width: 5
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 86fcc6ec665dd5a30800000000000000
+      internalID: 4205752264560529256
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SlotLastFrameDashed_22
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 442
+        width: 5
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 17533226957058bb0800000000000000
+      internalID: -4934529736234551951
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SlotLastFrameDashed_23
+      rect:
+        serializedVersion: 2
+        x: 257
+        y: 429
+        width: 5
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ed096e35e0eaab9a0800000000000000
+      internalID: -6216464959071153954
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SlotLastFrameDashed_24
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 422
+        width: 5
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e2921744ee09c3540800000000000000
+      internalID: 4989021840244549934
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SlotLastFrameDashed_25
+      rect:
+        serializedVersion: 2
+        x: 257
+        y: 409
+        width: 5
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ebfa23d407037cc20800000000000000
+      internalID: 3226600916923887550
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SlotLastFrameDashed_26
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 402
+        width: 5
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f8323598ce79bb700800000000000000
+      internalID: 557206021082391439
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SlotLastFrameDashed_27
+      rect:
+        serializedVersion: 2
+        x: 257
+        y: 389
+        width: 5
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cb95b144d67627120800000000000000
+      internalID: 2410102469588375996
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SlotLastFrameDashed_28
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 382
+        width: 5
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0085f2455bb9b68e0800000000000000
+      internalID: -1699093231298455552
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SlotLastFrameDashed_29
+      rect:
+        serializedVersion: 2
+        x: 257
+        y: 369
+        width: 5
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c7bc7cae4c06aeef0800000000000000
+      internalID: -78143644656743556
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SlotLastFrameDashed_30
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 362
+        width: 5
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8c009eb8294afceb0800000000000000
+      internalID: -4697354937004654392
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SlotLastFrameDashed_31
+      rect:
+        serializedVersion: 2
+        x: 257
+        y: 349
+        width: 5
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8b05c1928a7d67dd0800000000000000
+      internalID: -2488564626831421256
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SlotLastFrameDashed_32
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 342
+        width: 5
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 736bd2f5ef21837e0800000000000000
+      internalID: -1785656368524577225
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SlotLastFrameDashed_33
+      rect:
+        serializedVersion: 2
+        x: 257
+        y: 329
+        width: 5
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 409c71f97110e20d0800000000000000
+      internalID: -3445815463926839036
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SlotLastFrameDashed_34
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 322
+        width: 5
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 660e480c26b5658b0800000000000000
+      internalID: -5163839443038838682
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SlotLastFrameDashed_35
+      rect:
+        serializedVersion: 2
+        x: 257
+        y: 309
+        width: 5
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6a9d47e5e64268be0800000000000000
+      internalID: -1475451771467540058
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SlotLastFrameDashed_36
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 302
+        width: 5
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c9662b95d45482b70800000000000000
+      internalID: 8874419264253224604
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SlotLastFrameDashed_37
+      rect:
+        serializedVersion: 2
+        x: 257
+        y: 289
+        width: 5
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8f4df4cfdb7a20a50800000000000000
+      internalID: 6485930847790683384
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SlotLastFrameDashed_38
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 282
+        width: 5
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c0c9bc396d89a51b0800000000000000
+      internalID: -5667049133722330100
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SlotLastFrameDashed_39
+      rect:
+        serializedVersion: 2
+        x: 257
+        y: 269
+        width: 5
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 55c2b7bd3bcee13e0800000000000000
+      internalID: -2080965720573006763
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SlotLastFrameDashed_40
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 262
+        width: 5
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ce127069d06c4b120800000000000000
+      internalID: 2428783860713464300
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SlotLastFrameDashed_41
+      rect:
+        serializedVersion: 2
+        x: 257
+        y: 249
+        width: 5
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 52ac4872bc1675e60800000000000000
+      internalID: 7950931192315169317
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SlotLastFrameDashed_42
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 242
+        width: 5
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b85b2c8c2d7c74630800000000000000
+      internalID: 3911314509519828363
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SlotLastFrameDashed_43
+      rect:
+        serializedVersion: 2
+        x: 257
+        y: 229
+        width: 5
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d5020dfb425260030800000000000000
+      internalID: 3460494203447943261
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SlotLastFrameDashed_44
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 222
+        width: 5
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c6e354cc900658be0800000000000000
+      internalID: -1475667707695907220
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SlotLastFrameDashed_45
+      rect:
+        serializedVersion: 2
+        x: 257
+        y: 209
+        width: 5
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dcb30a104338517e0800000000000000
+      internalID: -1795384617048458291
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SlotLastFrameDashed_46
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 202
+        width: 5
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 32c768093982be910800000000000000
+      internalID: 1867631084725238819
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SlotLastFrameDashed_47
+      rect:
+        serializedVersion: 2
+        x: 257
+        y: 189
+        width: 5
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5e84cca6bbe941ed0800000000000000
+      internalID: -2444154169967490843
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SlotLastFrameDashed_48
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 182
+        width: 5
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7b62b5a71c765a520800000000000000
+      internalID: 2712688431239734967
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SlotLastFrameDashed_49
+      rect:
+        serializedVersion: 2
+        x: 257
+        y: 169
+        width: 5
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f76d53b7605231540800000000000000
+      internalID: 4977362722941687423
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SlotLastFrameDashed_50
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 162
+        width: 5
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bb725257e805a07c0800000000000000
+      internalID: -4104379537613838405
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SlotLastFrameDashed_51
+      rect:
+        serializedVersion: 2
+        x: 257
+        y: 149
+        width: 5
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 66f0e915268e26bb0800000000000000
+      internalID: -4944133931925631130
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SlotLastFrameDashed_52
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 142
+        width: 5
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 16ae51005339e3910800000000000000
+      internalID: 1819053155348245089
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SlotLastFrameDashed_53
+      rect:
+        serializedVersion: 2
+        x: 257
+        y: 129
+        width: 5
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 89768386dbdc574e0800000000000000
+      internalID: -1984453847405795432
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SlotLastFrameDashed_54
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 122
+        width: 5
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 44f5fcaf2a2e84580800000000000000
+      internalID: -8842568678721495228
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SlotLastFrameDashed_55
+      rect:
+        serializedVersion: 2
+        x: 257
+        y: 109
+        width: 5
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 435083f6c48a71db0800000000000000
+      internalID: -4821199829839903436
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SlotLastFrameDashed_56
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 102
+        width: 5
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: df8d201b2c4ee2d70800000000000000
+      internalID: 9020398628514224381
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SlotLastFrameDashed_57
+      rect:
+        serializedVersion: 2
+        x: 257
+        y: 89
+        width: 5
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0b6192ec6837c4e70800000000000000
+      internalID: 9100775969830540976
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SlotLastFrameDashed_58
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 82
+        width: 5
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 149455f0eba87bbe0800000000000000
+      internalID: -1461547005152769727
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SlotLastFrameDashed_59
+      rect:
+        serializedVersion: 2
+        x: 257
+        y: 69
+        width: 5
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d2ba1c2969d336ca0800000000000000
+      internalID: -6024904159575037139
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SlotLastFrameDashed_60
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 62
+        width: 5
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f8ccb65e4517c9180800000000000000
+      internalID: -9107279737009746801
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SlotLastFrameDashed_61
+      rect:
+        serializedVersion: 2
+        x: 257
+        y: 49
+        width: 5
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9706ea4f0f19119e0800000000000000
+      internalID: -1652379124185014151
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SlotLastFrameDashed_62
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 42
+        width: 5
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b2c10625f0199bdc0800000000000000
+      internalID: -3622704930250286037
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SlotLastFrameDashed_63
+      rect:
+        serializedVersion: 2
+        x: 257
+        y: 29
+        width: 5
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0afa9cdef69685510800000000000000
+      internalID: 1538095202198728608
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SlotLastFrameDashed_64
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 22
+        width: 5
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e8b245b3416cff5d0800000000000000
+      internalID: -3026482634372666482
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SlotLastFrameDashed_65
+      rect:
+        serializedVersion: 2
+        x: 257
+        y: 9
+        width: 5
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a6962a5fac7ea8750800000000000000
+      internalID: 6308109086976272746
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SlotLastFrameDashed_66
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 2
+        width: 5
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 302c62168a9a54df0800000000000000
+      internalID: -196564468071218685
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SlotLastFrameDashed_67
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 0
+        width: 15
+        height: 5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bbbe1b1d4fbc4a7c0800000000000000
+      internalID: -4060896711630787653
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SlotLastFrameDashed_68
+      rect:
+        serializedVersion: 2
+        x: 27
+        y: 0
+        width: 15
+        height: 5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 02f63302d0e3510f0800000000000000
+      internalID: -1146942304000184544
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SlotLastFrameDashed_69
+      rect:
+        serializedVersion: 2
+        x: 47
+        y: 0
+        width: 15
+        height: 5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4807b6e8918fe3430800000000000000
+      internalID: 3764719127175590020
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SlotLastFrameDashed_70
+      rect:
+        serializedVersion: 2
+        x: 67
+        y: 0
+        width: 15
+        height: 5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1865094a1f2c0ec90800000000000000
+      internalID: -7142494665905777023
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SlotLastFrameDashed_71
+      rect:
+        serializedVersion: 2
+        x: 87
+        y: 0
+        width: 15
+        height: 5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6c47075e1aa5548e0800000000000000
+      internalID: -1709860832131648314
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SlotLastFrameDashed_72
+      rect:
+        serializedVersion: 2
+        x: 107
+        y: 0
+        width: 15
+        height: 5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a188e5a44fbdc4ae0800000000000000
+      internalID: -1563633128338192358
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SlotLastFrameDashed_73
+      rect:
+        serializedVersion: 2
+        x: 127
+        y: 0
+        width: 15
+        height: 5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6d8190f0de779b810800000000000000
+      internalID: 1781586987644950742
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SlotLastFrameDashed_74
+      rect:
+        serializedVersion: 2
+        x: 147
+        y: 0
+        width: 15
+        height: 5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 56aa2f1fd66c59ea0800000000000000
+      internalID: -5866564764067255707
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SlotLastFrameDashed_75
+      rect:
+        serializedVersion: 2
+        x: 167
+        y: 0
+        width: 15
+        height: 5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 08bb7d97814b337c0800000000000000
+      internalID: -4092729619133252736
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SlotLastFrameDashed_76
+      rect:
+        serializedVersion: 2
+        x: 187
+        y: 0
+        width: 15
+        height: 5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d98562b8f14979260800000000000000
+      internalID: 7104309800399689885
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SlotLastFrameDashed_77
+      rect:
+        serializedVersion: 2
+        x: 207
+        y: 0
+        width: 15
+        height: 5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 56a5af72efa07d070800000000000000
+      internalID: 8130979738949409381
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SlotLastFrameDashed_78
+      rect:
+        serializedVersion: 2
+        x: 227
+        y: 0
+        width: 15
+        height: 5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bdf82c51e88e6bae0800000000000000
+      internalID: -1533782926125002789
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SlotLastFrameDashed_79
+      rect:
+        serializedVersion: 2
+        x: 247
+        y: 0
+        width: 15
+        height: 5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7f896315358e6fda0800000000000000
+      internalID: -5911282016334735113
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      SlotLastFrameDashed_0: 3083844327886798719
+      SlotLastFrameDashed_1: 952197401738352790
+      SlotLastFrameDashed_10: 59460183279555982
+      SlotLastFrameDashed_11: 6793817750617442169
+      SlotLastFrameDashed_12: 4811376010358202428
+      SlotLastFrameDashed_13: -5586729281952645840
+      SlotLastFrameDashed_14: -2984944227351407214
+      SlotLastFrameDashed_15: -3326128082773261930
+      SlotLastFrameDashed_16: -3944734430750770307
+      SlotLastFrameDashed_17: 3498024481066074262
+      SlotLastFrameDashed_18: 7145676006724274173
+      SlotLastFrameDashed_19: -5751715877065809945
+      SlotLastFrameDashed_2: -2187227890335786035
+      SlotLastFrameDashed_20: 7237694647602956947
+      SlotLastFrameDashed_21: 4205752264560529256
+      SlotLastFrameDashed_22: -4934529736234551951
+      SlotLastFrameDashed_23: -6216464959071153954
+      SlotLastFrameDashed_24: 4989021840244549934
+      SlotLastFrameDashed_25: 3226600916923887550
+      SlotLastFrameDashed_26: 557206021082391439
+      SlotLastFrameDashed_27: 2410102469588375996
+      SlotLastFrameDashed_28: -1699093231298455552
+      SlotLastFrameDashed_29: -78143644656743556
+      SlotLastFrameDashed_3: 8875281566878046936
+      SlotLastFrameDashed_30: -4697354937004654392
+      SlotLastFrameDashed_31: -2488564626831421256
+      SlotLastFrameDashed_32: -1785656368524577225
+      SlotLastFrameDashed_33: -3445815463926839036
+      SlotLastFrameDashed_34: -5163839443038838682
+      SlotLastFrameDashed_35: -1475451771467540058
+      SlotLastFrameDashed_36: 8874419264253224604
+      SlotLastFrameDashed_37: 6485930847790683384
+      SlotLastFrameDashed_38: -5667049133722330100
+      SlotLastFrameDashed_39: -2080965720573006763
+      SlotLastFrameDashed_4: 1718409767442300560
+      SlotLastFrameDashed_40: 2428783860713464300
+      SlotLastFrameDashed_41: 7950931192315169317
+      SlotLastFrameDashed_42: 3911314509519828363
+      SlotLastFrameDashed_43: 3460494203447943261
+      SlotLastFrameDashed_44: -1475667707695907220
+      SlotLastFrameDashed_45: -1795384617048458291
+      SlotLastFrameDashed_46: 1867631084725238819
+      SlotLastFrameDashed_47: -2444154169967490843
+      SlotLastFrameDashed_48: 2712688431239734967
+      SlotLastFrameDashed_49: 4977362722941687423
+      SlotLastFrameDashed_5: 8326044237188090251
+      SlotLastFrameDashed_50: -4104379537613838405
+      SlotLastFrameDashed_51: -4944133931925631130
+      SlotLastFrameDashed_52: 1819053155348245089
+      SlotLastFrameDashed_53: -1984453847405795432
+      SlotLastFrameDashed_54: -8842568678721495228
+      SlotLastFrameDashed_55: -4821199829839903436
+      SlotLastFrameDashed_56: 9020398628514224381
+      SlotLastFrameDashed_57: 9100775969830540976
+      SlotLastFrameDashed_58: -1461547005152769727
+      SlotLastFrameDashed_59: -6024904159575037139
+      SlotLastFrameDashed_6: -2826730826754530533
+      SlotLastFrameDashed_60: -9107279737009746801
+      SlotLastFrameDashed_61: -1652379124185014151
+      SlotLastFrameDashed_62: -3622704930250286037
+      SlotLastFrameDashed_63: 1538095202198728608
+      SlotLastFrameDashed_64: -3026482634372666482
+      SlotLastFrameDashed_65: 6308109086976272746
+      SlotLastFrameDashed_66: -196564468071218685
+      SlotLastFrameDashed_67: -4060896711630787653
+      SlotLastFrameDashed_68: -1146942304000184544
+      SlotLastFrameDashed_69: 3764719127175590020
+      SlotLastFrameDashed_7: 2080875345210126484
+      SlotLastFrameDashed_70: -7142494665905777023
+      SlotLastFrameDashed_71: -1709860832131648314
+      SlotLastFrameDashed_72: -1563633128338192358
+      SlotLastFrameDashed_73: 1781586987644950742
+      SlotLastFrameDashed_74: -5866564764067255707
+      SlotLastFrameDashed_75: -4092729619133252736
+      SlotLastFrameDashed_76: 7104309800399689885
+      SlotLastFrameDashed_77: 8130979738949409381
+      SlotLastFrameDashed_78: -1533782926125002789
+      SlotLastFrameDashed_79: -5911282016334735113
+      SlotLastFrameDashed_8: 671015357036212858
+      SlotLastFrameDashed_9: 2762514468313449297
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
