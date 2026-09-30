@@ -37,6 +37,7 @@ przygotowanym przez cały Team 13. Od tego czasu Daniel Pytel wprowadził:
   - Jednostka zabita w trakcie akcji Superiora nie blokuje już tury.
 - **Czystszy kod.** Plansza liczy zasięg ruchu i ścieżki jednym przeszukiwaniem wszerz. Skrypty
   trzymają się typowych konwencji C#, a animacje są bezpiecznie powiązane ze swoimi obiektami.
+  Pliki i foldery w `Assets` mają nazwy w PascalCase, a nieużywane zasoby zostały usunięte.
 - **Nowy interfejs.** Interfejs skaluje się z rozdzielczością ekranu i korzysta z TextMeshPro
   z ostrą pikselową czcionką o stałych rozmiarach. HUD ma napis tury w kolorze drużyny
   i zwijany dziennik bitwy po stronie aktywnego gracza. Menu ma nową instrukcję i wolno

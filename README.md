@@ -37,6 +37,7 @@ by the whole Team 13. Since then Daniel Pytel has added:
   - A unit killed while its Superior acted no longer blocks the turn.
 - **Cleaner code.** The board computes move range and paths with a single breadth-first search.
   The scripts follow common C# conventions, and animations are safely linked to their objects.
+  Files and folders in `Assets` use PascalCase names, and unused assets were removed.
 - **New interface.** The UI scales with the screen resolution and uses TextMeshPro with a sharp
   pixel font at fixed sizes. The HUD has a team-coloured turn label and a collapsible battle log
   on the active player's side. The menu has new instructions and slowly floating artwork, and the
