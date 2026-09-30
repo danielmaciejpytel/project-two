@@ -19,6 +19,8 @@ W grę mogą grać dwie osoby przy jednym ekranie albo jedna osoba przeciwko kom
 | --- | --- |
 | ![Menu główne](Docs/Screenshots/menu.png) | ![Twórcy](Docs/Screenshots/credits.png) |
 
+![Wybór jednostek](Docs/Screenshots/unit-choice.png)
+
 ![Rozgrywka](Docs/Screenshots/gameplay.png)
 
 ## Co zmieniło się od pierwszego wydania

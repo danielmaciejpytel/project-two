@@ -19,6 +19,8 @@ Two players can play on one screen, or one player can face the computer.
 | --- | --- |
 | ![Main menu](Docs/Screenshots/menu.png) | ![Credits](Docs/Screenshots/credits.png) |
 
+![Unit choice](Docs/Screenshots/unit-choice.png)
+
 ![Gameplay](Docs/Screenshots/gameplay.png)
 
 ## What changed since the initial release
