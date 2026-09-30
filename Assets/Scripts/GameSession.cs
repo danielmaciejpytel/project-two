@@ -18,6 +18,12 @@ public static class GameSession
 
     public static bool IsAiPlayer(int playerId) => AiPlayerId != NoAi && AiPlayerId == playerId;
 
+    // Rematch with the sides swapped: the computer takes the other team. Nothing changes in a two-player game.
+    public static void SwapSides()
+    {
+        if (AiPlayerId != NoAi) AiPlayerId = AiPlayerId == 1 ? 2 : 1;
+    }
+
     // Chosen in Options, remembered between sessions.
     public static AiDifficulty Difficulty
     {

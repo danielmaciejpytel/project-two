@@ -133,3 +133,16 @@ Attack	Atak
 Play again	Zagraj ponownie
 Back to Menu	Wróć do menu
 Settings	Ustawienia
+Are you sure?	Na pewno?
+Yes	Tak
+No	Nie
+The current game will be lost and a new one starts.	Bieżąca gra zostanie utracona i zacznie się nowa.
+The current game will be lost.	Bieżąca gra zostanie utracona.
+The game will close and the current game will be lost.	Gra się zamknie, a bieżąca gra zostanie utracona.
+Turns played: {0}	Rozegrane tury: {0}
+Units called: {0}	Wezwane jednostki: {0}
+Units killed: {0}	Zabite jednostki: {0}
+Rematch: swap sides	Rewanż: zamiana stron
+Click one of your units to choose it. Call brings a new Doppelganger next to your Superior.	Kliknij jedną ze swoich jednostek, aby ją wybrać. Wezwij przywołuje nowego sobowtóra obok Twojego dowódcy.
+Click a highlighted tile to move, or an enemy in range to attack. End Turn passes the turn.	Kliknij podświetlone pole, aby się poruszyć, albo wroga w zasięgu, aby zaatakować. Zakończ oddaje turę.
+Pick a card below, then click a tile next to your Superior. Press Call again to cancel.	Wybierz kartę poniżej, potem kliknij pole obok swojego dowódcy. Naciśnij Wezwij ponownie, aby anulować.

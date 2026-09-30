@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using DG.Tweening;
 using TMPro;
@@ -6,7 +7,8 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 // The screen after the game (also the pause menu opened with Escape): the rest of the HUD is dimmed, the winner banner moves to the middle of the
-// screen and four buttons appear under it. Settings replaces the buttons with a small options panel.
+// screen, under it come a summary of the game and the buttons (with a rematch that swaps the sides against the computer).
+// Settings replaces the buttons with a small options panel. In the pause menu Play again, Back to Menu and Quit ask for confirmation first.
 public class EndGameController : MonoBehaviour
 {
     // Share of the settings panel's rect that its image really covers (792 of 812 pixels).
@@ -18,6 +20,20 @@ public class EndGameController : MonoBehaviour
     [SerializeField] private Button _menuButton;
     [SerializeField] private Button _settingsButton;
     [SerializeField] private Button _quitButton;
+    [Header("Summary of the game")]
+    [SerializeField] private GameObject _summaryPanel;
+    [SerializeField] private TMP_Text _summaryText;
+    [Tooltip("Rematch with the computer taking the other team; only in a game against the computer.")]
+    [SerializeField] private Button _swapSidesButton;
+    [SerializeField] private Color _superHotColor = new Color32(0xFF, 0x1B, 0x47, 0xFF);
+    [SerializeField] private Color _superColdColor = new Color32(0x14, 0xC8, 0xD8, 0xFF);
+    [Header("Confirmation in the pause menu")]
+    [SerializeField] private GameObject _confirmPanel;
+    [SerializeField] private TMP_Text _confirmDetail;
+    [SerializeField] private Button _confirmYesButton;
+    [SerializeField] private Button _confirmNoButton;
+    [Tooltip("The pause menu has no banner and summary above it, so the buttons and panels move up by this much.")]
+    [SerializeField] private float _pauseShift = 100.0f;
     [Header("Settings")]
     [SerializeField] private GameObject _settingsPanel;
     [SerializeField] private Slider _soundSlider;
@@ -34,14 +50,30 @@ public class EndGameController : MonoBehaviour
     [SerializeField] private float _fadeTime = 0.5f;
 
     private bool _paused;
+    private Action _confirmedAction;
+    private RectTransform _buttonsRect;
+    private RectTransform _settingsRect;
+    private RectTransform _confirmRect;
+    private Vector2 _buttonsPosition;
+    private Vector2 _settingsPosition;
+    private Vector2 _confirmPosition;
 
     private void Awake()
     {
-        _playAgainButton.onClick.AddListener(PlayAgain);
-        _menuButton.onClick.AddListener(BackToMenu);
+        _buttonsRect = (RectTransform)_buttons.transform;
+        _settingsRect = (RectTransform)_settingsPanel.transform;
+        _confirmRect = (RectTransform)_confirmPanel.transform;
+        _buttonsPosition = _buttonsRect.anchoredPosition;
+        _settingsPosition = _settingsRect.anchoredPosition;
+        _confirmPosition = _confirmRect.anchoredPosition;
+        _playAgainButton.onClick.AddListener(() => Ask("The current game will be lost and a new one starts.", PlayAgain));
+        _menuButton.onClick.AddListener(() => Ask("The current game will be lost.", BackToMenu));
+        _quitButton.onClick.AddListener(() => Ask("The game will close and the current game will be lost.", QuitGame));
+        _swapSidesButton.onClick.AddListener(SwapSides);
+        _confirmYesButton.onClick.AddListener(Confirmed);
+        _confirmNoButton.onClick.AddListener(Declined);
         _settingsButton.onClick.AddListener(() => ShowSettings(true));
         _settingsBackButton.onClick.AddListener(() => ShowSettings(false));
-        _quitButton.onClick.AddListener(QuitGame);
         _resolutionButton.onClick.AddListener(CycleResolution);
         _soundSlider.onValueChanged.AddListener(value => SoundController.Instance.SoundVolume = value);
         _musicSlider.onValueChanged.AddListener(value => SoundController.Instance.MusicVolume = value);
@@ -59,10 +91,11 @@ public class EndGameController : MonoBehaviour
     // The game must never stay frozen after this screen is gone.
     private void OnDestroy() => Time.timeScale = 1.0f;
 
-    // Escape during the game: opens the pause menu; with the settings open it goes back to the buttons, otherwise it resumes.
+    // Escape during the game: opens the pause menu; with the settings or a question open it goes back to the buttons, otherwise it resumes.
     public void HandleEscape()
     {
         if (!gameObject.activeSelf) ShowPause();
+        else if (_confirmPanel.activeSelf) Declined();
         else if (_settingsPanel.activeSelf) ShowSettings(false);
         else if (_paused) Resume();
     }
@@ -82,11 +115,20 @@ public class EndGameController : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    // Shows the screen; the banner is taken out of the HUD so it stays above the dimming.
-    public void Show(RectTransform winnerBanner)
+    // Shows the screen; the banner is taken out of the HUD so it stays above the dimming. Without a banner it is the pause menu.
+    public void Show(RectTransform winnerBanner, GameStats stats = null)
     {
         gameObject.SetActive(true);
         ShowSettings(false);
+        _confirmedAction = null;
+        bool endOfGame = winnerBanner != null;
+        Vector2 shift = endOfGame ? Vector2.zero : new Vector2(0.0f, _pauseShift);
+        _buttonsRect.anchoredPosition = _buttonsPosition + shift;
+        _settingsRect.anchoredPosition = _settingsPosition + shift;
+        _confirmRect.anchoredPosition = _confirmPosition + shift;
+        _summaryPanel.SetActive(endOfGame && stats != null);
+        if (endOfGame && stats != null) _summaryText.text = Summary(stats);
+        _swapSidesButton.gameObject.SetActive(endOfGame && GameSession.AiPlayerId != GameSession.NoAi);
         _soundSlider.SetValueWithoutNotify(SoundController.Instance != null ? SoundController.Instance.SoundVolume : 1.0f);
         _musicSlider.SetValueWithoutNotify(SoundController.Instance != null ? SoundController.Instance.MusicVolume : 0.5f);
         UpdateResolutionLabel();
@@ -119,7 +161,55 @@ public class EndGameController : MonoBehaviour
     private void ShowSettings(bool show)
     {
         _settingsPanel.SetActive(show);
+        _confirmPanel.SetActive(false);
         _buttons.gameObject.SetActive(!show);
+    }
+
+    // Turns of the whole game and, for each team, how many units it called and how many it killed.
+    private string Summary(GameStats stats)
+    {
+        string called = Score(stats.CalledBy(1), stats.CalledBy(2));
+        string killed = Score(stats.KilledBy(1), stats.KilledBy(2));
+        return Loc.F("Turns played: {0}", stats.Turns) + "\n" + Loc.F("Units called: {0}", called) + "\n" + Loc.F("Units killed: {0}", killed);
+    }
+
+    private string Score(int hot, int cold)
+    {
+        return $"<color=#{ColorUtility.ToHtmlStringRGB(_superHotColor)}>Super Hot</color> {hot}   <color=#{ColorUtility.ToHtmlStringRGB(_superColdColor)}>Super Cold</color> {cold}";
+    }
+
+    // In the pause menu the game is still running behind it, so leaving needs a second click; after the game it does not.
+    private void Ask(string detailKey, Action action)
+    {
+        if (!_paused)
+        {
+            action();
+            return;
+        }
+        _confirmedAction = action;
+        _confirmDetail.text = Loc.T(detailKey);
+        _confirmPanel.SetActive(true);
+        _buttons.gameObject.SetActive(false);
+    }
+
+    private void Confirmed()
+    {
+        Action action = _confirmedAction;
+        Declined();
+        action?.Invoke();
+    }
+
+    private void Declined()
+    {
+        _confirmedAction = null;
+        _confirmPanel.SetActive(false);
+        _buttons.gameObject.SetActive(true);
+    }
+
+    private void SwapSides()
+    {
+        GameSession.SwapSides();
+        GameController.Instance.RestartGame();
     }
 
     private void PlayAgain() => GameController.Instance.RestartGame();

@@ -82,7 +82,8 @@ public class LocalizationTests
     {
         List<string> missing = new List<string>();
         // Only whole literals: a text built with + is not a key.
-        Regex call = new Regex("Loc\\.[TF]\\(\"((?:[^\"\\\\]|\\\\.)*)\"\\s*[,)]");
+        // Texts passed to Loc, and the ones kept for it: hints (const string Hint...) and questions (Ask("...", ...)).
+        Regex call = new Regex("(?:Loc\\.[TF]\\(|const string Hint\\w* = |\\bAsk\\()\"((?:[^\"\\\\]|\\\\.)*)\"\\s*[,)|;]");
         foreach (string file in Directory.GetFiles(ProjectPath("Scripts"), "*.cs", SearchOption.AllDirectories))
         {
             foreach (Match match in call.Matches(File.ReadAllText(file)))

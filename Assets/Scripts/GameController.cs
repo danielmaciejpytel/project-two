@@ -76,6 +76,7 @@ public class GameController : MonoBehaviour
     public int ActivePlayer => _activePlayer;
     public bool IsGameOver => _gameEnded;
     public IReadOnlyList<UnitController> Units => _units;
+    public GameStats Stats { get; } = new GameStats();
 
     // During the computer's turn the human's clicks, hovers and HUD buttons are ignored.
     private bool IsInputLocked => GameSession.IsAiPlayer(_activePlayer) && !_bypassInputLock;
@@ -129,6 +130,8 @@ public class GameController : MonoBehaviour
 
     private void OnUnitKilled(UnitController killedUnit)
     {
+        // Counted first: the end screen shows these numbers.
+        Stats.RecordKill(GetOpponent(killedUnit.GetPlayerId()));
         _myUIController.KillUnit(killedUnit);
         if (killedUnit.IsKing() && !_gameEnded)
         {
@@ -155,7 +158,13 @@ public class GameController : MonoBehaviour
         events.OnTileHovered += OnTileHovered;
         events.OnExecutionEnd += OnExecutionEnded;
         events.OnUnitKilled += OnUnitKilled;
+        events.OnTurnStarted += OnTurnStarted;
+        events.OnUnitDeployed += OnUnitDeployed;
     }
+
+    private void OnTurnStarted(int playerId) => Stats.RecordTurnStarted();
+
+    private void OnUnitDeployed(UnitController unit) => Stats.RecordCall(unit.GetPlayerId());
 
     private void Update()
     {
@@ -239,6 +248,8 @@ public class GameController : MonoBehaviour
         events.OnTileHovered -= OnTileHovered;
         events.OnExecutionEnd -= OnExecutionEnded;
         events.OnUnitKilled -= OnUnitKilled;
+        events.OnTurnStarted -= OnTurnStarted;
+        events.OnUnitDeployed -= OnUnitDeployed;
     }
 
     public BoardGrid GetGrid() => _myGrid;
