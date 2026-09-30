@@ -24,6 +24,9 @@ public class BattleLogController : MonoBehaviour
     [SerializeField] private TMP_Text _entriesText;
     [SerializeField] private Button _toggleButton;
     [SerializeField] private TMP_Text _toggleLabel;
+    [Tooltip("On the left side the panel lines up with the left edge of this rect (the info panel).")]
+    [SerializeField] private RectTransform _leftAlignReference;
+    [SerializeField] private float _leftAlignInset = 6.0f;
     [SerializeField] private int _maxEntries = 6;
     [Tooltip("Height of the panel when collapsed to the title bar.")]
     [SerializeField] private float _collapsedHeight = 44.0f;
@@ -103,7 +106,18 @@ public class BattleLogController : MonoBehaviour
         _rect.anchorMin = new Vector2(side, _rect.anchorMin.y);
         _rect.anchorMax = new Vector2(side, _rect.anchorMax.y);
         _rect.pivot = new Vector2(side, _rect.pivot.y);
-        _rect.anchoredPosition = new Vector2(playerId == 1 ? _sideMargin : -_sideMargin, _rect.anchoredPosition.y);
+        _rect.anchoredPosition = new Vector2(playerId == 1 ? LeftMargin() : -_sideMargin, _rect.anchoredPosition.y);
+    }
+
+    // Distance from the left edge of the parent to where the panel starts on the left side.
+    private float LeftMargin()
+    {
+        if (_leftAlignReference == null) return _sideMargin;
+        RectTransform parent = (RectTransform)_rect.parent;
+        Vector3[] corners = new Vector3[4];
+        _leftAlignReference.GetWorldCorners(corners);
+        float scale = parent.lossyScale.x;
+        return parent.InverseTransformPoint(new Vector3(corners[0].x + _leftAlignInset * scale, 0.0f, 0.0f)).x - parent.rect.xMin;
     }
 
     // Collapsed: only the "Battle log" title with "Show" on its right.

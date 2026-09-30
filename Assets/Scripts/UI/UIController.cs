@@ -16,8 +16,11 @@ public class UIController : MonoBehaviour
     [SerializeField] private Button _endTurnButton;
     [SerializeField] private Image _timerImage;
     [SerializeField] private TMP_Text _timerText;
+    [Tooltip("Horizontal distance between the left edge of the info panel and where the controls on the left side start.")]
+    [SerializeField] private float _leftEdgeInset = 6.0f;
     [SerializeField] private Color _superHotColor = new Color32(0xFF, 0x1B, 0x47, 0xFF);
     [SerializeField] private Color _superColdColor = new Color32(0x14, 0xC8, 0xD8, 0xFF);
+    private readonly Dictionary<RectTransform, Vector2> _rightSidePositions = new Dictionary<RectTransform, Vector2>();
     private int _myTimer;
     private Coroutine _turnTimer;
     private bool _unitDeployedThisTurn;
@@ -104,21 +107,49 @@ public class UIController : MonoBehaviour
         SoundController.Instance?.PlayEndTurn();
     }
 
-    // Moves the turn controls to the active player's side: left half for Super Hot, right half for Super Cold.
-    // Mirroring (instead of shifting by fixed offsets) keeps them in place whatever their size.
+    // Moves the turn controls to the active player's side: right edge for Super Cold, left edge for Super Hot.
+    // The controls are laid out for the right side. For Super Hot they are mirrored around the middle of the
+    // screen (not the middle of their parent, which can be offset), and the left edges line up with the info panel.
     private void MoveActivePlayerControls(float direction)
     {
-        MirrorToSide(_timerImage.rectTransform, direction);
-        MirrorToSide((RectTransform)_endTurnButton.transform, direction);
-        MirrorToSide((RectTransform)_deployMinionButton.transform, direction);
-        MirrorToSide((RectTransform)_abilityButton.transform, direction);
+        RectTransform[] controls = { _timerImage.rectTransform, (RectTransform)_endTurnButton.transform, (RectTransform)_deployMinionButton.transform, (RectTransform)_abilityButton.transform };
+        foreach (RectTransform control in controls) MirrorToSide(control, direction);
+        if (direction >= 0.0f) return;
+        // The buttons keep their order and spacing, so they move together; the timer lines up on its own.
+        AlignLeftEdge(controls[1], new[] { controls[1], controls[2], controls[3] });
+        AlignLeftEdge(controls[0], new[] { controls[0] });
     }
 
-    private static void MirrorToSide(RectTransform target, float direction)
+    private void MirrorToSide(RectTransform target, float direction)
     {
-        Vector2 position = target.anchoredPosition;
-        position.x = Mathf.Abs(position.x) * Mathf.Sign(direction);
+        if (!_rightSidePositions.TryGetValue(target, out Vector2 right))
+        {
+            right = target.anchoredPosition;
+            right.x = ScreenCentreX(target) + Mathf.Abs(right.x - ScreenCentreX(target));
+            _rightSidePositions[target] = right;
+        }
+        Vector2 position = right;
+        if (direction < 0.0f) position.x = 2.0f * ScreenCentreX(target) - right.x;
         target.anchoredPosition = position;
+    }
+
+    // The middle of the screen in the local coordinates of the target's parent.
+    private float ScreenCentreX(RectTransform target)
+    {
+        return target.parent.InverseTransformPoint(target.GetComponentInParent<Canvas>().rootCanvas.transform.position).x;
+    }
+
+    // Moves the group so the left edge of the leader lines up with the left edge of the info panel.
+    private void AlignLeftEdge(RectTransform leader, RectTransform[] group)
+    {
+        Vector3[] leaderCorners = new Vector3[4];
+        Vector3[] infoCorners = new Vector3[4];
+        leader.GetWorldCorners(leaderCorners);
+        ((RectTransform)_myInfoPanel.transform).GetWorldCorners(infoCorners);
+        float scale = leader.GetComponentInParent<Canvas>().rootCanvas.transform.lossyScale.x;
+        float shift = infoCorners[0].x + _leftEdgeInset * scale - leaderCorners[0].x;
+        Vector3 local = leader.parent.InverseTransformVector(new Vector3(shift, 0.0f, 0.0f));
+        foreach (RectTransform member in group) member.anchoredPosition += new Vector2(local.x, 0.0f);
     }
 
     // Player name in the team color, e.g. "Super Cold" in cyan.
