@@ -46,9 +46,30 @@ public class UIController : MonoBehaviour
                 _myTimer = 0;
             }
             _timerText.text = (timeLimit - _myTimer).ToString();
+            CenterTimerTexts();
             _myTimer += 1;
             yield return oneSecond;
         }
+    }
+
+    // "Turn ends in:" and the seconds are two texts; together they are centred on the timer background.
+    // The seconds are measured as two digits, so the label does not shift when the count drops below 10.
+    private void CenterTimerTexts()
+    {
+        TMP_Text label = null;
+        foreach (TMP_Text text in _timerImage.GetComponentsInChildren<TMP_Text>(true))
+        {
+            if (text != _timerText) { label = text; break; }
+        }
+        if (label == null) return;
+        const float gap = 10.0f;
+        float labelWidth = label.GetPreferredValues(label.text).x;
+        float secondsWidth = _timerText.GetPreferredValues("00").x;
+        float left = -(labelWidth + gap + secondsWidth) * 0.5f;
+        RectTransform labelRect = label.rectTransform;
+        RectTransform secondsRect = _timerText.rectTransform;
+        labelRect.anchoredPosition = new Vector2(left + labelWidth, labelRect.anchoredPosition.y);
+        secondsRect.anchoredPosition = new Vector2(left + labelWidth + gap, secondsRect.anchoredPosition.y);
     }
 
     public void DisplayWinner(int winnerId)
