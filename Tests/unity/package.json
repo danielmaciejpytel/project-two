@@ -1,0 +1,10 @@
+{
+    "name": "com.team13.project-two-tests",
+    "displayName": "Project Two tests",
+    "version": "1.0.0",
+    "description": "Automatic EditMode and PlayMode tests of Project Two. Kept outside of Assets in the tests folder.",
+    "unity": "6000.3",
+    "dependencies": {
+        "com.unity.test-framework": "1.6.0"
+    }
+}

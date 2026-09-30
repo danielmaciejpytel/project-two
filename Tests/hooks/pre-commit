@@ -1,0 +1,10 @@
+#!/bin/sh
+# Refreshes Tests/TestsUpdate.md and adds it to the commit. Never blocks the commit.
+root=$(git rev-parse --show-toplevel)
+if command -v python >/dev/null 2>&1; then PY=python
+elif command -v python3 >/dev/null 2>&1; then PY=python3
+else echo "TestsUpdate: skipped (Python not found)"; exit 0
+fi
+"$PY" "$root/Tests/tools/update-tests-doc.py" --staged || echo "TestsUpdate: skipped"
+[ -f "$root/Tests/TestsUpdate.md" ] && git add "$root/Tests/TestsUpdate.md"
+exit 0

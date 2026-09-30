@@ -1,0 +1,42 @@
+[
+    {
+        "paths": ["Assets/Resources/Localization/*", "Assets/Scripts/Localization/*", "Assets/Scenes/*.unity"],
+        "tests": ["LocalizationTests"],
+        "why": "Nowe lub zmienione teksty muszą mieć tłumaczenie w Polish.txt; zmiana formatu pliku wymaga poprawienia parsera w LocalizationTests."
+    },
+    {
+        "paths": ["Assets/StreamingAssets/Grid.csv", "Assets/Prefabs/TilePrefab*", "Assets/Scripts/BoardGrid.cs", "Assets/Scripts/Tiles/*", "Assets/Scriptables/*"],
+        "tests": ["BoardGridTests", "GameplayTests"],
+        "why": "Plansza: wymiary, przeszkody, rogi dowódców i długość ścieżki w BoardGridTests zależą od układu w Grid.csv."
+    },
+    {
+        "paths": ["Assets/Scripts/*State.cs", "Assets/Scripts/GameController.cs", "Assets/Scripts/EventManager.cs", "Assets/Scripts/UI/UIController.cs", "Assets/Scripts/UI/PlayerUnitsController.cs", "Assets/Scripts/UI/ButtonUnitController.cs", "Assets/Scripts/UI/UnitTilePanelController.cs", "Assets/Scripts/UI/CommanderBarController.cs"],
+        "tests": ["GameplayTests", "EndScreenTests"],
+        "why": "Przebieg tury, Call, timer, podpowiedzi zasięgu, panel info i karty jednostek."
+    },
+    {
+        "paths": ["Assets/Scripts/UI/EndGameController.cs", "Assets/Sprites/UI/*_Solid*"],
+        "tests": ["EndScreenTests"],
+        "why": "Ekran końca gry i menu pauzy (ESC): przyciski, szerokości, Time.timeScale, przeładowanie scen."
+    },
+    {
+        "paths": ["Assets/Scripts/UI/BattleLogController.cs"],
+        "tests": ["BattleLogTests"],
+        "why": "Historia, przewijanie kółkiem i powrót na dół przy nowym wpisie."
+    },
+    {
+        "paths": ["Assets/Scripts/AIController.cs", "Assets/Scripts/GameSession.cs", "Assets/Scripts/Units/*"],
+        "tests": ["AiSoakTests", "GameplayTests"],
+        "why": "Komputer musi dokończyć partię na każdym poziomie trudności bez błędów w konsoli; zmiana zasad jednostek zmienia przebieg partii."
+    },
+    {
+        "paths": ["Assets/Scenes/MainScene.unity"],
+        "tests": ["GameplayTests", "BattleLogTests", "EndScreenTests"],
+        "why": "Układ HUD-u (nazwy obiektów, szerokości, pozycje) jest sprawdzany w testach przez nazwy i liczby."
+    },
+    {
+        "paths": ["*.asmdef", "Packages/manifest.json"],
+        "tests": ["EditModeTests", "PlayModeTests"],
+        "why": "Zmiana zależności skryptów lub pakietów może zepsuć kompilację testów."
+    }
+]
