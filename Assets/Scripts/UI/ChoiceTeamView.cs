@@ -7,6 +7,8 @@ public class ChoiceTeamView : MonoBehaviour
 {
     private const float PanelIdleAlpha = 0.65f;
     private const float ContentIdleAlpha = 0.75f;
+    // "Player n" stands a little lower than the heading, as in the mockup.
+    private const float PlayerDrop = 8.0f;
 
     [SerializeField] private Image _panel;
     [SerializeField] private CanvasGroup _content;
@@ -35,7 +37,7 @@ public class ChoiceTeamView : MonoBehaviour
         RectTransform playerRect = _player.rectTransform;
         float headingBaseline = headingRect.anchoredPosition.y + _heading.textInfo.lineInfo[0].baseline;
         float playerBaseline = _player.textInfo.lineInfo[0].baseline;
-        playerRect.anchoredPosition = new Vector2(headingRect.anchoredPosition.x + _heading.preferredWidth + 14.0f, headingBaseline - playerBaseline);
+        playerRect.anchoredPosition = new Vector2(headingRect.anchoredPosition.x + _heading.preferredWidth + 14.0f, headingBaseline - playerBaseline - PlayerDrop);
     }
 
     // The team that is not choosing is dimmed.
