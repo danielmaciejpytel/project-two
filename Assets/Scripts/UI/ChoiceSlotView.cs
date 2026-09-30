@@ -60,6 +60,8 @@ public class ChoiceSlotView : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     {
         _leftArrow.Clicked += () => ArrowPressed?.Invoke(-1);
         _rightArrow.Clicked += () => ArrowPressed?.Invoke(1);
+        _leftArrow.SetPulsing(true);
+        _rightArrow.SetPulsing(true);
         if (_isLast) _fill.sprite = _fillLast;
     }
 

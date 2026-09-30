@@ -82,7 +82,7 @@ public class ChoiceButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     {
         if (_group == null) _group = GetComponent<CanvasGroup>();
         _label.color = _hovered ? _hoverColor : _normalColor;
-        bool pulse = _pulsing && _interactable && (!_hovered || _pulseWhileHovered);
+        bool pulse = _pulsing && _interactable && isActiveAndEnabled && (!_hovered || _pulseWhileHovered);
         if (pulse)
         {
             if (_pulse == null || !_pulse.IsActive())
