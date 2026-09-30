@@ -11,6 +11,8 @@ public class ChoiceInfoView : MonoBehaviour
     private const int GridRadius = 4;
     private const float RowPitch = 27.6f;
     private const float TagGap = 4.0f;
+    // The letters of a tag sit a little higher in their line than those of the statistics, so they are lowered to stand level.
+    private const float GlyphDrop = 2.0f;
     private const string TagNameColor = "<color=#D72E66>";
 
     private static readonly Color BaseCell = new Color(0.259f, 0.259f, 0.259f);
@@ -181,7 +183,7 @@ public class ChoiceInfoView : MonoBehaviour
                 float move = RowTop(_moveLabel), attack = RowTop(_attackLabel);
                 start = previousEnd + TagGap <= move ? move : previousEnd + TagGap <= attack ? attack : previousEnd + RowPitch * 0.5f;
             }
-            SetTop(text, start + (RowPitch - NaturalLineHeight(text)) * 0.5f);
+            SetTop(text, start + (RowPitch - NaturalLineHeight(text)) * 0.5f + GlyphDrop);
             previousEnd = start + text.textInfo.lineCount * RowPitch;
         }
     }
