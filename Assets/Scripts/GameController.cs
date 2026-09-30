@@ -253,21 +253,21 @@ public class GameController : MonoBehaviour
     public void EndTurnAction()
     {
         if (_myGameState == null || IsInputLocked) return;
-        SoundController.Instance.PlayClick();
+        SoundController.Instance?.PlayClick();
         SetState(_myGameState.EndTurnPressed(this));
     }
 
     public void DeployAction()
     {
         if (_myGameState == null || IsInputLocked) return;
-        SoundController.Instance.PlayClick();
+        SoundController.Instance?.PlayClick();
         SetState(_myGameState.DeploymentPressed(this));
     }
 
     public void AbilityAction()
     {
         if (_myGameState == null || IsInputLocked) return;
-        SoundController.Instance.PlayClick();
+        SoundController.Instance?.PlayClick();
         SetState(_myGameState.AbilityPressed(this));
     }
 
@@ -355,7 +355,7 @@ public class GameController : MonoBehaviour
 
     public void ChangeMode()
     {
-        SoundController.Instance.PlayClick();
+        SoundController.Instance?.PlayClick();
         bool showArt = !_backgroundImage.enabled;
         _backgroundImage.enabled = showArt;
         _shadowImage.enabled = showArt;
@@ -376,7 +376,7 @@ public class GameController : MonoBehaviour
 
     public void QuitPressed()
     {
-        SoundController.Instance.PlayClick();
+        SoundController.Instance?.PlayClick();
         DOTween.KillAll(false);
         UnitAnimators.Release();
         SceneManager.LoadScene(MenuSceneName);

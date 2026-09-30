@@ -101,7 +101,7 @@ public class UIController : MonoBehaviour
             MoveActivePlayerControls(1.0f);
         }
         _winnerImage.transform.DOPunchScale(new Vector3(0.2f, 0.2f, 0.0f), 0.5f).SetLink(_winnerImage.gameObject);
-        SoundController.Instance.PlayEndTurn();
+        SoundController.Instance?.PlayEndTurn();
     }
 
     // Moves the turn controls to the active player's side: left half for Super Hot, right half for Super Cold.

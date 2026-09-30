@@ -20,7 +20,7 @@ public class AttackSelectedState : IGameState
     public IGameState TileClicked(GameController myGameController, TileController clickedTile)
     {
         //nothing happens
-        SoundController.Instance.PlayClick();
+        SoundController.Instance?.PlayClick();
         return null;
     }
 
@@ -30,7 +30,7 @@ public class AttackSelectedState : IGameState
         UIController ui;
         bool attackEndsTurn;
 
-        SoundController.Instance.PlayClick();
+        SoundController.Instance?.PlayClick();
         ui = myGameController.GetUI();
         myGrid = myGameController.GetGrid();
         if (_activeUnit.IsTargetValid(clickedUnit) && myGrid.IsTileInAttackRange(_activeUnit, clickedUnit.CurrentTile))
@@ -56,7 +56,7 @@ public class AttackSelectedState : IGameState
     public IGameState TileHovered(GameController myGameController, TileController hoveredTile)
     {
         //highlight tile
-        SoundController.Instance.PlayHover();
+        SoundController.Instance?.PlayHover();
         if (hoveredTile.isWalkable()) hoveredTile.Highlight(HighlightType.Hover, false);
         return null;
     }
@@ -67,7 +67,7 @@ public class AttackSelectedState : IGameState
         BoardGrid myGrid;
         UIController ui;
 
-        SoundController.Instance.PlayHover();
+        SoundController.Instance?.PlayHover();
         ui = myGameController.GetUI();
         myGrid = myGameController.GetGrid();
         ui.DisplayUnit(hoveredUnit);

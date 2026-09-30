@@ -32,7 +32,7 @@ public class DeploymentState : IGameState
         UIController ui = myGameController.GetUI();
         BoardGrid myGrid = myGameController.GetGrid();
 
-        SoundController.Instance.PlayClick();
+        SoundController.Instance?.PlayClick();
         if (_unitToDeploy == null)
         {
             ui.EndDeployment();
@@ -41,7 +41,7 @@ public class DeploymentState : IGameState
         if (!IsTileInDeploymentZone(_kingUnit.CurrentTile, clickedTile)) return null;
 
         _unitToDeploy.DeployUnit(clickedTile);
-        SoundController.Instance.PlayCall();
+        SoundController.Instance?.PlayCall();
         if (_unitToDeploy.SummoningSickness())
         {
             ui.MarkUnitUnavailable(_unitToDeploy);
@@ -70,7 +70,7 @@ public class DeploymentState : IGameState
         UIController ui;
         BoardGrid myGrid;
 
-        SoundController.Instance.PlayClick();
+        SoundController.Instance?.PlayClick();
         ui = myGameController.GetUI();
         myGrid = myGameController.GetGrid();
         if (clickedUnit.IsDeployed)
@@ -98,7 +98,7 @@ public class DeploymentState : IGameState
     {
         UIController ui;
 
-        SoundController.Instance.PlayHover();
+        SoundController.Instance?.PlayHover();
         if (hoveredTile.isWalkable()) hoveredTile.Highlight(HighlightType.Hover, false);
         ui = myGameController.GetUI();
         ui.DisplayTile(hoveredTile);
@@ -109,7 +109,7 @@ public class DeploymentState : IGameState
     {
         UIController ui;
 
-        SoundController.Instance.PlayHover();
+        SoundController.Instance?.PlayHover();
         ui = myGameController.GetUI();
         ui.DisplayUnit(hoveredUnit);
         return null;

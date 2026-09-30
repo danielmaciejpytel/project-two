@@ -77,7 +77,7 @@ public class MainMenuController : MonoBehaviour
     // PLAY opens the choice between Player vs Player and Play vs AI in place of the main buttons.
     public void DisplayPlayMenu()
     {
-        SoundController.Instance.PlayClick();
+        SoundController.Instance?.PlayClick();
         SetMainButtonsActive(false);
         SetPlayButtonsActive(true);
         HideBar();
@@ -85,7 +85,7 @@ public class MainMenuController : MonoBehaviour
 
     public void HidePlayMenu()
     {
-        SoundController.Instance.PlayClick();
+        SoundController.Instance?.PlayClick();
         SetPlayButtonsActive(false);
         SetMainButtonsActive(true);
         HideBar();
@@ -111,7 +111,7 @@ public class MainMenuController : MonoBehaviour
 
     public void DisplayCredits()
     {
-        SoundController.Instance.PlayClick();
+        SoundController.Instance?.PlayClick();
         SetMainButtonsActive(false);
         _backButton.gameObject.SetActive(true);
         _creditsImage.gameObject.SetActive(true);
@@ -120,7 +120,7 @@ public class MainMenuController : MonoBehaviour
 
     public void HideCredits()
     {
-        SoundController.Instance.PlayClick();
+        SoundController.Instance?.PlayClick();
         SetMainButtonsActive(true);
         _backButton.gameObject.SetActive(false);
         _creditsImage.gameObject.SetActive(false);
@@ -130,7 +130,7 @@ public class MainMenuController : MonoBehaviour
 
     public void DisplayOptions()
     {
-        SoundController.Instance.PlayClick();
+        SoundController.Instance?.PlayClick();
         SetMainButtonsActive(false);
         _optionsPanel.SetActive(true);
         HideBar();
@@ -141,7 +141,7 @@ public class MainMenuController : MonoBehaviour
 
     public void HideOptions()
     {
-        SoundController.Instance.PlayClick();
+        SoundController.Instance?.PlayClick();
         SetMainButtonsActive(true);
         _optionsPanel.SetActive(false);
         HideBar();
@@ -149,7 +149,7 @@ public class MainMenuController : MonoBehaviour
 
     public void DisplayInstructions()
     {
-        SoundController.Instance.PlayClick();
+        SoundController.Instance?.PlayClick();
         SetMainButtonsActive(false);
         _backButton.gameObject.SetActive(true);
         _instructionText.gameObject.SetActive(true);
@@ -158,7 +158,7 @@ public class MainMenuController : MonoBehaviour
 
     public void QuitGame()
     {
-        SoundController.Instance.PlayClick();
+        SoundController.Instance?.PlayClick();
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #else
@@ -168,7 +168,7 @@ public class MainMenuController : MonoBehaviour
 
     public void OnMybuttonEnter(Button myButton)
     {
-        SoundController.Instance.PlayHover();
+        SoundController.Instance?.PlayHover();
         // Follow the hovered button vertically, start off-screen on the left (canvas units).
         Vector3 barPosition = _barImage.transform.position;
         barPosition.y = myButton.transform.position.y;
@@ -188,7 +188,7 @@ public class MainMenuController : MonoBehaviour
     // Options: cycles the computer opponent's difficulty Easy -> Normal -> Hard.
     public void CycleDifficulty()
     {
-        SoundController.Instance.PlayClick();
+        SoundController.Instance?.PlayClick();
         GameSession.Difficulty = (AiDifficulty)(((int)GameSession.Difficulty + 1) % 3);
         RefreshOptionTexts();
     }
@@ -201,7 +201,7 @@ public class MainMenuController : MonoBehaviour
     // Options: cycles through the resolutions the monitor supports (native first).
     public void CycleResolution()
     {
-        SoundController.Instance.PlayClick();
+        SoundController.Instance?.PlayClick();
         List<Vector2Int> resolutions = DisplaySettings.Available();
         int next = (resolutions.IndexOf(DisplaySettings.Current) + 1) % resolutions.Count;
         DisplaySettings.Set(resolutions[next]);
@@ -219,7 +219,7 @@ public class MainMenuController : MonoBehaviour
     // Options: switches between the available languages; every text follows at once.
     public void CycleLanguage()
     {
-        SoundController.Instance.PlayClick();
+        SoundController.Instance?.PlayClick();
         Loc.Current = Loc.Current == Language.English ? Language.Polish : Language.English;
     }
 
@@ -258,6 +258,6 @@ public class MainMenuController : MonoBehaviour
     // A click after releasing the sound slider, so the new volume can be heard.
     public void SoundSliderReleased()
     {
-        SoundController.Instance.PlayClick();
+        SoundController.Instance?.PlayClick();
     }
 }

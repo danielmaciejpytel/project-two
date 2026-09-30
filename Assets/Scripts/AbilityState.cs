@@ -19,25 +19,25 @@ public class AbilityState : IGameState
 
     public IGameState TileClicked(GameController myGameController, TileController clickedTile)
     {
-        SoundController.Instance.PlayClick();
+        SoundController.Instance?.PlayClick();
         return _activeAbility.TileClicked(myGameController, clickedTile);
     }
 
     public IGameState UnitClicked(GameController myGameController, UnitController clickedUnit)
     {
-        SoundController.Instance.PlayClick();
+        SoundController.Instance?.PlayClick();
         return _activeAbility.UnitClicked(myGameController, clickedUnit);
     }
 
     public IGameState TileHovered(GameController myGameController, TileController hoveredTile)
     {
-        SoundController.Instance.PlayHover();
+        SoundController.Instance?.PlayHover();
         return _activeAbility.TileHovered(myGameController, hoveredTile);
     }
 
     public IGameState UnitHovered(GameController myGameController, UnitController hoveredUnit)
     {
-        SoundController.Instance.PlayHover();
+        SoundController.Instance?.PlayHover();
         hoveredUnit.CurrentTile.AnimateHighlight();
         return _activeAbility.UnitHovered(myGameController, hoveredUnit);
     }

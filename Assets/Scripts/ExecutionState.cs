@@ -18,28 +18,28 @@ public class ExecutionState : IGameState
     public IGameState TileClicked(GameController myGameController, TileController clickedTile)
     {
         //nothing happens
-        SoundController.Instance.PlayClick();
+        SoundController.Instance?.PlayClick();
         return null;
     }
 
     public IGameState UnitClicked(GameController myGameController, UnitController clickedUnit)
     {
         //nothing happens
-        SoundController.Instance.PlayClick();
+        SoundController.Instance?.PlayClick();
         return null;
     }
 
     public IGameState TileHovered(GameController myGameController, TileController hoveredTile)
     {
         //nothing happens
-        SoundController.Instance.PlayHover();
+        SoundController.Instance?.PlayHover();
         return null;
     }
 
     public IGameState UnitHovered(GameController myGameController, UnitController hoveredUnit)
     {
         //nothing happens
-        SoundController.Instance.PlayHover();
+        SoundController.Instance?.PlayHover();
         return null;
     }
 

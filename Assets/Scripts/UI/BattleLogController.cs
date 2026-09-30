@@ -92,7 +92,7 @@ public class BattleLogController : MonoBehaviour
 
     private void ToggleBody()
     {
-        if (SoundController.Instance != null) SoundController.Instance.PlayClick();
+        if (SoundController.Instance != null) SoundController.Instance?.PlayClick();
         SetExpanded(!_body.activeSelf);
     }
 

@@ -165,7 +165,7 @@ public class UnitChoiceControllerOld : MonoBehaviour
 
         if (IsBlockedByAi()) return;
 
-        SoundController.Instance.PlayClick();
+        SoundController.Instance?.PlayClick();
         currentUnitController = _currentUnitPanel.GetUnitPrefab().GetComponent<UnitController>();
         _chosenUnits.Add(new ChosenUnit(currentUnitController.GetPlayerId(), currentUnitController.GetUnitType()));
         _myGameController.AddUnitPrefab(_currentUnitPanel.GetUnitPrefab(), _currentPlayer);
@@ -266,7 +266,7 @@ public class UnitChoiceControllerOld : MonoBehaviour
         bool unitValid;
 
         if (IsBlockedByAi()) return;
-        SoundController.Instance.PlayClick();
+        SoundController.Instance?.PlayClick();
         unitValid = false;
         while (!unitValid)
         {

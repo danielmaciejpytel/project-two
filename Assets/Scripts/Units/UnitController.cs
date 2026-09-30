@@ -303,7 +303,7 @@ public class UnitController : MonoBehaviour, IClickable, IHoverable, IEndturnabl
 
     private void PlayUnitSound(AudioClip clip)
     {
-        if (clip != null) SoundController.Instance.PlayClip(clip);
+        if (clip != null) SoundController.Instance?.PlayClip(clip);
     }
 
     // Called by the death animation event (or directly in designer mode).
@@ -452,7 +452,7 @@ public class UnitController : MonoBehaviour, IClickable, IHoverable, IEndturnabl
 
     public void PlaySound(AudioClip soundToPlay)
     {
-        if (soundToPlay != null) SoundController.Instance.PlayClip(soundToPlay);
+        if (soundToPlay != null) SoundController.Instance?.PlayClip(soundToPlay);
     }
 
     public void ChangePosition(Vector3 newPosition)
