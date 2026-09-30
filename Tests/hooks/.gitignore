@@ -1,0 +1,5 @@
+# Git LFS installs its own hooks here (core.hooksPath); they belong to each machine, not to the repository.
+post-checkout
+post-commit
+post-merge
+pre-push

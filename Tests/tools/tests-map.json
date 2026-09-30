@@ -38,9 +38,10 @@
         "tests": [
             "GameplayTests",
             "EndScreenTests",
-            "HintsAndWarningTests"
+            "HintsAndWarningTests",
+            "ShortcutAndSettingsTests"
         ],
-        "why": "Przebieg tury, Call, timer i jego ostrzeżenie (ostatnie 10 s), wskazówki w pierwszych turach, podpowiedzi zasięgu, panel info i karty jednostek."
+        "why": "Przebieg tury, Call, timer i jego ostrzeżenie (ostatnie 10 s), skróty klawiaturowe (spacja, C), wskazówki w pierwszych turach, podpowiedzi zasięgu, panel info i karty jednostek."
     },
     {
         "paths": [
@@ -51,9 +52,11 @@
         "tests": [
             "EndScreenTests",
             "PauseAndSummaryTests",
-            "GameStatsTests"
+            "GameStatsTests",
+            "ShortcutAndSettingsTests",
+            "ResultsTests"
         ],
-        "why": "Ekran końca i menu pauzy (ESC): przyciski, pytanie „Na pewno?” w pauzie, podsumowanie partii, rewanż ze zmianą stron, Time.timeScale, przeładowanie scen."
+        "why": "Ekran końca i menu pauzy (ESC): przyciski, pytanie „Na pewno?”, podsumowanie i wynik, rewanż ze zmianą stron, trudność w ustawieniach, Time.timeScale, przeładowanie scen."
     },
     {
         "paths": [
@@ -73,9 +76,10 @@
         "tests": [
             "AiSoakTests",
             "GameplayTests",
-            "PauseAndSummaryTests"
+            "PauseAndSummaryTests",
+            "AttackAnimationTests"
         ],
-        "why": "Komputer musi dokończyć partię po obu stronach i na każdym poziomie trudności bez błędów w konsoli; zmiana zasad jednostek zmienia przebieg partii."
+        "why": "Komputer musi dokończyć partię po obu stronach i na każdym poziomie trudności bez błędów w konsoli; zmiana zasad jednostek zmienia przebieg partii; animacja śmierci zabitej jednostki zaczyna się dopiero po animacji ataku przeciwnika."
     },
     {
         "paths": [
@@ -86,7 +90,9 @@
             "BattleLogTests",
             "EndScreenTests",
             "PauseAndSummaryTests",
-            "HintsAndWarningTests"
+            "HintsAndWarningTests",
+            "ShortcutAndSettingsTests",
+            "ResultsTests"
         ],
         "why": "Układ HUD-u (nazwy obiektów, szerokości, pozycje) jest sprawdzany w testach przez nazwy i liczby."
     },
@@ -100,5 +106,43 @@
             "PlayModeTests"
         ],
         "why": "Zmiana zależności skryptów lub pakietów może zepsuć kompilację testów."
+    },
+    {
+        "paths": [
+            "Assets/Scripts/Results/*",
+            "Assets/Scripts/GameStats.cs"
+        ],
+        "tests": [
+            "ScoreCalculatorTests",
+            "RecordStoreTests",
+            "GameResultTests",
+            "GameStatsTests",
+            "ResultsTests"
+        ],
+        "why": "Punktacja (wzór), zapis partii w games.json (limit 200, uszkodzony plik), ranking, statystyki i wynik po końcu gry."
+    },
+    {
+        "paths": [
+            "Assets/Scripts/UI/RecordsController.cs",
+            "Assets/Scripts/UI/MainMenuController.cs",
+            "Assets/Scripts/UI/HoverTint.cs",
+            "Assets/Scenes/MenuScene.unity"
+        ],
+        "tests": [
+            "RecordsMenuTests",
+            "OptionsPanelTests",
+            "SoundAssetTests"
+        ],
+        "why": "Panele menu głównego: Wyniki (ranking, historia, statystyki, czyszczenie) i Options (ten sam układ i rozmiar tekstu co Wyniki, różowy kolor i pasek pod wierszem po najechaniu), oraz dźwięk tik przypisany w scenie menu."
+    },
+    {
+        "paths": [
+            "Assets/Scripts/SoundController.cs",
+            "Assets/Sounds/Tick.wav"
+        ],
+        "tests": [
+            "SoundAssetTests"
+        ],
+        "why": "Dźwięk tik w ostatnich 10 s tury musi istnieć i być przypisany w SoundController sceny menu."
     }
 ]

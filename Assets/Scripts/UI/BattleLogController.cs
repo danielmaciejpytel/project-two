@@ -230,6 +230,26 @@ public class BattleLogController : MonoBehaviour
     }
 
     // Shows the whole history and scrolls to its end, so a new action is always visible.
+    // The log as plain text (for the saved game): the turns with the actions under them.
+    public string ExportText()
+    {
+        StringBuilder text = new StringBuilder();
+        int shownTurn = -1;
+        foreach (Entry entry in _entries)
+        {
+            if (entry.turn != shownTurn)
+            {
+                shownTurn = entry.turn;
+                if (text.Length > 0) text.Append('\n');
+                text.Append(Loc.F("Turn {0} - {1}", entry.turn, PlayerName(entry.turnPlayer))).Append('\n');
+            }
+            text.Append("  ").Append(System.Text.RegularExpressions.Regex.Replace(entry.text, "<[^>]+>", "").Trim());
+            if (!string.IsNullOrEmpty(entry.value)) text.Append("  ").Append(System.Text.RegularExpressions.Regex.Replace(entry.value, "<[^>]+>", ""));
+            text.Append('\n');
+        }
+        return text.ToString().TrimEnd();
+    }
+
     private void Refresh()
     {
         Build(0);

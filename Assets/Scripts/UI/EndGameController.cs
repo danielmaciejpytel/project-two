@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.Text;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
@@ -23,6 +25,9 @@ public class EndGameController : MonoBehaviour
     [Header("Summary of the game")]
     [SerializeField] private GameObject _summaryPanel;
     [SerializeField] private TMP_Text _summaryText;
+    [SerializeField] private float _summaryFontSize = 26.0f;
+    [Tooltip("Space between the labels and the first number of the summary, and the smallest space between its two numbers.")]
+    [SerializeField] private float _summaryGap = 24.0f;
     [Tooltip("Rematch with the computer taking the other team; only in a game against the computer.")]
     [SerializeField] private Button _swapSidesButton;
     [SerializeField] private Color _superHotColor = new Color32(0xFF, 0x1B, 0x47, 0xFF);
@@ -32,17 +37,22 @@ public class EndGameController : MonoBehaviour
     [SerializeField] private TMP_Text _confirmDetail;
     [SerializeField] private Button _confirmYesButton;
     [SerializeField] private Button _confirmNoButton;
-    [Tooltip("The pause menu has no banner and summary above it, so the buttons and panels move up by this much.")]
-    [SerializeField] private float _pauseShift = 100.0f;
+    [Tooltip("The pause menu has no banner and summary above the buttons, so they move up by this much; its panels are centred on the screen.")]
+    [SerializeField] private float _pauseButtonsShift = 126.0f;
     [Header("Settings")]
     [SerializeField] private GameObject _settingsPanel;
     [SerializeField] private Slider _soundSlider;
     [SerializeField] private Slider _musicSlider;
     [SerializeField] private Button _resolutionButton;
     [SerializeField] private TMP_Text _resolutionLabel;
+    [Tooltip("Difficulty of the computer; it applies to the next game.")]
+    [SerializeField] private Button _difficultyButton;
+    [SerializeField] private TMP_Text _difficultyLabel;
     [SerializeField] private Button _settingsBackButton;
     [Tooltip("Background of the winner banner on this screen, less transparent than in the HUD.")]
     [SerializeField] private Sprite _bannerSprite;
+    [Tooltip("Size of the text of the winner banner (in the HUD the same text, \"Turn: ...\", is smaller).")]
+    [SerializeField] private float _winnerFontSize = 40.0f;
     [Header("Layout")]
     [Tooltip("Where the winner banner stops, relative to the middle of the screen.")]
     [SerializeField] private Vector2 _bannerPosition = new Vector2(0.0f, 150.0f);
@@ -50,6 +60,9 @@ public class EndGameController : MonoBehaviour
     [SerializeField] private float _fadeTime = 0.5f;
 
     private bool _paused;
+
+    // Whether the screen is open, as the pause menu or after the game.
+    public bool IsOpen => gameObject.activeSelf;
     private Action _confirmedAction;
     private RectTransform _buttonsRect;
     private RectTransform _settingsRect;
@@ -75,6 +88,7 @@ public class EndGameController : MonoBehaviour
         _settingsButton.onClick.AddListener(() => ShowSettings(true));
         _settingsBackButton.onClick.AddListener(() => ShowSettings(false));
         _resolutionButton.onClick.AddListener(CycleResolution);
+        _difficultyButton.onClick.AddListener(CycleDifficulty);
         _soundSlider.onValueChanged.AddListener(value => SoundController.Instance.SoundVolume = value);
         _musicSlider.onValueChanged.AddListener(value => SoundController.Instance.MusicVolume = value);
         // A click after releasing the sound slider, so the new volume can be heard.
@@ -84,9 +98,9 @@ public class EndGameController : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    private void OnEnable() => Loc.Changed += UpdateResolutionLabel;
+    private void OnEnable() => Loc.Changed += UpdateSettingsLabels;
 
-    private void OnDisable() => Loc.Changed -= UpdateResolutionLabel;
+    private void OnDisable() => Loc.Changed -= UpdateSettingsLabels;
 
     // The game must never stay frozen after this screen is gone.
     private void OnDestroy() => Time.timeScale = 1.0f;
@@ -116,22 +130,20 @@ public class EndGameController : MonoBehaviour
     }
 
     // Shows the screen; the banner is taken out of the HUD so it stays above the dimming. Without a banner it is the pause menu.
-    public void Show(RectTransform winnerBanner, GameStats stats = null)
+    public void Show(RectTransform winnerBanner, GameResult result = null)
     {
         gameObject.SetActive(true);
         ShowSettings(false);
         _confirmedAction = null;
         bool endOfGame = winnerBanner != null;
-        Vector2 shift = endOfGame ? Vector2.zero : new Vector2(0.0f, _pauseShift);
-        _buttonsRect.anchoredPosition = _buttonsPosition + shift;
-        _settingsRect.anchoredPosition = _settingsPosition + shift;
-        _confirmRect.anchoredPosition = _confirmPosition + shift;
-        _summaryPanel.SetActive(endOfGame && stats != null);
-        if (endOfGame && stats != null) _summaryText.text = Summary(stats);
+        _buttonsRect.anchoredPosition = _buttonsPosition + (endOfGame ? Vector2.zero : new Vector2(0.0f, _pauseButtonsShift));
+        _settingsRect.anchoredPosition = endOfGame ? _settingsPosition : new Vector2(_settingsPosition.x, 0.0f);
+        _confirmRect.anchoredPosition = endOfGame ? _confirmPosition : new Vector2(_confirmPosition.x, 0.0f);
+        _summaryPanel.SetActive(endOfGame && result != null);
         _swapSidesButton.gameObject.SetActive(endOfGame && GameSession.AiPlayerId != GameSession.NoAi);
         _soundSlider.SetValueWithoutNotify(SoundController.Instance != null ? SoundController.Instance.SoundVolume : 1.0f);
         _musicSlider.SetValueWithoutNotify(SoundController.Instance != null ? SoundController.Instance.MusicVolume : 0.5f);
-        UpdateResolutionLabel();
+        UpdateSettingsLabels();
 
         Color dim = _dim.color;
         dim.a = 0.0f;
@@ -148,14 +160,24 @@ public class EndGameController : MonoBehaviour
         winnerBanner.anchorMin = winnerBanner.anchorMax = new Vector2(0.5f, 0.5f);
         winnerBanner.anchoredPosition = overlay.InverseTransformPoint(winnerBanner.position);
         winnerBanner.DOAnchorPos(_bannerPosition, _fadeTime).SetEase(Ease.OutCubic).SetUpdate(true).SetLink(winnerBanner.gameObject);
-        // The banner is as wide as the settings panel; the panel image has a transparent margin on its left and right.
+        // The banner is as wide as the panels under it (the summary and the buttons, which are as wide as the settings panel;
+        // its image has a transparent margin on the left and right). The size is set at once, not tweened: the banner slides
+        // into place, but it is never seen narrower than the panels below it.
         float width = ((RectTransform)_settingsPanel.transform).rect.width * PanelVisibleWidth;
-        // The banner image keeps its proportions, so the height follows the width.
         Image bannerImage = winnerBanner.GetComponent<Image>();
-        float height = bannerImage != null && bannerImage.sprite != null && bannerImage.preserveAspect
+        float height = bannerImage != null && bannerImage.sprite != null
             ? width * bannerImage.sprite.rect.height / bannerImage.sprite.rect.width
-            : winnerBanner.sizeDelta.y;
-        winnerBanner.DOSizeDelta(new Vector2(width, height), _fadeTime).SetEase(Ease.OutCubic).SetUpdate(true).SetLink(winnerBanner.gameObject);
+            : winnerBanner.rect.height;
+        if (bannerImage != null) bannerImage.preserveAspect = false;
+        winnerBanner.sizeDelta = new Vector2(width, height);
+        // A larger text, on one line across the banner.
+        TMP_Text winnerText = winnerBanner.GetComponentInChildren<TMP_Text>();
+        if (winnerText != null)
+        {
+            winnerText.fontSize = _winnerFontSize;
+            winnerText.rectTransform.sizeDelta = new Vector2(width - 40.0f, winnerText.rectTransform.sizeDelta.y);
+            if (result != null) FillSummary(result, winnerText);
+        }
     }
 
     private void ShowSettings(bool show)
@@ -165,17 +187,54 @@ public class EndGameController : MonoBehaviour
         _buttons.gameObject.SetActive(!show);
     }
 
-    // Turns of the whole game and, for each team, how many units it called and how many it killed.
-    private string Summary(GameStats stats)
+    // The summary lines up with the name of the winner above it: the labels start at its left edge; the first number of a line
+    // (the Super Hot one, in its color) is in a column of its own and the second (Super Cold's) ends at its right edge.
+    private void FillSummary(GameResult result, TMP_Text winnerText)
     {
-        string called = Score(stats.CalledBy(1), stats.CalledBy(2));
-        string killed = Score(stats.KilledBy(1), stats.KilledBy(2));
-        return Loc.F("Turns played: {0}", stats.Turns) + "\n" + Loc.F("Units called: {0}", called) + "\n" + Loc.F("Units killed: {0}", killed);
+        winnerText.ForceMeshUpdate();
+        float width = winnerText.preferredWidth;
+        _summaryText.fontSize = _summaryFontSize;
+        _summaryText.enableAutoSizing = false;
+        _summaryText.alignment = TextAlignmentOptions.MidlineLeft;
+        _summaryText.textWrappingMode = TextWrappingModes.NoWrap;
+        RectTransform rect = _summaryText.rectTransform;
+        rect.anchorMin = rect.anchorMax = new Vector2(0.5f, 0.5f);
+        rect.pivot = new Vector2(0.5f, 0.5f);
+        rect.anchoredPosition = Vector2.zero;
+        rect.sizeDelta = new Vector2(width, rect.sizeDelta.y);
+
+        GameStats stats = result.Stats;
+        GameRecord record = result.Record;
+        string turns = Label("Turns played: {0}");
+        string called = Label("Units called: {0}");
+        string killed = Label("Units killed: {0}");
+        string score = Label("Score: {0}");
+        // The column of the first numbers: after the longest label.
+        float column = Mathf.Max(Measure(turns), Measure(called), Measure(killed), Measure(score)) + _summaryGap;
+
+        StringBuilder text = new StringBuilder();
+        text.Append(turns).Append("<pos=").Append(column.ToString("0.#", CultureInfo.InvariantCulture)).Append("px>").Append(stats.Turns);
+        AppendRow(text, called, stats.CalledBy(1), stats.CalledBy(2), column, width);
+        AppendRow(text, killed, stats.KilledBy(1), stats.KilledBy(2), column, width);
+        AppendRow(text, score, record.team1.score, record.team2.score, column, width);
+        if (result.IsHighScore) text.Append('\n').Append(Loc.T("New high score!"));
+        else if (result.LeaderboardPlace > 0) text.Append('\n').Append(Loc.F("Leaderboard place {0}", result.LeaderboardPlace));
+        _summaryText.text = text.ToString();
     }
 
-    private string Score(int hot, int cold)
+    // "Units called: " without the number, from the text used with a number.
+    private static string Label(string format) => Loc.F(format, "").TrimEnd();
+
+    private float Measure(string text) => _summaryText.GetPreferredValues(text).x;
+
+    private void AppendRow(StringBuilder text, string label, int hot, int cold, float column, float width)
     {
-        return $"<color=#{ColorUtility.ToHtmlStringRGB(_superHotColor)}>Super Hot</color> {hot}   <color=#{ColorUtility.ToHtmlStringRGB(_superColdColor)}>Super Cold</color> {cold}";
+        string secondNumber = cold.ToString();
+        // The second number is written so that its right end is at the right edge of the line.
+        float secondStart = width - Measure(secondNumber);
+        text.Append('\n').Append(label)
+            .Append("<pos=").Append(column.ToString("0.#", CultureInfo.InvariantCulture)).Append("px><color=#").Append(ColorUtility.ToHtmlStringRGB(_superHotColor)).Append('>').Append(hot).Append("</color>")
+            .Append("<pos=").Append(secondStart.ToString("0.#", CultureInfo.InvariantCulture)).Append("px><color=#").Append(ColorUtility.ToHtmlStringRGB(_superColdColor)).Append('>').Append(secondNumber).Append("</color>");
     }
 
     // In the pause menu the game is still running behind it, so leaving needs a second click; after the game it does not.
@@ -234,6 +293,22 @@ public class EndGameController : MonoBehaviour
         DisplaySettings.Set(resolutions[next]);
         UpdateResolutionLabel();
     }
+
+    // Easy -> Normal -> Hard, like in the options of the menu.
+    private void CycleDifficulty()
+    {
+        SoundController.Instance?.PlayClick();
+        GameSession.Difficulty = (AiDifficulty)(((int)GameSession.Difficulty + 1) % 3);
+        UpdateDifficultyLabel();
+    }
+
+    private void UpdateSettingsLabels()
+    {
+        UpdateResolutionLabel();
+        UpdateDifficultyLabel();
+    }
+
+    private void UpdateDifficultyLabel() => _difficultyLabel.text = Loc.F("Difficulty: {0}", Loc.T(GameSession.Difficulty.ToString()));
 
     private void UpdateResolutionLabel()
     {

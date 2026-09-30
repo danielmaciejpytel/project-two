@@ -51,6 +51,31 @@ public static class GameTestUtil
     {
         Time.timeScale = 1.0f;
         GameSession.AiPlayerId = GameSession.NoAi;
+        // Finished games are saved: the tests must never write into the player's results.
+        RecordStore.PathOverride = System.IO.Path.Combine(Application.temporaryCachePath, "play-mode-tests-results.json");
+        RecordStore.Clear();
+    }
+
+    // A finished game against the computer, played by the human as team 1, for the tests of the results.
+    public static GameRecord SampleGame(int humanScore, bool won, string difficulty = "Normal", string log = "")
+    {
+        GameRecord record = new GameRecord
+        {
+            mode = GameRecord.VsComputer,
+            difficulty = difficulty,
+            humanTeam = 1,
+            winner = won ? 1 : 2,
+            date = System.DateTime.UtcNow.ToString("o"),
+            turns = 12,
+            seconds = 200.0f,
+            log = log
+        };
+        record.team1.units = new[] { "Super Hot", "Striker" };
+        record.team2.units = new[] { "Super Cold", "Tormentor" };
+        record.team1.score = humanScore;
+        record.team1.killed = 2;
+        record.team1.called = 1;
+        return record;
     }
 
     public static T Find<T>(string name) where T : Component
@@ -121,6 +146,21 @@ public static class GameTestUtil
             }
         }
         return changed;
+    }
+
+    // Tiles that show an attack crosshair.
+    public static int CrosshairTiles()
+    {
+        int count = 0;
+        BoardGrid grid = Game.GetGrid();
+        for (int y = 0; y < grid.GetBoardHeight(); y++)
+        {
+            for (int x = 0; x < grid.GetBoardWidth(); x++)
+            {
+                if (GetPrivate<SpriteRenderer>(grid.GetTile(x, y), "_crosshairSpriteRenderer").enabled) count++;
+            }
+        }
+        return count;
     }
 
     public static Color[,] SnapshotOverlays()

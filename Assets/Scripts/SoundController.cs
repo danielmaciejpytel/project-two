@@ -15,6 +15,8 @@ public class SoundController : MonoBehaviour
     [SerializeField] private AudioClip _hoverClip;
     [SerializeField] private AudioClip _callUnitClip;
     [SerializeField] private AudioClip _endTurnClip;
+    [Tooltip("Played every second in the last seconds of a turn.")]
+    [SerializeField] private AudioClip _tickClip;
     [Tooltip("Index 0 is the menu theme, the rest are played in game.")]
     [SerializeField] private AudioClip[] _gameMusic;
 
@@ -115,4 +117,6 @@ public class SoundController : MonoBehaviour
     public void PlayCall() => PlayOneShot(_callUnitClip);
 
     public void PlayEndTurn() => PlayOneShot(_endTurnClip);
+
+    public void PlayTick() => PlayOneShot(_tickClip);
 }

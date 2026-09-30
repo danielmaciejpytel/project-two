@@ -39,9 +39,9 @@ public class UIController : MonoBehaviour
 
     // Each player gets hints in the first turn of the game.
     private const int TurnsWithHints = 2;
-    private const string HintChoose = "Click one of your units to choose it. Call brings a new Doppelganger next to your Superior.";
-    private const string HintUnit = "Click a highlighted tile to move, or an enemy in range to attack. End Turn passes the turn.";
-    private const string HintCall = "Pick a card below, then click a tile next to your Superior. Press Call again to cancel.";
+    private const string HintChoose = "Click one of your units to choose it. Call (C) brings a new Doppelganger next to your Superior.";
+    private const string HintUnit = "Click a highlighted tile to move, or an enemy in range to attack. End Turn (Space) passes the turn.";
+    private const string HintCall = "Pick a card below, then click a tile next to your Superior. Press Call (C) again to cancel.";
 
 
     private void Start()
@@ -57,11 +57,36 @@ public class UIController : MonoBehaviour
 
     private void Update()
     {
-        if (_endGame == null || Keyboard.current == null || !Keyboard.current.escapeKey.wasPressedThisFrame) return;
-        GameController game = GameController.Instance;
-        // Only while a game is being played: not during the unit draft and not after the game has ended.
-        if (game != null && game.CurrentState != null && !game.IsGameOver) _endGame.HandleEscape();
+        if (Keyboard.current == null) return;
+        if (Keyboard.current.spaceKey.wasPressedThisFrame) PressEndTurnShortcut();
+        if (Keyboard.current.cKey.wasPressedThisFrame) PressCallShortcut();
+        if (_endGame != null && Keyboard.current.escapeKey.wasPressedThisFrame && GameIsBeingPlayed()) _endGame.HandleEscape();
     }
+
+    // Only while a game is being played: not during the unit draft and not after the game has ended.
+    private static bool GameIsBeingPlayed()
+    {
+        GameController game = GameController.Instance;
+        return game != null && game.CurrentState != null && !game.IsGameOver;
+    }
+
+    // Space does what the End Turn button does, C what Call does; not while the pause menu is open, and only when the button is there.
+    public bool PressEndTurnShortcut()
+    {
+        if (!ShortcutsAvailable() || !_endTurnButton.gameObject.activeSelf) return false;
+        GameController.Instance.EndTurnAction();
+        return true;
+    }
+
+    public bool PressCallShortcut()
+    {
+        if (!ShortcutsAvailable() || !_deployMinionButton.gameObject.activeSelf) return false;
+        GameController.Instance.DeployAction();
+        return true;
+    }
+
+    // Not while the computer plays: the buttons do not react to a human then either.
+    private bool ShortcutsAvailable() => GameIsBeingPlayed() && (_endGame == null || !_endGame.IsOpen) && !GameSession.IsAiPlayer(GameController.Instance.ActivePlayer);
 
     private IEnumerator TurnTimer(int timeLimit, GameController myGameController)
     {
@@ -89,6 +114,7 @@ public class UIController : MonoBehaviour
         TMP_Text label = TimerLabel();
         if (label != null) label.color = color;
         if (!warning) return;
+        SoundController.Instance?.PlayTick();
         _timerImage.transform.DOComplete();
         _timerImage.transform.DOPunchScale(new Vector3(0.06f, 0.06f, 0.0f), 0.4f).SetLink(_timerImage.gameObject);
     }
@@ -131,7 +157,7 @@ public class UIController : MonoBehaviour
         _abilityButton.gameObject.SetActive(false);
         _timerImage.gameObject.SetActive(false);
         if (_hintPanel != null) _hintPanel.SetActive(false);
-        if (_endGame != null) _endGame.Show(_winnerImage.rectTransform, GameController.Instance != null ? GameController.Instance.Stats : null);
+        if (_endGame != null) _endGame.Show(_winnerImage.rectTransform, GameController.Instance != null ? GameController.Instance.Result : null);
     }
 
     public void InitializeUnitsPanel(List<UnitController> units, int startingPlayer, GameController myGameController, int timeLimit)

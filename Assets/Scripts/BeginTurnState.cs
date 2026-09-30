@@ -55,10 +55,11 @@ public class BeginTurnState : IGameState
 
         SoundController.Instance?.PlayHover();
         myGrid = myGameController.GetGrid();
-        // Move and attack ranges are shown only for the units of the team that is playing.
-        if (hoveredUnit.GetPlayerId() == _activePlayerId)
+        // Move and attack ranges are shown only for the units of the team that is playing, and only what the unit can still do
+        // this turn: a unit that has moved shows no move range from its new place, one that has played shows nothing.
+        if (hoveredUnit.GetPlayerId() == _activePlayerId && hoveredUnit.IsAvailable)
         {
-            myGrid.ShowMoveRange(hoveredUnit.GetGridPosition(), hoveredUnit.GetMoveRange());
+            if (!hoveredUnit.HasMoved) myGrid.ShowMoveRange(hoveredUnit.GetGridPosition(), hoveredUnit.GetMoveRange());
             if(hoveredUnit.FreeAttacksCount > 0) myGrid.ShowAttackRange(hoveredUnit, hoveredUnit.GetAttackRange(), hoveredUnit.GetPlayerId());
         }
         ui = myGameController.GetUI();

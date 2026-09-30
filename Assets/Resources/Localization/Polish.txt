@@ -143,6 +143,33 @@ Turns played: {0}	Rozegrane tury: {0}
 Units called: {0}	Wezwane jednostki: {0}
 Units killed: {0}	Zabite jednostki: {0}
 Rematch: swap sides	Rewanż: zamiana stron
-Click one of your units to choose it. Call brings a new Doppelganger next to your Superior.	Kliknij jedną ze swoich jednostek, aby ją wybrać. Wezwij przywołuje nowego sobowtóra obok Twojego dowódcy.
-Click a highlighted tile to move, or an enemy in range to attack. End Turn passes the turn.	Kliknij podświetlone pole, aby się poruszyć, albo wroga w zasięgu, aby zaatakować. Zakończ oddaje turę.
-Pick a card below, then click a tile next to your Superior. Press Call again to cancel.	Wybierz kartę poniżej, potem kliknij pole obok swojego dowódcy. Naciśnij Wezwij ponownie, aby anulować.
+Score: {0}	Wynik: {0}
+New high score!	Nowy rekord!
+Leaderboard place {0}	Miejsce w rankingu: {0}
+Click one of your units to choose it. Call (C) brings a new Doppelganger next to your Superior.	Kliknij jedną ze swoich jednostek, aby ją wybrać. Wezwij (C) przywołuje nowego sobowtóra obok Twojego dowódcy.
+Click a highlighted tile to move, or an enemy in range to attack. End Turn (Space) passes the turn.	Kliknij podświetlone pole, aby się poruszyć, albo wroga w zasięgu, aby zaatakować. Zakończ (spacja) oddaje turę.
+Pick a card below, then click a tile next to your Superior. Press Call (C) again to cancel.	Wybierz kartę poniżej, potem kliknij pole obok swojego dowódcy. Naciśnij Wezwij (C) ponownie, aby anulować.
+All	Wszystkie
+Click again to remove all results	Kliknij ponownie, aby usunąć wszystkie wyniki
+Clear results	Wyczyść wyniki
+No games yet.	Brak rozegranych partii.
+No won games against the computer yet.	Brak wygranych partii z komputerem.
+Won	Wygrana
+Lost	Przegrana
+{0} won	Wygrał: {0}
+Two players	Dwóch graczy
+Against the computer ({0})	Z komputerem ({0})
+Time: {0}	Czas: {0}
+Games played: {0}	Rozegrane partie: {0}
+against the computer: {0}	z komputerem: {0}
+Win rate: {0}	Wygrane: {0}
+Best score: {0}	Najlepszy wynik: {0}
+Longest win streak: {0}	Najdłuższa seria wygranych: {0}
+current: {0}	obecna: {0}
+Favorite unit: {0}	Ulubiona jednostka: {0}
+RECORDS	WYNIKI
+LEADERBOARD	RANKING
+HISTORY	HISTORIA
+STATS	STATYSTYKI
+Scroll with the mouse wheel	Przewijaj kółkiem myszy
+Reset settings	Przywróć ustawienia

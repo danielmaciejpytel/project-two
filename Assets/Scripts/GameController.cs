@@ -69,6 +69,7 @@ public class GameController : MonoBehaviour
     private BoardGrid _myGrid;
     private Camera _myCamera;
     private bool _gameEnded;
+    private float _gameStartTime;
 
     public static GameController Instance { get; private set; }
 
@@ -77,6 +78,8 @@ public class GameController : MonoBehaviour
     public bool IsGameOver => _gameEnded;
     public IReadOnlyList<UnitController> Units => _units;
     public GameStats Stats { get; } = new GameStats();
+    // The outcome of the game, available once it has ended.
+    public GameResult Result { get; private set; }
 
     // During the computer's turn the human's clicks, hovers and HUD buttons are ignored.
     private bool IsInputLocked => GameSession.IsAiPlayer(_activePlayer) && !_bypassInputLock;
@@ -136,8 +139,40 @@ public class GameController : MonoBehaviour
         if (killedUnit.IsKing() && !_gameEnded)
         {
             _gameEnded = true;
-            _myGameState = new EndState(this, GetOpponent(killedUnit.GetPlayerId()));
+            int winnerId = GetOpponent(killedUnit.GetPlayerId());
+            Result = FinishGame(winnerId);
+            _myGameState = new EndState(this, winnerId);
         }
+    }
+
+    // Works out the score, saves the game in the results and finds its place on the leaderboard.
+    private GameResult FinishGame(int winnerId)
+    {
+        Stats.RecordEnd(Time.time - _gameStartTime, CommanderHealthOf(1), CommanderHealthOf(2));
+        BattleLogController log = FindFirstObjectByType<BattleLogController>();
+        GameResult result = GameResult.Create(Stats, winnerId, GameSession.AiPlayerId, GameSession.Difficulty, UnitNames(1), UnitNames(2), log != null ? log.ExportText() : "");
+        RecordStore.Add(result.Record);
+        if (result.Record.HumanWon) result.LeaderboardPlace = RecordStore.LeaderboardPlace(result.Record.id);
+        return result;
+    }
+
+    private int CommanderHealthOf(int playerId)
+    {
+        UnitController commander = GetCommander(playerId);
+        return commander != null && !commander.IsKilled ? commander.GetHP() : 0;
+    }
+
+    // The names of a team's units, the commander first.
+    private string[] UnitNames(int playerId)
+    {
+        List<string> names = new List<string>();
+        foreach (UnitController unit in _units)
+        {
+            if (unit.GetPlayerId() != playerId) continue;
+            if (unit.IsKing()) names.Insert(0, unit.GetUnitName());
+            else names.Add(unit.GetUnitName());
+        }
+        return names.ToArray();
     }
 
     private void OnExecutionEnded(UnitController unit)
@@ -331,6 +366,7 @@ public class GameController : MonoBehaviour
 
     public void StartGame()
     {
+        _gameStartTime = Time.time;
         string configFilePath = Path.Combine(Application.streamingAssetsPath, GridFileName);
         if (!File.Exists(configFilePath))
         {

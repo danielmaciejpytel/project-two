@@ -187,4 +187,40 @@ public class GameplayTests
         }
         Assert.IsTrue(found, "The killed unit has a card");
     }
+
+    [UnityTest]
+    public IEnumerator AUnitThatHasMovedShowsNoMoveRangeFromItsNewPlace()
+    {
+        yield return StartGame();
+        UnitController commander = Game.GetCommander(Game.ActivePlayer);
+        Color[,] clean = SnapshotOverlays();
+        commander.PointerEnter();
+        int changedBeforeMoving = ChangedTiles(clean);
+        int crosshairsBeforeMoving = CrosshairTiles();
+        commander.PointerExit();
+        yield return null;
+
+        commander.HasMoved = true;
+        commander.PointerEnter();
+
+        Assert.Greater(changedBeforeMoving, 1, "A unit that has not moved shows where it can go");
+        Assert.LessOrEqual(ChangedTiles(clean), 1, "After the move only the unit's own tile is marked");
+        Assert.Greater(crosshairsBeforeMoving, 0);
+        Assert.AreEqual(crosshairsBeforeMoving > 0, CrosshairTiles() > 0, "It can still attack, so the attack range stays");
+    }
+
+    [UnityTest]
+    public IEnumerator AUnitThatHasPlayedShowsNoRanges()
+    {
+        yield return StartGame();
+        UnitController commander = Game.GetCommander(Game.ActivePlayer);
+        Color[,] clean = SnapshotOverlays();
+
+        commander.IsAvailable = false;
+        commander.PointerEnter();
+
+        Assert.LessOrEqual(ChangedTiles(clean), 1, "No move range");
+        Assert.AreEqual(0, CrosshairTiles(), "No attack range either");
+        yield return null;
+    }
 }

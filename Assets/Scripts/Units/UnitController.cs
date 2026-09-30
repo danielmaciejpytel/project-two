@@ -247,7 +247,7 @@ public class UnitController : MonoBehaviour, IClickable, IHoverable, IEndturnabl
         IAddEffect[] myEffectGivers;
         int attackPower = CalculateAttack(_myTarget);
         EventManager.Instance.UnitAttacked(this, _myTarget, attackPower, Mathf.Min(_myTarget.CalculateDamage(attackPower), _myTarget.GetHP()));
-        _myTarget.DamageUnit(attackPower);
+        _myTarget.DamageUnit(attackPower, null, this);
         myEffectGivers = GetComponents<IAddEffect>();
         foreach (IAddEffect giver in myEffectGivers)
         {
@@ -275,7 +275,8 @@ public class UnitController : MonoBehaviour, IClickable, IHoverable, IEndturnabl
     }
 
     /// <param name="source">Name shown in the battle log for damage that doesn't come from an attack (tiles, burning).</param>
-    public void DamageUnit(int damage, string source = null)
+    /// <param name="attacker">The unit that attacks: a unit it kills dies only when its attack animation has ended.</param>
+    public void DamageUnit(int damage, string source = null, UnitController attacker = null)
     {
         int damageTaken;
 
@@ -283,7 +284,7 @@ public class UnitController : MonoBehaviour, IClickable, IHoverable, IEndturnabl
         if (source != null) EventManager.Instance.UnitDamaged(this, Mathf.Min(damageTaken, GetHP()), source);
         if (_myHealth.ChangeHealth(-damageTaken))
         {
-            Kill();
+            Kill(attacker);
         }
         else
         {
@@ -292,14 +293,56 @@ public class UnitController : MonoBehaviour, IClickable, IHoverable, IEndturnabl
         }
     }
 
-    private void Kill()
+    // The unit is dead for the game at once; its death animation waits until the attacker has finished the attack animation.
+    private void Kill(UnitController attacker = null)
     {
         if (IsKilled) return;
         IsKilled = true;
+        if (attacker != null && attacker.IsPlayingAttack) StartCoroutine(DieAfterAttack(attacker));
+        else PlayDeath();
+    }
+
+    private IEnumerator DieAfterAttack(UnitController attacker)
+    {
+        // The attack animation goes on after the moment of the hit; a limit keeps a stuck animator from holding the death back.
+        float end = Time.time + 10.0f;
+        while (attacker != null && attacker.IsPlayingAttack && Time.time < end) yield return null;
+        PlayDeath();
+    }
+
+    private void PlayDeath()
+    {
         PlayUnitSound(_myDeathClip);
         if (!_isDesignerMode) _myAnimator.SetTrigger("Die");
         else DeathEnded();
     }
+
+    // True while the animator plays the attack animation. The states of the controllers have different names, so the clip is
+    // recognised by its name (like "RedMeleeAttack").
+    public bool IsPlayingAttack => !_isDesignerMode && _myAnimator != null && _myAnimator.isActiveAndEnabled && (_myAnimator.GetBool("Attack") || PlaysClip("attack"));
+
+    // True while the animator plays the death animation.
+    public bool IsPlayingDeath => !_isDesignerMode && _myAnimator != null && _myAnimator.isActiveAndEnabled && PlaysClip("death");
+
+    // The clip that is playing or, while the animator blends into another state, the one it is blending into: a fast attack hits
+    // while its animation is only just starting.
+    private bool PlaysClip(string nameEnd)
+    {
+        foreach (AnimatorClipInfo info in _myAnimator.GetCurrentAnimatorClipInfo(0))
+        {
+            if (info.weight > 0.5f && NameEndsWith(info.clip, nameEnd)) return true;
+        }
+        if (_myAnimator.IsInTransition(0))
+        {
+            foreach (AnimatorClipInfo info in _myAnimator.GetNextAnimatorClipInfo(0))
+            {
+                if (NameEndsWith(info.clip, nameEnd)) return true;
+            }
+        }
+        return false;
+    }
+
+    private static bool NameEndsWith(AnimationClip clip, string nameEnd) => clip != null && clip.name.EndsWith(nameEnd, System.StringComparison.OrdinalIgnoreCase);
 
     private void PlayUnitSound(AudioClip clip)
     {

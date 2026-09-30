@@ -16,6 +16,8 @@ public class MainMenuController : MonoBehaviour
     [Header("Main menu")]
     [SerializeField] private Button _instructionsButton;
     [SerializeField] private Button _optionsButton;
+    [SerializeField] private Button _recordsButton;
+    [SerializeField] private RecordsController _records;
     [SerializeField] private Button _creditsButton;
     [SerializeField] private Button _exitButton;
     [SerializeField] private Button _backButton;
@@ -63,6 +65,7 @@ public class MainMenuController : MonoBehaviour
         _playButton.gameObject.SetActive(active);
         _instructionsButton.gameObject.SetActive(active);
         _optionsButton.gameObject.SetActive(active);
+        _recordsButton.gameObject.SetActive(active);
         _creditsButton.gameObject.SetActive(active);
         _exitButton.gameObject.SetActive(active);
     }
@@ -147,6 +150,23 @@ public class MainMenuController : MonoBehaviour
         HideBar();
     }
 
+    // RECORDS: the leaderboard, the latest games and the statistics.
+    public void DisplayRecords()
+    {
+        SoundController.Instance?.PlayClick();
+        SetMainButtonsActive(false);
+        _records.gameObject.SetActive(true);
+        HideBar();
+    }
+
+    public void HideRecords()
+    {
+        SoundController.Instance?.PlayClick();
+        SetMainButtonsActive(true);
+        _records.gameObject.SetActive(false);
+        HideBar();
+    }
+
     public void DisplayInstructions()
     {
         SoundController.Instance?.PlayClick();
@@ -166,12 +186,17 @@ public class MainMenuController : MonoBehaviour
 #endif
     }
 
-    public void OnMybuttonEnter(Button myButton)
+    public void OnMybuttonEnter(Button myButton) => ShowBarAt(myButton.transform);
+
+    public void OnMybuttonExit(Button myButton) => HideBarAgain();
+
+    // The dark bar slides in from the left behind the row under the mouse.
+    public void ShowBarAt(Transform row)
     {
         SoundController.Instance?.PlayHover();
-        // Follow the hovered button vertically, start off-screen on the left (canvas units).
+        // Follow the hovered row vertically, start off-screen on the left (canvas units).
         Vector3 barPosition = _barImage.transform.position;
-        barPosition.y = myButton.transform.position.y;
+        barPosition.y = row.position.y;
         _barImage.transform.position = barPosition;
         HideBar();
         // Only stop the highlight bar tween, KillAll also stopped every other running tween in the menu.
@@ -179,10 +204,28 @@ public class MainMenuController : MonoBehaviour
         _barImage.transform.DOLocalMoveX(0.0f, 1.0f).SetEase(Ease.OutExpo).SetLink(_barImage.gameObject);
     }
 
-    public void OnMybuttonExit(Button myButton)
+    public void HideBarAgain()
     {
         _barImage.transform.DOKill();
         _barImage.transform.DOLocalMoveX(HiddenBarX, 1.0f).SetEase(Ease.OutExpo).SetLink(_barImage.gameObject);
+    }
+
+    // Options: effects and music to half of their range, difficulty Normal and the native resolution. The language stays.
+    public void ResetSettings()
+    {
+        SoundController sound = SoundController.Instance;
+        if (sound != null)
+        {
+            sound.SoundVolume = 0.5f;
+            sound.MusicVolume = 0.5f;
+        }
+        _soundSlider.SetValueWithoutNotify(0.5f);
+        _musicSlider.SetValueWithoutNotify(0.5f);
+        GameSession.Difficulty = AiDifficulty.Normal;
+        if (DisplaySettings.Current != DisplaySettings.Native) DisplaySettings.Set(DisplaySettings.Native);
+        RefreshOptionTexts();
+        // After the volumes are set, so the click is heard at the new volume.
+        sound?.PlayClick();
     }
 
     // Options: cycles the computer opponent's difficulty Easy -> Normal -> Hard.

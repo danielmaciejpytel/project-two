@@ -64,6 +64,13 @@ public class EndScreenTests
         float right = menu.anchoredPosition.x + menu.rect.width / 2.0f;
         Assert.AreEqual(banner.rect.width, right - left, 1.5f, "The two button columns span the banner");
         Assert.AreEqual(0.0f, banner.anchoredPosition.x, 0.5f, "The banner is centred");
+        RectTransform summary = (RectTransform)screen.transform.Find("Buttons/SummaryPanel");
+        Assert.AreEqual(summary.rect.width, banner.rect.width, 0.5f, "As wide as the summary panel under it");
+        Assert.AreEqual(summary.position.x, banner.position.x, 0.5f, "On the same axis");
+        TMPro.TMP_Text text = banner.GetComponentInChildren<TMPro.TMP_Text>();
+        Assert.GreaterOrEqual(text.fontSize, 40.0f, "The winner is written large");
+        Assert.LessOrEqual(text.preferredWidth, text.rectTransform.rect.width + 1.0f, "On one line, within the banner");
+        Assert.LessOrEqual(text.rectTransform.rect.width, banner.rect.width, "The text does not stick out of the banner");
     }
 
     [UnityTest]
