@@ -53,9 +53,11 @@ public class BattleLogController : MonoBehaviour
     private float _sideMargin;
     private float _scroll;
     private RectTransform _entriesRect;
+    private ScreenCorners _corners;
 
     private void Awake()
     {
+        _corners = GetComponentInParent<ScreenCorners>();
         // Hidden while players are still choosing units.
         _panel.SetActive(false);
         _rect = (RectTransform)transform;
@@ -137,6 +139,8 @@ public class BattleLogController : MonoBehaviour
     // Follows the other turn controls: left edge for Super Hot, right edge for Super Cold.
     private void MoveToPlayerSide(int playerId)
     {
+        // The canvas of the log (as big as the layout) sticks to the top corner on that side of the screen.
+        if (_corners != null && _rect.parent.parent != _corners.TurnSide(playerId)) _rect.parent.SetParent(_corners.TurnSide(playerId), false);
         float side = playerId == 1 ? 0.0f : 1.0f;
         _rect.anchorMin = new Vector2(side, _rect.anchorMin.y);
         _rect.anchorMax = new Vector2(side, _rect.anchorMax.y);

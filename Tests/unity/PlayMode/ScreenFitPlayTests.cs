@@ -106,4 +106,49 @@ public class ScreenFitPlayTests
         }
         Assert.Fail("The shadow of the board is not a WorldBackdrop");
     }
+
+    private static void AssertOffset(string corner, float x, float y, float aspect)
+    {
+        Vector3 position = Find<ScreenCorner>(corner).transform.localPosition;
+        Assert.AreEqual(x, position.x, 0.01f, corner + " horizontally, aspect " + aspect);
+        Assert.AreEqual(y, position.y, 0.01f, corner + " vertically, aspect " + aspect);
+    }
+
+    [UnityTest]
+    public IEnumerator TheHudSticksToTheCornersAndEdgesOfTheScreen()
+    {
+        yield return StartGame();
+
+        foreach (float aspect in new[] { ScreenFit.ReferenceAspect, Wide, Tall, Square })
+        {
+            yield return ShowAs(aspect);
+            Vector2 margin = ScreenFit.EdgeMargin(aspect);
+            AssertOffset("CornerTopLeft", -margin.x, margin.y, aspect);
+            AssertOffset("CornerTopRight", margin.x, margin.y, aspect);
+            AssertOffset("EdgeTop", 0.0f, margin.y, aspect);
+            AssertOffset("CornerBottomLeft", -margin.x, -margin.y, aspect);
+            AssertOffset("CornerBottomRight", margin.x, -margin.y, aspect);
+        }
+    }
+
+    [UnityTest]
+    public IEnumerator TheControlsOfThePlayerWithTheTurnStickToHisCornerAndFollowTheTurn()
+    {
+        yield return StartGame();
+        ScreenFit.AspectOverride = Square;
+        yield return null;
+
+        for (int turn = 0; turn < 2; turn++)
+        {
+            string corner = Game.ActivePlayer == 1 ? "CornerTopLeft" : "CornerTopRight";
+            foreach (string control in new[] { "EndTurnButton", "TimerBackgroundImage", "BattleLogCanvas" })
+            {
+                Assert.AreEqual(corner, Find<Transform>(control).parent.name, control + " in the turn of player " + Game.ActivePlayer);
+            }
+            Game.EndTurnAction();
+            yield return null;
+            yield return null;
+        }
+    }
 }
+

@@ -22,6 +22,9 @@ public class UIController : MonoBehaviour
     [SerializeField] private float _leftEdgeInset = 6.0f;
     [SerializeField] private Color _superHotColor = new Color32(0xFF, 0x1B, 0x47, 0xFF);
     [SerializeField] private Color _superColdColor = new Color32(0x14, 0xC8, 0xD8, 0xFF);
+    [Header("Screen corners")]
+    [Tooltip("The top corners the controls of the player who has the turn move between.")]
+    [SerializeField] private ScreenCorners _corners;
     [Header("Hints for the first turns")]
     [SerializeField] private GameObject _hintPanel;
     [SerializeField] private TMP_Text _hintText;
@@ -219,6 +222,15 @@ public class UIController : MonoBehaviour
     private void MoveActivePlayerControls(float direction)
     {
         RectTransform[] controls = { _timerImage.rectTransform, (RectTransform)_endTurnButton.transform, (RectTransform)_deployMinionButton.transform, (RectTransform)_abilityButton.transform };
+        // The controls stick to the top corner on the active player's side, in the same place of the corner as before.
+        if (_corners != null)
+        {
+            Transform corner = direction < 0.0f ? _corners.TopLeft : _corners.TopRight;
+            foreach (RectTransform control in controls)
+            {
+                if (control.parent != corner) control.SetParent(corner, false);
+            }
+        }
         foreach (RectTransform control in controls) MirrorToSide(control, direction);
         if (direction >= 0.0f) return;
         // The buttons keep their order and spacing, so they move together; the timer lines up on its own.
@@ -239,10 +251,12 @@ public class UIController : MonoBehaviour
         target.anchoredPosition = position;
     }
 
-    // The middle of the screen in the local coordinates of the target's parent.
+    // The middle of the screen in the coordinates of the layout. The controls sit in a corner of the screen, which moves
+    // sideways on wide screens, but the mirroring is about the middle of the layout that does not move.
     private float ScreenCentreX(RectTransform target)
     {
-        return target.parent.InverseTransformPoint(target.GetComponentInParent<Canvas>().rootCanvas.transform.position).x;
+        Transform layout = _corners != null ? _corners.transform : target.parent;
+        return layout.InverseTransformPoint(target.GetComponentInParent<Canvas>().rootCanvas.transform.position).x;
     }
 
     // Moves the group so the left edge of the leader lines up with the left edge of the info panel.

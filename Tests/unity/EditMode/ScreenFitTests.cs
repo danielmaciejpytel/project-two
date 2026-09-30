@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using UnityEngine;
 
 // The shapes of the screen the game is fitted to: the 16:9 layout stays as it is, backgrounds and the camera adapt.
 public class ScreenFitTests
@@ -44,4 +45,18 @@ public class ScreenFitTests
             Assert.GreaterOrEqual(frameHeight * factor + 0.0001f, 1.0f, "Height, aspect " + aspect);
         }
     }
+
+    [Test]
+    public void TheSpaceBeyondTheFrameIsOnTheSidesOfAWideScreenAndAboveAndBelowATallOne()
+    {
+        Assert.AreEqual(Vector2.zero, ScreenFit.EdgeMargin(ScreenFit.ReferenceAspect));
+        Vector2 wide = ScreenFit.EdgeMargin(Wide);
+        Assert.AreEqual((1080.0f * Wide - 1920.0f) * 0.5f, wide.x, 0.001f);
+        Assert.AreEqual(0.0f, wide.y, 0.001f);
+        Vector2 tall = ScreenFit.EdgeMargin(Tall);
+        Assert.AreEqual(0.0f, tall.x, 0.001f);
+        Assert.AreEqual(60.0f, tall.y, 0.001f);
+        Assert.AreEqual(180.0f, ScreenFit.EdgeMargin(Square).y, 0.001f);
+    }
 }
+
