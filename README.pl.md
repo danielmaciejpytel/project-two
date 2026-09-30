@@ -39,8 +39,12 @@ przygotowanym przez cały Team 13. Od tego czasu Daniel Pytel wprowadził:
   trzymają się typowych konwencji C#, a animacje są bezpiecznie powiązane ze swoimi obiektami.
 - **Nowy interfejs.** Interfejs skaluje się z rozdzielczością ekranu i korzysta z TextMeshPro
   z ostrą pikselową czcionką o stałych rozmiarach. HUD ma napis tury w kolorze drużyny
-  i zwijany dziennik bitwy po stronie aktywnego gracza. Menu ma nową instrukcję, a panel
-  informacji pokazuje maksymalne zdrowie razem z bonusami.
+  i zwijany dziennik bitwy po stronie aktywnego gracza. Menu ma nową instrukcję i wolno
+  unoszącą się grafikę, a panel informacji pokazuje maksymalne zdrowie razem z bonusami.
+- **Opcje.** Suwaki głośności efektów i muzyki, poziom trudności AI, rozdzielczość ekranu
+  (domyślnie natywna) i język (angielski lub polski, z pełnym polskim tłumaczeniem). Wszystko
+  zapisuje się automatycznie.
+- **Szybszy start.** Animacje jednostek wczytują się tylko dla postaci wybranych w drafcie.
 - **Przeciwnik komputerowy.** Nowy tryb PLAY VS AI (w menu PLAY) pozwala poprowadzić Super Hot przeciwko Super
   Cold sterowanemu przez komputer. Komputer wybiera jednostki, przyzywa posiłki, porusza się,
   atakuje i używa Confuse oraz Teleport. W opcjach można wybrać trzy poziomy trudności:

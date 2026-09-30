@@ -39,8 +39,12 @@ by the whole Team 13. Since then Daniel Pytel has added:
   The scripts follow common C# conventions, and animations are safely linked to their objects.
 - **New interface.** The UI scales with the screen resolution and uses TextMeshPro with a sharp
   pixel font at fixed sizes. The HUD has a team-coloured turn label and a collapsible battle log
-  on the active player's side. The menu has new instructions, and the info panel shows maximum
-  health including bonuses.
+  on the active player's side. The menu has new instructions and slowly floating artwork, and the
+  info panel shows maximum health including bonuses.
+- **Options.** Sound and music volume sliders, AI difficulty, screen resolution (native by
+  default) and language (English or Polish, with a full Polish translation). Everything is saved
+  automatically.
+- **Faster start.** Unit animations are loaded only for the units picked in the draft.
 - **Computer opponent.** The new PLAY VS AI mode (under PLAY) lets you lead Super Hot against a computer-led
   Super Cold. The computer drafts its units, calls reinforcements, moves, attacks and uses
   Confuse and Teleport. Three difficulty levels can be chosen in Options:
