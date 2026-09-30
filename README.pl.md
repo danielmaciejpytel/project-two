@@ -44,6 +44,10 @@ przygotowanym przez cały Team 13. Od tego czasu Daniel Pytel wprowadził:
   z ostrą pikselową czcionką o stałych rozmiarach. HUD ma napis tury w kolorze drużyny
   i zwijany dziennik bitwy po stronie aktywnego gracza. Menu ma nową instrukcję i wolno
   unoszącą się grafikę, a panel informacji pokazuje maksymalne zdrowie razem z bonusami.
+- **Nowy ekran wyboru jednostek.** Draft ma nowy układ z osobnym panelem dla każdej drużyny,
+  statystykami jednostek, ikonami cech, siatką zasięgu ruchu i ataku oraz pulsującymi strzałkami.
+  Działa też w grze z komputerem. Menu, draft i bitwa mają to samo animowane tło, które można
+  przyciemnić opcjonalnymi warstwami dim i shade.
 - **Opcje.** Suwaki głośności efektów i muzyki, poziom trudności AI, rozdzielczość ekranu
   (domyślnie natywna) i język (angielski lub polski, z pełnym polskim tłumaczeniem). Wszystko
   zapisuje się automatycznie.

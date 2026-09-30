@@ -44,6 +44,10 @@ by the whole Team 13. Since then Daniel Pytel has added:
   pixel font at fixed sizes. The HUD has a team-coloured turn label and a collapsible battle log
   on the active player's side. The menu has new instructions and slowly floating artwork, and the
   info panel shows maximum health including bonuses.
+- **New unit choice screen.** The draft has a new layout with a panel for each team, unit stats,
+  tag icons, a move and attack range grid and pulsing arrows. It also works against the computer.
+  Menu, draft and battle share the same animated background, which can be darkened with optional
+  dim and shade layers.
 - **Options.** Sound and music volume sliders, AI difficulty, screen resolution (native by
   default) and language (English or Polish, with a full Polish translation). Everything is saved
   automatically.
