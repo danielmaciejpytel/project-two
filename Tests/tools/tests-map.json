@@ -144,5 +144,18 @@
             "SoundAssetTests"
         ],
         "why": "Dźwięk tik w ostatnich 10 s tury musi istnieć i być przypisany w SoundController sceny menu."
+    },
+    {
+        "paths": [
+            "Assets/Scripts/UI/ScreenFit.cs",
+            "Assets/Scripts/UI/ScreenCover.cs",
+            "Assets/Scripts/UI/WorldBackdrop.cs",
+            "Assets/Scripts/UI/CameraAspectFit.cs"
+        ],
+        "tests": [
+            "ScreenFitTests",
+            "ScreenFitPlayTests"
+        ],
+        "why": "Układ 16:9 zostaje bez zmian na każdym ekranie: kamera pokazuje całą ramkę 16:9, a tła i przyciemnienie rosną i wypełniają ekran; dekoracje planszy nie zależą od skali kanwy."
     }
 ]

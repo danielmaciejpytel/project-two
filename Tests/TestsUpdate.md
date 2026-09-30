@@ -186,12 +186,13 @@ Reguły są w `Tests/tools/tests-map.json` (dodaj tam wpis dla nowego obszaru).
 | `Assets/Scripts/Results/*`<br>`Assets/Scripts/GameStats.cs` | ScoreCalculatorTests, RecordStoreTests, GameResultTests, GameStatsTests, ResultsTests | Punktacja (wzór), zapis partii w games.json (limit 200, uszkodzony plik), ranking, statystyki i wynik po końcu gry. |
 | `Assets/Scripts/UI/RecordsController.cs`<br>`Assets/Scripts/UI/MainMenuController.cs`<br>`Assets/Scripts/UI/HoverTint.cs`<br>`Assets/Scenes/MenuScene.unity` | RecordsMenuTests, OptionsPanelTests, SoundAssetTests | Panele menu głównego: Wyniki (ranking, historia, statystyki, czyszczenie) i Options (ten sam układ i rozmiar tekstu co Wyniki, różowy kolor i pasek pod wierszem po najechaniu), oraz dźwięk tik przypisany w scenie menu. |
 | `Assets/Scripts/SoundController.cs`<br>`Assets/Sounds/Tick.wav` | SoundAssetTests | Dźwięk tik w ostatnich 10 s tury musi istnieć i być przypisany w SoundController sceny menu. |
+| `Assets/Scripts/UI/ScreenFit.cs`<br>`Assets/Scripts/UI/ScreenCover.cs`<br>`Assets/Scripts/UI/WorldBackdrop.cs`<br>`Assets/Scripts/UI/CameraAspectFit.cs` | ScreenFitTests, ScreenFitPlayTests | Układ 16:9 zostaje bez zmian na każdym ekranie: kamera pokazuje całą ramkę 16:9, a tła i przyciemnienie rosną i wypełniają ekran; dekoracje planszy nie zależą od skali kanwy. |
 <!-- AUTO:MAP:END -->
 
 ## Lista testów
 
 <!-- AUTO:TESTS:START -->
-Razem: **112** testów w 18 plikach.
+Razem: **119** testów w 20 plikach.
 
 - `Tests/unity/EditMode/BoardGridTests.cs` (5): EveryCellOfTheLayoutBecomesATile, TilesOutsideTheBoardDoNotExist, CommandersStartOnWalkableCornerTiles, PathGoesAroundObstaclesInTheShortestWay, PathToAnObstacleDoesNotExist
 - `Tests/unity/EditMode/GameResultTests.cs` (4): AGameAgainstTheComputerIsScoredWithTheDifficulty, ThePlayersTeamCanBeTheSecondOne, AGameOfTwoPlayersHasNoDifficultyAndNoHumanTeam, TheHighScoreIsThePlaceOne
@@ -199,6 +200,7 @@ Razem: **112** testów w 18 plikach.
 - `Tests/unity/EditMode/LocalizationTests.cs` (5): EveryPolishLineHasAKeyAndATranslation, PolishFileHasNoDuplicateKeys, TranslationsKeepTheFormatPlaceholders, EveryTextOfTheScenesHasATranslation, EveryTextInTheCodeHasATranslation
 - `Tests/unity/EditMode/RecordStoreTests.cs` (11): AMissingFileIsAnEmptyList, ASavedGameIsReadBackWithAllItsData, OnlyTheLatest200GamesAreKept, ADamagedFileIsSetAsideAndDoesNotStopTheGame, ClearingRemovesEverything, TheLeaderboardHasOnlyWonGamesAgainstTheComputerBestFirst, TheLeaderboardHasTheTopTenAndCanBeFilteredByDifficulty, AGameKnowsItsPlaceOnTheLeaderboard, TheLatestGamesComeNewestFirst, TheStatisticsCountWinsStreaksAndTheFavoriteUnit, NoGamesGiveEmptyStatistics
 - `Tests/unity/EditMode/ScoreCalculatorTests.cs` (6): ALostGameScoresOnlyKillsMinusLosses, AScoreNeverGoesBelowZero, AWinAddsThePointsForTheWinTheSpeedAndTheCommandersHealth, ASlowWinGetsNoSpeedBonus, ALossGetsNoBonusesEvenWithAHealthyCommander, TheDifficultyMultipliesTheScore
+- `Tests/unity/EditMode/ScreenFitTests.cs` (4): SixteenByNineNeedsNoChange, AWiderScreenEnlargesTheBackgroundByTheWidthAndKeepsTheCameraHeight, ANarrowerScreenEnlargesTheBackgroundByTheHeightAndWidensTheCamera, TheBackgroundAlwaysCoversTheScreenAndNeverShrinks
 - `Tests/unity/EditMode/SoundAssetTests.cs` (2): TheTickSoundExists, TheMenuSceneGivesTheTickToTheSoundController
 - `Tests/unity/PlayMode/AiSoakTests.cs` (3): TheComputerWinsAgainstAPassingPlayerOnNormal, TheComputerWinsAgainstAPassingPlayerOnHard, TheComputerCanPlayTheOtherSideToo
 - `Tests/unity/PlayMode/AttackAnimationTests.cs` (4): TheDeathAnimationStartsRightAfterTheAttackAnimationHasEnded, TheSameHoldsForAUnitThatWasCalled, ADamageThatIsNotAnAttackKillsAtOnce, TheVictimGoesFromTheIdleFramesStraightIntoTheDeathFramesWithoutAJumpBack
@@ -210,6 +212,7 @@ Razem: **112** testów w 18 plikach.
 - `Tests/unity/PlayMode/PauseAndSummaryTests.cs` (9): PlayAgainInThePauseMenuAsksFirst, SayingNoGoesBackToThePauseMenu, EscapeInTheQuestionMeansNo, SayingYesLeavesTheGame, TheEndScreenDoesNotAsk, TheSummaryCountsTurnsCallsAndKills, TheSummaryIsNotInThePauseMenu, RematchWithSwappedSidesIsOnlyAgainstTheComputer, RematchSwapsTheSidesAgainstTheComputer
 - `Tests/unity/PlayMode/RecordsMenuTests.cs` (7): TheRecordsButtonOpensThePanelAndBackClosesIt, WithoutGamesThePanelSaysSo, TheLeaderboardListsTheBestWinsFirstAndCanBeFilteredByDifficulty, TheHistoryShowsTheLatestTenAndTheDetailsOfAGame, TheStatisticsShowTheWinRateAndTheBestScore, ClearingTheResultsTakesTwoClicks, SwitchingTabsForgetsAClearThatWasStarted
 - `Tests/unity/PlayMode/ResultsTests.cs` (8): AWonGameAgainstTheComputerIsSavedWithItsScoreAndPlace, TheSavedScoreFollowsTheFormula, ALostGameIsSavedButIsNotOnTheLeaderboard, AGameOfTwoPlayersIsOnlyInTheHistory, AGoodScoreTakesAPlaceOnTheLeaderboard, TheSavedGameHasTheUnitsOfBothTeamsAndTheBattleLog, AGameThatIsLeftIsNotSaved, TheSummaryLinesUpWithTheNameOfTheWinner
+- `Tests/unity/PlayMode/ScreenFitPlayTests.cs` (3): TheCameraKeepsTheWholeSixteenByNineFrameInView, TheBackgroundsFillTheScreenOfAnyShape, TheShadowOfTheBoardStaysWhereItIsWhateverTheScreen
 - `Tests/unity/PlayMode/ShortcutAndSettingsTests.cs` (8): SpaceEndsTheTurn, CStartsCallAndPressingItAgainCancelsIt, CDoesNothingOnceTheCallIsUsedUp, TheShortcutsAreOffInThePauseMenu, TheShortcutsAreOffAfterTheGame, TheShortcutsAreOffInTheComputersTurn, TheSettingsOfThePauseMenuHaveTheDifficultyThatCyclesAndIsKept, TheSettingsAfterTheGameHaveTheDifficultyToo
 <!-- AUTO:TESTS:END -->
 
@@ -218,6 +221,7 @@ Razem: **112** testów w 18 plikach.
 Wpis dodaje się przy każdym commicie, który zmienia pliki z tabeli powyżej (najnowsze na górze, ostatnie 15).
 
 <!-- AUTO:LOG:START -->
+- 2026-09-30: `Assets/Scenes/MainScene.unity`, `Assets/Scenes/MenuScene.unity`, `Assets/Scripts/UI/CameraAspectFit.cs`, `Assets/Scripts/UI/MainMenuController.cs`, `Assets/Scripts/UI/ScreenCover.cs`, `+2 więcej` → sprawdź: LocalizationTests, GameplayTests, BattleLogTests, EndScreenTests, PauseAndSummaryTests, HintsAndWarningTests, ShortcutAndSettingsTests, ResultsTests, RecordsMenuTests, OptionsPanelTests, SoundAssetTests, ScreenFitTests, ScreenFitPlayTests
 - 2026-09-30: `Assets/Resources/Localization/Polish.txt`, `Assets/Scenes/MainScene.unity`, `Assets/Scenes/MenuScene.unity`, `Assets/Scripts/BeginTurnState.cs`, `Assets/Scripts/GameController.cs`, `+20 więcej` → sprawdź: LocalizationTests, GameplayTests, BattleLogTests, EndScreenTests, PauseAndSummaryTests, HintsAndWarningTests, ShortcutAndSettingsTests, ResultsTests, RecordsMenuTests, OptionsPanelTests, SoundAssetTests, GameStatsTests, ScoreCalculatorTests, RecordStoreTests, GameResultTests, AiSoakTests, AttackAnimationTests
 - 2026-09-30: `Assets/Resources/Localization/Polish.txt`, `Assets/Scenes/MainScene.unity`, `Assets/Scripts/GameController.cs`, `Assets/Scripts/GameSession.cs`, `Assets/Scripts/GameStats.cs`, `+2 więcej` → sprawdź: LocalizationTests, GameplayTests, BattleLogTests, EndScreenTests, PauseAndSummaryTests, HintsAndWarningTests, AiSoakTests, GameStatsTests
 - 2026-09-30: `Assets/Resources/Localization/Polish.txt`, `Assets/Scenes/MainScene.unity`, `Assets/Scripts/GameController.cs`, `Assets/Scripts/UI/EndGameController.cs` → sprawdź: LocalizationTests, GameplayTests, BattleLogTests, EndScreenTests · **bez testów:** `Assets/Scripts/SoundController.cs`, `Assets/Scripts/UI/UnitChoiceController.cs`, `Assets/Scripts/UI/UnitChoiceControllerOld.cs`, `Assets/Scripts/UI/UnitPanelController.cs`

@@ -12435,6 +12435,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 579032441}
   - {fileID: 295016069}
   m_Father: {fileID: 1828386046}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -12508,7 +12509,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -12566,6 +12567,7 @@ GameObject:
   - component: {fileID: 450089872}
   - component: {fileID: 450089873}
   - component: {fileID: 450089874}
+  - component: {fileID: 450089875}
   m_Layer: 0
   m_Name: BackgroundDim
   m_TagString: Untagged
@@ -12630,6 +12632,18 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &450089875
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 450089871}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 450c74b72df69524285e194e5de0c3ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::ScreenCover
 --- !u!1 &460197885
 GameObject:
   m_ObjectHideFlags: 0
@@ -14376,6 +14390,7 @@ GameObject:
   - component: {fileID: 519420032}
   - component: {fileID: 519420031}
   - component: {fileID: 519420029}
+  - component: {fileID: 519420033}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -14457,6 +14472,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &519420033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed8526f138abd6049a6206612fbae1e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::CameraAspectFit
 --- !u!1 &520493174
 GameObject:
   m_ObjectHideFlags: 0
@@ -15498,6 +15525,7 @@ GameObject:
   m_Component:
   - component: {fileID: 558671999}
   - component: {fileID: 558671998}
+  - component: {fileID: 558672000}
   m_Layer: 0
   m_Name: HalfLineMirror
   m_TagString: Untagged
@@ -15579,6 +15607,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1859120329}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &558672000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 558671997}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b957e8665178374a96c9148c0e090ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::WorldBackdrop
+  _fillScreen: 0
+  _worldPosition: {x: -0.020019531, y: -3.0200195, z: 0}
+  _worldScale: {x: 0.46, y: 0.46, z: 1}
 --- !u!1 &562360650
 GameObject:
   m_ObjectHideFlags: 0
@@ -16244,6 +16287,94 @@ MonoBehaviour:
   _frameDashed: {fileID: 21300000, guid: 92d47fed44316f543831b47a7a7b95d3, type: 3}
   _frameLastSolid: {fileID: 21300000, guid: c10f0b2ab4234134cb4611a5f9a39d71, type: 3}
   _frameLastDashed: {fileID: 21300000, guid: 5dca0319f0d74164095f81acd26efd61, type: 3}
+--- !u!1 &579032440
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 579032441}
+  - component: {fileID: 579032444}
+  - component: {fileID: 579032443}
+  - component: {fileID: 579032442}
+  m_Layer: 0
+  m_Name: BackgroundArt
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &579032441
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 579032440}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 450089860}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 1920, y: 1080}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &579032442
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 579032440}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 450c74b72df69524285e194e5de0c3ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::ScreenCover
+--- !u!114 &579032443
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 579032440}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 0
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 681b150c43a9f7e42b16b36799e685db, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &579032444
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 579032440}
+  m_CullTransparentMesh: 1
 --- !u!1 &579810359
 GameObject:
   m_ObjectHideFlags: 0
@@ -19279,6 +19410,7 @@ GameObject:
   - component: {fileID: 672202569}
   - component: {fileID: 672202571}
   - component: {fileID: 672202570}
+  - component: {fileID: 672202572}
   m_Layer: 0
   m_Name: BackgroundShade
   m_TagString: Untagged
@@ -19300,11 +19432,11 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 295016069}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 1920, y: 1080}
-  m_Pivot: {x: 0, y: 1}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &672202570
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19343,6 +19475,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 672202568}
   m_CullTransparentMesh: 1
+--- !u!114 &672202572
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 672202568}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 450c74b72df69524285e194e5de0c3ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::ScreenCover
 --- !u!1 &672393349
 GameObject:
   m_ObjectHideFlags: 0
@@ -31824,6 +31968,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1159875042}
   - component: {fileID: 1159875041}
+  - component: {fileID: 1159875043}
   m_Layer: 0
   m_Name: BackgroundDim
   m_TagString: Untagged
@@ -31906,6 +32051,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1859120329}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1159875043
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1159875040}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b957e8665178374a96c9148c0e090ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::WorldBackdrop
+  _fillScreen: 1
+  _worldPosition: {x: -0.03, y: -2.69, z: -0.1}
+  _worldScale: {x: 10, y: 10, z: 1}
 --- !u!1 &1160798878
 GameObject:
   m_ObjectHideFlags: 0
@@ -37828,6 +37988,7 @@ GameObject:
   - component: {fileID: 1367840900}
   - component: {fileID: 1367840902}
   - component: {fileID: 1367840901}
+  - component: {fileID: 1367840904}
   m_Layer: 0
   m_Name: BackgroundAnimation
   m_TagString: Untagged
@@ -37943,6 +38104,21 @@ RectTransform:
   m_AnchoredPosition: {x: -921.5627, y: -523.4349}
   m_SizeDelta: {x: 38.4, y: 21.6}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1367840904
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1367840899}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b957e8665178374a96c9148c0e090ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::WorldBackdrop
+  _fillScreen: 1
+  _worldPosition: {x: -0.03, y: -2.69, z: 0}
+  _worldScale: {x: 0.926, y: 0.926, z: 1}
 --- !u!1 &1368417883
 GameObject:
   m_ObjectHideFlags: 0
@@ -38967,7 +39143,7 @@ MonoBehaviour:
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 1920, y: 1080}
-  m_ScreenMatchMode: 0
+  m_ScreenMatchMode: 1
   m_MatchWidthOrHeight: 0.5
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
@@ -39208,6 +39384,8 @@ MonoBehaviour:
   _quitButton: {fileID: 36247484}
   _summaryPanel: {fileID: 1651766823}
   _summaryText: {fileID: 898094337}
+  _summaryFontSize: 26
+  _summaryGap: 24
   _swapSidesButton: {fileID: 1388128376}
   _superHotColor: {r: 1, g: 0.105882354, b: 0.2784314, a: 1}
   _superColdColor: {r: 0.078431375, g: 0.78431374, b: 0.84705883, a: 1}
@@ -43250,6 +43428,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1577816444}
   - component: {fileID: 1577816443}
+  - component: {fileID: 1577816445}
   m_Layer: 0
   m_Name: BackgroundShade
   m_TagString: Untagged
@@ -43331,6 +43510,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1859120329}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1577816445
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1577816442}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b957e8665178374a96c9148c0e090ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::WorldBackdrop
+  _fillScreen: 1
+  _worldPosition: {x: -0.03, y: -2.69, z: -0.2}
+  _worldScale: {x: 0.009260417, y: 0.009260417, z: 1}
 --- !u!1 &1580174719
 GameObject:
   m_ObjectHideFlags: 0
@@ -49400,6 +49594,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1806568233}
   - component: {fileID: 1806568232}
+  - component: {fileID: 1806568234}
   m_Layer: 0
   m_Name: MapShadow
   m_TagString: Untagged
@@ -49481,6 +49676,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1859120329}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1806568234
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1806568231}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b957e8665178374a96c9148c0e090ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::WorldBackdrop
+  _fillScreen: 0
+  _worldPosition: {x: 0.099975586, y: -3.3649902, z: 0}
+  _worldScale: {x: 0.325, y: 0.325, z: 1}
 --- !u!1 &1813915427
 GameObject:
   m_ObjectHideFlags: 0
@@ -49838,7 +50048,7 @@ MonoBehaviour:
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 1920, y: 1080}
-  m_ScreenMatchMode: 0
+  m_ScreenMatchMode: 1
   m_MatchWidthOrHeight: 0.5
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96

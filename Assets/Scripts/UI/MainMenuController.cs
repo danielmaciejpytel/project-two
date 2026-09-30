@@ -31,7 +31,10 @@ public class MainMenuController : MonoBehaviour
     [SerializeField] private TMP_Text _resolutionLabel;
     [SerializeField] private TMP_Text _languageLabel;
 
-    private const float HiddenBarX = -1920.0f;
+    // The bar is as wide as the layout (1920), or as the screen when that is wider, and waits just outside the left edge.
+    private const float BarDesignWidth = 1920.0f;
+    private float BarWidth => Mathf.Max(BarDesignWidth, ((RectTransform)_barImage.canvas.rootCanvas.transform).rect.width);
+    private float HiddenBarX => -(((RectTransform)_barImage.canvas.rootCanvas.transform).rect.width + BarWidth) * 0.5f;
 
     private void OnEnable()
     {
@@ -45,6 +48,8 @@ public class MainMenuController : MonoBehaviour
 
     private void Start()
     {
+        // The bar waits outside the screen, whatever shape the screen has.
+        HideBar();
         // Coming back from the unit draft: show the game mode choice right away.
         if (!GameSession.OpenPlayMenu) return;
         GameSession.OpenPlayMenu = false;
@@ -55,6 +60,7 @@ public class MainMenuController : MonoBehaviour
     private void HideBar()
     {
         _barImage.transform.DOKill();
+        ((RectTransform)_barImage.transform).SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, BarWidth);
         Vector3 localPosition = _barImage.transform.localPosition;
         localPosition.x = HiddenBarX;
         _barImage.transform.localPosition = localPosition;
