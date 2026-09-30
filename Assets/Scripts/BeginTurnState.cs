@@ -55,8 +55,12 @@ public class BeginTurnState : IGameState
 
         SoundController.Instance?.PlayHover();
         myGrid = myGameController.GetGrid();
-        myGrid.ShowMoveRange(hoveredUnit.GetGridPosition(), hoveredUnit.GetMoveRange());
-        if(hoveredUnit.FreeAttacksCount > 0) myGrid.ShowAttackRange(hoveredUnit, hoveredUnit.GetAttackRange(), hoveredUnit.GetPlayerId());
+        // Move and attack ranges are shown only for the units of the team that is playing.
+        if (hoveredUnit.GetPlayerId() == _activePlayerId)
+        {
+            myGrid.ShowMoveRange(hoveredUnit.GetGridPosition(), hoveredUnit.GetMoveRange());
+            if(hoveredUnit.FreeAttacksCount > 0) myGrid.ShowAttackRange(hoveredUnit, hoveredUnit.GetAttackRange(), hoveredUnit.GetPlayerId());
+        }
         ui = myGameController.GetUI();
         ui.DisplayUnit(hoveredUnit);
         hoveredUnit.HighlighUnitTile(HighlightType.Unit);

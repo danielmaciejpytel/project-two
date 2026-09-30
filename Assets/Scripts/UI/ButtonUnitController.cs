@@ -38,7 +38,12 @@ public class ButtonUnitController : MonoBehaviour
 
     public void EnlargeUnit(UnitController unit)
     {
-        if(unit == _myUnit)
+        // A killed unit's card stays small, also after the cards are reassigned on a turn change.
+        if (_myUnit != null && _myUnit.IsKilled)
+        {
+            transform.DOScale(0.6f, 0.3f).SetEase(Ease.InOutBack).SetLink(gameObject);
+        }
+        else if(unit == _myUnit)
         {
             transform.DOScale(1.0f, 0.3f).SetEase(Ease.InOutBack).SetLink(gameObject);
         }

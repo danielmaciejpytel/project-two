@@ -2,6 +2,7 @@
 using System.Text;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 // Short history of the last actions, grouped by turn, shown in the HUD.
@@ -27,7 +28,10 @@ public class BattleLogController : MonoBehaviour
     [Tooltip("On the left side the panel lines up with the left edge of this rect (the info panel).")]
     [SerializeField] private RectTransform _leftAlignReference;
     [SerializeField] private float _leftAlignInset = 6.0f;
-    [SerializeField] private int _maxEntries = 6;
+    [Tooltip("How many actions are remembered; older ones can be scrolled to with the mouse wheel over the log.")]
+    [SerializeField] private int _maxEntries = 60;
+    [Tooltip("Lines moved by one notch of the mouse wheel.")]
+    [SerializeField] private int _wheelLines = 2;
     [Tooltip("Height of the panel when collapsed to the title bar.")]
     [SerializeField] private float _collapsedHeight = 44.0f;
     [Tooltip("Position of the toggle button in the title bar when collapsed.")]
@@ -47,12 +51,22 @@ public class BattleLogController : MonoBehaviour
     private float _expandedHeight;
     private Vector2 _expandedButtonPosition;
     private float _sideMargin;
+    private float _scroll;
+    private RectTransform _entriesRect;
 
     private void Awake()
     {
         // Hidden while players are still choosing units.
         _panel.SetActive(false);
         _rect = (RectTransform)transform;
+        // The entries text grows downwards inside the body and is scrolled behind a mask.
+        _entriesRect = _entriesText.rectTransform;
+        _entriesRect.anchorMin = new Vector2(0.0f, 1.0f);
+        _entriesRect.anchorMax = new Vector2(1.0f, 1.0f);
+        _entriesRect.pivot = new Vector2(0.0f, 1.0f);
+        _entriesRect.sizeDelta = new Vector2(0.0f, _entriesRect.rect.height);
+        _entriesRect.anchoredPosition = Vector2.zero;
+        if (!_body.TryGetComponent(out RectMask2D _)) _body.AddComponent<RectMask2D>();
         _buttonRect = (RectTransform)_toggleButton.transform;
         _expandedHeight = _rect.sizeDelta.y;
         _expandedButtonPosition = _buttonRect.anchoredPosition;
@@ -93,6 +107,27 @@ public class BattleLogController : MonoBehaviour
         events.OnUnitKilled -= OnUnitKilled;
     }
 
+    private void Update()
+    {
+        Mouse mouse = Mouse.current;
+        if (mouse == null || !_body.activeInHierarchy) return;
+        float wheel = mouse.scroll.ReadValue().y;
+        if (Mathf.Approximately(wheel, 0.0f)) return;
+        if (!RectTransformUtility.RectangleContainsScreenPoint((RectTransform)_panel.transform, mouse.position.ReadValue(), null)) return;
+        ScrollBy(-Mathf.Sign(wheel) * _wheelLines);
+    }
+
+    // Moves the visible part of the log by whole lines; positive goes towards newer entries.
+    private void ScrollBy(float lines)
+    {
+        _scroll = Mathf.Clamp(_scroll + lines * LineHeight(), 0.0f, MaxScroll());
+        _entriesRect.anchoredPosition = new Vector2(0.0f, Mathf.Round(_scroll));
+    }
+
+    private float LineHeight() => _entriesText.textInfo != null && _entriesText.textInfo.lineCount > 0 ? _entriesText.textInfo.lineInfo[0].lineHeight : _entriesText.fontSize * 1.2f;
+
+    private float MaxScroll() => Mathf.Max(0.0f, _entriesRect.rect.height - ((RectTransform)_body.transform).rect.height);
+
     private void ToggleBody()
     {
         if (SoundController.Instance != null) SoundController.Instance?.PlayClick();
@@ -124,6 +159,7 @@ public class BattleLogController : MonoBehaviour
     private void SetExpanded(bool expanded)
     {
         _body.SetActive(expanded);
+        if (expanded && _entriesRect != null) Refresh();
         _rect.sizeDelta = new Vector2(_rect.sizeDelta.x, expanded ? _expandedHeight : _collapsedHeight);
         _buttonRect.anchoredPosition = expanded ? _expandedButtonPosition : _collapsedButtonPosition;
         _toggleLabel.text = Loc.T(expanded ? "Hide" : "Show");
@@ -193,11 +229,22 @@ public class BattleLogController : MonoBehaviour
         Refresh();
     }
 
+    // Shows the whole history and scrolls to its end, so a new action is always visible.
     private void Refresh()
+    {
+        Build(0);
+        _entriesText.text = _builder.ToString();
+        _entriesText.ForceMeshUpdate();
+        _entriesRect.sizeDelta = new Vector2(_entriesRect.sizeDelta.x, _entriesText.preferredHeight);
+        _scroll = MaxScroll();
+        _entriesRect.anchoredPosition = new Vector2(0.0f, Mathf.Round(_scroll));
+    }
+
+    private void Build(int firstEntry)
     {
         _builder.Clear();
         int shownTurn = -1;
-        for (int i = 0; i < _entries.Count; i++)
+        for (int i = firstEntry; i < _entries.Count; i++)
         {
             Entry entry = _entries[i];
             bool isOld = entry.turn < _turn;
@@ -210,7 +257,6 @@ public class BattleLogController : MonoBehaviour
         }
         // Header for a turn that has no actions yet.
         if (shownTurn != _turn && _turn > 0) AppendTurnHeader(_turn, _turnPlayer, false);
-        _entriesText.text = _builder.ToString();
     }
 
     private void AppendTurnHeader(int turn, int playerId, bool isOld)

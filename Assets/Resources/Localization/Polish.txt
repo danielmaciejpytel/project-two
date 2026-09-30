@@ -131,3 +131,6 @@ DONE	GOTOWE
 SUPERIOR	DOWÓDCA
 Move	Ruch
 Attack	Atak
+Play again	Zagraj ponownie
+Back to Menu	Wróć do menu
+Settings	Ustawienia

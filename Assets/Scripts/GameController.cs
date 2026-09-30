@@ -165,6 +165,10 @@ public class GameController : MonoBehaviour
         GameObject target = hasPointer && !overUI ? GetTopObjectAt(screenPosition) : null;
 
         UpdateHover(target);
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+        // Designer view of the board (tile names), for the editor and development builds only.
+        if (Keyboard.current != null && Keyboard.current.f1Key.wasPressedThisFrame) ChangeMode();
+#endif
         if (pressed && target != null && target.TryGetComponent(out IClickable clickedObject)) clickedObject.Click();
     }
 

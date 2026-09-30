@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using DG.Tweening;
+using UnityEngine.InputSystem;
 
 public class UIController : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class UIController : MonoBehaviour
     [SerializeField] private Button _deployMinionButton;
     [SerializeField] private Button _abilityButton;
     [SerializeField] private Button _endTurnButton;
+    [SerializeField] private EndGameController _endGame;
     [SerializeField] private Image _timerImage;
     [SerializeField] private TMP_Text _timerText;
     [Tooltip("Horizontal distance between the left edge of the info panel and where the controls on the left side start.")]
@@ -35,17 +37,23 @@ public class UIController : MonoBehaviour
         _winnerText.text = Loc.F("Turn: {0}", PlayerLabel(2));
     }
 
+    private void Update()
+    {
+        if (_endGame == null || Keyboard.current == null || !Keyboard.current.escapeKey.wasPressedThisFrame) return;
+        GameController game = GameController.Instance;
+        // Only while a game is being played: not during the unit draft and not after the game has ended.
+        if (game != null && game.CurrentState != null && !game.IsGameOver) _endGame.HandleEscape();
+    }
+
     private IEnumerator TurnTimer(int timeLimit, GameController myGameController)
     {
         WaitForSeconds oneSecond = new WaitForSeconds(1.0f);
         while (true)
         {
-            if (_myTimer >= timeLimit)
-            {
-                myGameController.TurnTimeExpired();
-                _myTimer = 0;
-            }
-            _timerText.text = (timeLimit - _myTimer).ToString();
+            // The turn can't end during an animation; the end is retried every second and starting the
+            // next turn resets the timer.
+            if (_myTimer >= timeLimit) myGameController.TurnTimeExpired();
+            _timerText.text = Mathf.Max(0, timeLimit - _myTimer).ToString();
             CenterTimerTexts();
             _myTimer += 1;
             yield return oneSecond;
@@ -79,6 +87,12 @@ public class UIController : MonoBehaviour
         _turnTimer = null;
         _winnerImage.transform.DOPunchScale(new Vector3(0.2f, 0.2f, 0.0f), 0.5f).SetLink(_winnerImage.gameObject);
         _winnerText.text = Loc.F("Winner: {0}", PlayerLabel(winnerId));
+        // Nothing is left to play: only the winner and the end screen stay.
+        _endTurnButton.gameObject.SetActive(false);
+        _deployMinionButton.gameObject.SetActive(false);
+        _abilityButton.gameObject.SetActive(false);
+        _timerImage.gameObject.SetActive(false);
+        if (_endGame != null) _endGame.Show(_winnerImage.rectTransform);
     }
 
     public void InitializeUnitsPanel(List<UnitController> units, int startingPlayer, GameController myGameController, int timeLimit)
@@ -109,6 +123,7 @@ public class UIController : MonoBehaviour
     public void StartPlayerTurn(int playerId)
     {
         _myTimer = 0;
+        _myInfoPanel.ClearDisplay();
         _myUnitsPanel.SetNewPlayer(playerId);
         if (!_myUnitsPanel.AllUnitsDeployed()) _deployMinionButton.gameObject.SetActive(true);
         else _deployMinionButton.gameObject.SetActive(false);
@@ -194,6 +209,13 @@ public class UIController : MonoBehaviour
         else _abilityButton.gameObject.SetActive(false);
     }
 
+    // Picking a card in the "Call" mode: its unit isn't on the board, so it has no ability to offer.
+    public void SelectUnitToDeploy(UnitController unit)
+    {
+        _myUnitsPanel.UnitSelected(unit);
+        _abilityButton.gameObject.SetActive(false);
+    }
+
     public void KillUnit(UnitController unit)
     {
         _myUnitsPanel.UnitKilled(unit);
@@ -209,6 +231,12 @@ public class UIController : MonoBehaviour
         _myUnitsPanel.EndDeployment();
         _deployMinionButton.gameObject.SetActive(false);
         _unitDeployedThisTurn = true;
+    }
+
+    // Leaves the "Call" mode without calling anyone: the button stays, the turn's call is not used up.
+    public void CancelDeployment()
+    {
+        _myUnitsPanel.EndDeployment();
     }
 
     public void MarkUnitUnavailable(UnitController unit)

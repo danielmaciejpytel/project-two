@@ -33,11 +33,7 @@ public class DeploymentState : IGameState
         BoardGrid myGrid = myGameController.GetGrid();
 
         SoundController.Instance?.PlayClick();
-        if (_unitToDeploy == null)
-        {
-            ui.EndDeployment();
-            return ReturnToActiveUnit(myGameController, myGrid, ui);
-        }
+        if (_unitToDeploy == null) return CancelDeployment(myGameController, myGrid, ui);
         if (!IsTileInDeploymentZone(_kingUnit.CurrentTile, clickedTile)) return null;
 
         _unitToDeploy.DeployUnit(clickedTile);
@@ -52,6 +48,14 @@ public class DeploymentState : IGameState
         clickedTile.ClearTile();
         ui.EndDeployment();
         myGrid.HideHighlight();
+        return ReturnToActiveUnit(myGameController, myGrid, ui);
+    }
+
+    // Leaves the deployment without calling anything: "Call" stays available this turn.
+    private IGameState CancelDeployment(GameController myGameController, BoardGrid myGrid, UIController ui)
+    {
+        myGrid.HideHighlight();
+        ui.CancelDeployment();
         return ReturnToActiveUnit(myGameController, myGrid, ui);
     }
 
@@ -76,7 +80,7 @@ public class DeploymentState : IGameState
         if (clickedUnit.IsDeployed)
         {
             myGrid.HideHighlight();
-            ui.EndDeployment();
+            ui.CancelDeployment();
             if (_activeUnit != null)
             {
                 _activeUnit.SetReticle(false);
@@ -88,7 +92,7 @@ public class DeploymentState : IGameState
         {
             _unitToDeploy = clickedUnit;
             ui.DisplayUnit(_unitToDeploy);
-            ui.SelectUnit(_unitToDeploy);
+            ui.SelectUnitToDeploy(_unitToDeploy);
             myGrid.ShowZone(_kingUnit.CurrentTile, HighlightType.Deployment);
         }
         return null;
@@ -138,8 +142,9 @@ public class DeploymentState : IGameState
 
     public IGameState DeploymentPressed(GameController myGameController)
     {
-        //nothing happens
-        return null;
+        // Pressing "Call" again cancels the deployment.
+        SoundController.Instance?.PlayClick();
+        return CancelDeployment(myGameController, myGameController.GetGrid(), myGameController.GetUI());
     }
 
     public IGameState AbilityPressed(GameController myGameController)

@@ -101,13 +101,11 @@ public class UnitSelectedState : IGameState
         myGrid = myGameController.GetGrid();
         ui = myGameController.GetUI();
         ui.DisplayUnit(hoveredUnit);
-        if (_activeUnit.IsTargetValid(hoveredUnit) && !myGrid.IsTileInAttackRange(_activeUnit, hoveredUnit.CurrentTile))
+        // Ranges are shown only for the units of the team that is playing; an enemy in reach shows the damage it would take.
+        if (_activeUnit.IsTargetValid(hoveredUnit) && myGrid.IsTileInAttackRange(_activeUnit, hoveredUnit.CurrentTile) && _activeUnit.FreeAttacksCount > 0)
         {
-            myGrid.HideHighlight();
-            myGrid.ShowMoveRange(hoveredUnit.GetGridPosition(), hoveredUnit.GetMoveRange());
-            if (hoveredUnit.FreeAttacksCount > 0) myGrid.ShowAttackRange(hoveredUnit, hoveredUnit.GetAttackRange(), hoveredUnit.GetPlayerId());
+            hoveredUnit.ShowPotentialDamage(_activeUnit.GetCalculatedAttack(hoveredUnit));
         }
-        else if (_activeUnit.IsTargetValid(hoveredUnit) && _activeUnit.FreeAttacksCount > 0) hoveredUnit.ShowPotentialDamage(_activeUnit.GetCalculatedAttack(hoveredUnit));
         return null;
     }
 
