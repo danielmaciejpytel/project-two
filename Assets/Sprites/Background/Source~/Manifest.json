@@ -1,0 +1,79 @@
+[
+ {
+  "category": "Layers",
+  "name": "BackgroundBase",
+  "w": 2176,
+  "h": 1336,
+  "scale": 1
+ },
+ {
+  "category": "Layers",
+  "name": "ShardA",
+  "w": 2176,
+  "h": 1336,
+  "scale": 1
+ },
+ {
+  "category": "Layers",
+  "name": "ShardAShadow",
+  "w": 2176,
+  "h": 1336,
+  "scale": 1
+ },
+ {
+  "category": "Layers",
+  "name": "ShardB",
+  "w": 2176,
+  "h": 1336,
+  "scale": 1
+ },
+ {
+  "category": "Layers",
+  "name": "ShardBShadow",
+  "w": 2176,
+  "h": 1336,
+  "scale": 1
+ },
+ {
+  "category": "Layers",
+  "name": "ShardC",
+  "w": 2176,
+  "h": 1336,
+  "scale": 1
+ },
+ {
+  "category": "Layers",
+  "name": "ShardCShadow",
+  "w": 2176,
+  "h": 1336,
+  "scale": 1
+ },
+ {
+  "category": "Layers",
+  "name": "ShardD",
+  "w": 2176,
+  "h": 1336,
+  "scale": 1
+ },
+ {
+  "category": "Layers",
+  "name": "ShardDShadow",
+  "w": 2176,
+  "h": 1336,
+  "scale": 1
+ },
+ {
+  "category": "Layers",
+  "name": "DustFar",
+  "w": 1920,
+  "h": 1080,
+  "scale": 1
+ },
+ {
+  "category": "Layers",
+  "name": "DustNear",
+  "w": 1920,
+  "h": 1080,
+  "scale": 1
+ }
+]

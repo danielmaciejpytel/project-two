@@ -1,0 +1,1280 @@
+fileFormatVersion: 2
+guid: 597fa414c03de4d4b94a33a5ac3a7d1a
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -116216287910970753
+    second: DustFar_0
+  - first:
+      213: 6071127887957305301
+    second: DustFar_1
+  - first:
+      213: -142442055427111582
+    second: DustFar_2
+  - first:
+      213: 2685947140644296567
+    second: DustFar_3
+  - first:
+      213: -8792006040262729181
+    second: DustFar_4
+  - first:
+      213: -429949688413978837
+    second: DustFar_5
+  - first:
+      213: -1209427291773065829
+    second: DustFar_6
+  - first:
+      213: -4185832080070958657
+    second: DustFar_7
+  - first:
+      213: -4151193624620140519
+    second: DustFar_8
+  - first:
+      213: 5178439160719704472
+    second: DustFar_9
+  - first:
+      213: 945277752850724902
+    second: DustFar_10
+  - first:
+      213: 1795057216880622327
+    second: DustFar_11
+  - first:
+      213: 4404040240977994481
+    second: DustFar_12
+  - first:
+      213: 5814599962750170996
+    second: DustFar_13
+  - first:
+      213: -7963255044723073539
+    second: DustFar_14
+  - first:
+      213: -8352055010068055262
+    second: DustFar_15
+  - first:
+      213: 6463262399003645267
+    second: DustFar_16
+  - first:
+      213: -8720519533676977205
+    second: DustFar_17
+  - first:
+      213: 5531486449003766432
+    second: DustFar_18
+  - first:
+      213: -8098673538247985970
+    second: DustFar_19
+  - first:
+      213: 6255864114472372243
+    second: DustFar_20
+  - first:
+      213: -2164912133752668839
+    second: DustFar_21
+  - first:
+      213: -3149473400378408207
+    second: DustFar_22
+  - first:
+      213: 3614337080816641066
+    second: DustFar_23
+  - first:
+      213: 9106826963152472588
+    second: DustFar_24
+  - first:
+      213: 8934363281443692312
+    second: DustFar_25
+  - first:
+      213: -214221033846384524
+    second: DustFar_26
+  - first:
+      213: -3592655882407745426
+    second: DustFar_27
+  - first:
+      213: 1572077058065137230
+    second: DustFar_28
+  - first:
+      213: -6818138205773463413
+    second: DustFar_29
+  - first:
+      213: 6843050051522423964
+    second: DustFar_30
+  - first:
+      213: 1100089079588821
+    second: DustFar_31
+  - first:
+      213: 20008029738264468
+    second: DustFar_32
+  - first:
+      213: 8018076061167746214
+    second: DustFar_33
+  - first:
+      213: -2934137772702845687
+    second: DustFar_34
+  - first:
+      213: 4138378179858693770
+    second: DustFar_35
+  - first:
+      213: 244630886701350816
+    second: DustFar_36
+  - first:
+      213: -3935428638387040850
+    second: DustFar_37
+  - first:
+      213: 9120596397737042539
+    second: DustFar_38
+  - first:
+      213: 5980359578908722475
+    second: DustFar_39
+  - first:
+      213: 5041564140791898467
+    second: DustFar_40
+  - first:
+      213: 7961633765880205874
+    second: DustFar_41
+  - first:
+      213: 3683397842279071575
+    second: DustFar_42
+  - first:
+      213: 2075499036529554418
+    second: DustFar_43
+  - first:
+      213: 3892861979412210149
+    second: DustFar_44
+  - first:
+      213: 7581644228928561580
+    second: DustFar_45
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 1
+  spriteExtrude: 0
+  spriteMeshType: 0
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 4096
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: DustFar_0
+      rect:
+        serializedVersion: 2
+        x: 1037
+        y: 1045
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f7ab3f1e6ed136ef0800000000000000
+      internalID: -116216287910970753
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFar_1
+      rect:
+        serializedVersion: 2
+        x: 650
+        y: 1020
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5d7a9abd5aaf04450800000000000000
+      internalID: 6071127887957305301
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFar_2
+      rect:
+        serializedVersion: 2
+        x: 1867
+        y: 1023
+        width: 15
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 265c03d84b1f50ef0800000000000000
+      internalID: -142442055427111582
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFar_3
+      rect:
+        serializedVersion: 2
+        x: 116
+        y: 1003
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 777549391b6664520800000000000000
+      internalID: 2685947140644296567
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFar_4
+      rect:
+        serializedVersion: 2
+        x: 1048
+        y: 1009
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3222d03a6158cf580800000000000000
+      internalID: -8792006040262729181
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFar_5
+      rect:
+        serializedVersion: 2
+        x: 273
+        y: 948
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b2f7bce4903880af0800000000000000
+      internalID: -429949688413978837
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFar_6
+      rect:
+        serializedVersion: 2
+        x: 319
+        y: 950
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b9524343940473fe0800000000000000
+      internalID: -1209427291773065829
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFar_7
+      rect:
+        serializedVersion: 2
+        x: 692
+        y: 940
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fb1afe196efe8e5c0800000000000000
+      internalID: -4185832080070958657
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFar_8
+      rect:
+        serializedVersion: 2
+        x: 616
+        y: 911
+        width: 12
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 91876a2746ff366c0800000000000000
+      internalID: -4151193624620140519
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFar_9
+      rect:
+        serializedVersion: 2
+        x: 1175
+        y: 915
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8918ba9eaf28dd740800000000000000
+      internalID: 5178439160719704472
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFar_10
+      rect:
+        serializedVersion: 2
+        x: 334
+        y: 825
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6283fb0ab1d4e1d00800000000000000
+      internalID: 945277752850724902
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFar_11
+      rect:
+        serializedVersion: 2
+        x: 626
+        y: 832
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7fabba3370359e810800000000000000
+      internalID: 1795057216880622327
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFar_12
+      rect:
+        serializedVersion: 2
+        x: 243
+        y: 808
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1f2e40cf34b4e1d30800000000000000
+      internalID: 4404040240977994481
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFar_13
+      rect:
+        serializedVersion: 2
+        x: 651
+        y: 787
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 47739baebdb91b050800000000000000
+      internalID: 5814599962750170996
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFar_14
+      rect:
+        serializedVersion: 2
+        x: 1128
+        y: 793
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dfd917b5ab5dc7190800000000000000
+      internalID: -7963255044723073539
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFar_15
+      rect:
+        serializedVersion: 2
+        x: 49
+        y: 774
+        width: 9
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 22b3f5c283a871c80800000000000000
+      internalID: -8352055010068055262
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFar_16
+      rect:
+        serializedVersion: 2
+        x: 1393
+        y: 761
+        width: 15
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 35550c678ee12b950800000000000000
+      internalID: 6463262399003645267
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFar_17
+      rect:
+        serializedVersion: 2
+        x: 863
+        y: 749
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bc3245affad7af680800000000000000
+      internalID: -8720519533676977205
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFar_18
+      rect:
+        serializedVersion: 2
+        x: 1675
+        y: 735
+        width: 12
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0a2a1c84e99c3cc40800000000000000
+      internalID: 5531486449003766432
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFar_19
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 684
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ec47fd8535bbb9f80800000000000000
+      internalID: -8098673538247985970
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFar_20
+      rect:
+        serializedVersion: 2
+        x: 1026
+        y: 682
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3184d32644b41d650800000000000000
+      internalID: 6255864114472372243
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFar_21
+      rect:
+        serializedVersion: 2
+        x: 750
+        y: 646
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 95d3db172efa4f1e0800000000000000
+      internalID: -2164912133752668839
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFar_22
+      rect:
+        serializedVersion: 2
+        x: 69
+        y: 609
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1f247e401a2da44d0800000000000000
+      internalID: -3149473400378408207
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFar_23
+      rect:
+        serializedVersion: 2
+        x: 1302
+        y: 614
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a242998ec64b82230800000000000000
+      internalID: 3614337080816641066
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFar_24
+      rect:
+        serializedVersion: 2
+        x: 149
+        y: 589
+        width: 11
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c0a07a97fd2f16e70800000000000000
+      internalID: 9106826963152472588
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFar_25
+      rect:
+        serializedVersion: 2
+        x: 1106
+        y: 580
+        width: 15
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 81f9eb4711c3dfb70800000000000000
+      internalID: 8934363281443692312
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFar_26
+      rect:
+        serializedVersion: 2
+        x: 891
+        y: 554
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4785b2eca1fe60df0800000000000000
+      internalID: -214221033846384524
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFar_27
+      rect:
+        serializedVersion: 2
+        x: 431
+        y: 516
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e686ed87282542ec0800000000000000
+      internalID: -3592655882407745426
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFar_28
+      rect:
+        serializedVersion: 2
+        x: 463
+        y: 454
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e4e738d41c321d510800000000000000
+      internalID: 1572077058065137230
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFar_29
+      rect:
+        serializedVersion: 2
+        x: 701
+        y: 461
+        width: 16
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b808a570d6b1161a0800000000000000
+      internalID: -6818138205773463413
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFar_30
+      rect:
+        serializedVersion: 2
+        x: 341
+        y: 446
+        width: 12
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c9c663d04c567fe50800000000000000
+      internalID: 6843050051522423964
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFar_31
+      rect:
+        serializedVersion: 2
+        x: 983
+        y: 407
+        width: 13
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5d76fc27688e30000800000000000000
+      internalID: 1100089079588821
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFar_32
+      rect:
+        serializedVersion: 2
+        x: 69
+        y: 352
+        width: 13
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 49764317235174000800000000000000
+      internalID: 20008029738264468
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFar_33
+      rect:
+        serializedVersion: 2
+        x: 738
+        y: 355
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6ac77ff22bde54f60800000000000000
+      internalID: 8018076061167746214
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFar_34
+      rect:
+        serializedVersion: 2
+        x: 907
+        y: 359
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 905bdffcd39d747d0800000000000000
+      internalID: -2934137772702845687
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFar_35
+      rect:
+        serializedVersion: 2
+        x: 1653
+        y: 324
+        width: 9
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a8e74bc47097e6930800000000000000
+      internalID: 4138378179858693770
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFar_36
+      rect:
+        serializedVersion: 2
+        x: 799
+        y: 259
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0af3ceece7a156300800000000000000
+      internalID: 244630886701350816
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFar_37
+      rect:
+        serializedVersion: 2
+        x: 315
+        y: 241
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ead8a02118c8269c0800000000000000
+      internalID: -3935428638387040850
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFar_38
+      rect:
+        serializedVersion: 2
+        x: 1720
+        y: 230
+        width: 14
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b62e2dac91ed29e70800000000000000
+      internalID: 9120596397737042539
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFar_39
+      rect:
+        serializedVersion: 2
+        x: 1630
+        y: 202
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b2585f90a518ef250800000000000000
+      internalID: 5980359578908722475
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFar_40
+      rect:
+        serializedVersion: 2
+        x: 812
+        y: 184
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 361af3cefdb37f540800000000000000
+      internalID: 5041564140791898467
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFar_41
+      rect:
+        serializedVersion: 2
+        x: 1569
+        y: 143
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2329b0f3ab76d7e60800000000000000
+      internalID: 7961633765880205874
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFar_42
+      rect:
+        serializedVersion: 2
+        x: 681
+        y: 117
+        width: 15
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 75ffb7372de0e1330800000000000000
+      internalID: 3683397842279071575
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFar_43
+      rect:
+        serializedVersion: 2
+        x: 39
+        y: 47
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2f372049067adcc10800000000000000
+      internalID: 2075499036529554418
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFar_44
+      rect:
+        serializedVersion: 2
+        x: 1199
+        y: 51
+        width: 12
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5e12d725859360630800000000000000
+      internalID: 3892861979412210149
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFar_45
+      rect:
+        serializedVersion: 2
+        x: 1236
+        y: 1
+        width: 13
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ca16da6c149673960800000000000000
+      internalID: 7581644228928561580
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable: {}
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

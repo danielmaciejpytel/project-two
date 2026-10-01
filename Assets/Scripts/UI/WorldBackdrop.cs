@@ -2,8 +2,10 @@ using UnityEngine;
 
 // A sprite in world space that sits under the UI canvas in the hierarchy. The canvas scale follows the screen size, so
 // without this the sprite would shrink and drift away from the board on every screen except 1920x1080.
+// It also runs in the editor, so the backdrop sits right in the Game view before Play (the canvas scale there follows the Game view size).
 // It keeps the position and size it was made with, and a background that fills the screen is also centred on the
 // camera and enlarged to cover a screen of any shape.
+[ExecuteAlways]
 public class WorldBackdrop : MonoBehaviour
 {
     [SerializeField] private bool _fillScreen;

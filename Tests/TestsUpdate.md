@@ -44,7 +44,7 @@ Unity zna testy tylko z `Assets` albo z pakietu, dlatego folder `Tests/unity` je
 |---|---|
 | `LocalizationTests` (EditMode) | Polish.txt bez duplikatów i pustych wpisów, zgodne `{0}`, każdy tekst ze scen i z kodu ma tłumaczenie |
 | `BoardGridTests` (EditMode) | plansza z `Grid.csv`: wymiary, kafelki, rogi dowódców, ścieżki omijające przeszkody |
-| `GameplayTests` (PlayMode) | przebieg tury: start, Call (użycie, anulowanie, przełączanie), koniec tury i strona HUD, timer, panel info, podpowiedzi zasięgu tylko dla drużyny z turą, małe karty zabitych |
+| `GameplayTests` (PlayMode) | przebieg tury: start, Call (użycie, anulowanie, przełączanie), koniec tury i strona HUD, timer, panel info, podpowiedzi zasięgu tylko dla drużyny z turą, karty zabitych (wyszarzone, przekreślone, podpis MARTWY), panel postaci bez efektów jej pola |
 | `EndScreenTests` (PlayMode) | koniec gry: ekran z przyciskami, szerokości banera i przycisków, Settings, Play again, Back to Menu, pauza ESC i `Time.timeScale` |
 | `PauseAndSummaryTests` (PlayMode) | pytanie „Na pewno?” w menu pauzy (Tak, Nie, ESC), brak pytania po końcu gry, podsumowanie partii (tury, wezwane, zabite), rewanż ze zmianą stron tylko w grze z komputerem |
 | `HintsAndWarningTests` (PlayMode) | wskazówki w pierwszej turze każdego gracza (i ich brak później oraz w turze komputera), kolor ostrzeżenia w ostatnich 10 s tury |
@@ -72,7 +72,7 @@ Najpierw uruchom testy z tabeli „Które testy sprawdzić” poniżej. Czerwony
 | **Nowy stan gry albo zmiana przejść między stanami** (`*State.cs`) | Dodaj test w `GameplayTests` w stylu: doprowadź do stanu przez `Game.DeployAction()`, `EventManager.Instance.UnitClicked/TileClicked`, sprawdź `Game.CurrentState`. Popraw testy, których stan początkowy się zmienił. |
 | **Zmiana zasad Call, timera, tury** | `GameplayTests`: `CallPutsAUnit…`, `CancellingCall…`, `TheTurnEndsWhenTheTimerRunsOut`. Limit czasu ustawia `_timeLimit` w `GameController`; test zakłada, że po 60 wywołaniach tura się kończy. |
 | **Zmiana nazwy lub przeniesienie obiektu HUD** | Testy szukają obiektów po nazwie (lista niżej w „Nazwy”). Zmień nazwę w testach (`Tests/unity/PlayMode`) razem ze sceną. |
-| **Zmiana układu HUD-u** (szerokości, pozycje) | `BattleLogTests.CallAndEndTurn…`, `TheLogSitsUnderTheTimer…` i `EndScreenTests.TheBannerIsAsWide…` sprawdzają konkretne relacje szerokości (timer = Call + End Turn + odstęp = log; baner = panel Settings; przyciski = baner). Zmień relację w teście, jeśli zmiana jest zamierzona. |
+| **Zmiana układu HUD-u** (szerokości, pozycje) | `BattleLogTests.CallAndEndTurn…`, `TheLogSitsUnderTheButtons…` i `EndScreenTests.TheBannerIsAsWide…` sprawdzają konkretne relacje szerokości (log = kolumna przycisków = Call + End Turn + odstęp; baner = panel podsumowania; przyciski = baner). Wymiary i pozycje elementów HUD-u są w `HudLayout` i w grafikach `Assets/Sprites/GameplayHud` (źródła SVG w `Source~`); scenę HUD-u odtwarza `Assets/Editor/GameplayHudBuilder.cs` (menu Tools → Gameplay HUD → Build). Zmień relację w teście, jeśli zmiana jest zamierzona. |
 | **Zmiana wskazówek lub ostrzeżenia timera** (`UIController`) | `HintsAndWarningTests`: teksty wskazówek są sprawdzane przez fragmenty (`Click one of your units`, `Pick a card`, `Click a highlighted tile`), liczba tur ze wskazówkami (2) i pole `_warningColor`. Nowy tekst wskazówki dodaj do `Polish.txt`; `LocalizationTests` sprawdzają też stałe `const string Hint...`. |
 | **Zmiana podsumowania, pytania „Na pewno?” albo rewanżu** (`EndGameController`, `GameStats`) | `PauseAndSummaryTests` i `GameStatsTests`; pytanie dotyczy tylko menu pauzy, więc test `TheEndScreenDoesNotAsk` musi dalej przechodzić. Nowe pytanie przekazywane do `Ask("…", …)` też musi mieć tłumaczenie. |
 | **Zmiana wzoru punktacji** (`ScoreCalculator`) | Popraw liczby w `ScoreCalculatorTests` (są policzone ze stałych: 1000, 100, 50, 30 tur, 20, 30 za punkt zdrowia) oraz w `ResultsTests`, które sprawdzają zgodność zapisanego wyniku ze wzorem. Wyniki zapisane wcześniej zostają takie, jakie były. |
@@ -104,20 +104,24 @@ Sprawdzane automatycznie przy każdym commicie: nazwa, w których testach jest u
 - `Step` (GameTestUtil.cs)
 - `_barImage` (OptionsPanelTests.cs)
 - `_body` (BattleLogTests.cs)
+- `_cardImage` (GameplayTests.cs)
 - `_difficultyLabel` (ShortcutAndSettingsTests.cs)
 - `_entriesRect` (BattleLogTests.cs)
 - `_entriesText` (BattleLogTests.cs)
 - `_hintPanel` (HintsAndWarningTests.cs)
 - `_hintText` (HintsAndWarningTests.cs)
+- `_killedImage` (GameplayTests.cs)
 - `_myAnimator` (AttackAnimationTests.cs)
 - `_myInfoPanel` (GameplayTests.cs)
 - `_myTimer` (EndScreenTests.cs, GameplayTests.cs, HintsAndWarningTests.cs)
 - `_myUnit` (GameplayTests.cs)
 - `_name` (GameplayTests.cs)
 - `_overlayColorSpriteRenderer` (GameTestUtil.cs)
+- `_recordText` (ResultsTests.cs)
 - `_summaryText` (PauseAndSummaryTests.cs, ResultsTests.cs)
 - `_tile` (BoardGridTests.cs)
 - `_timerText` (HintsAndWarningTests.cs)
+- `_unitText` (GameplayTests.cs)
 - `_warningColor` (HintsAndWarningTests.cs)
 
 **Obiekty sceny (szukane po nazwie):**
@@ -130,7 +134,7 @@ Sprawdzane automatycznie przy każdym commicie: nazwa, w których testach jest u
 - `Buttons` (AttackAnimationTests.cs, EndScreenTests.cs, ResultsTests.cs, ShortcutAndSettingsTests.cs)
 - `ClearButton` (OptionsPanelTests.cs, RecordsMenuTests.cs)
 - `ConfirmPanel` (ResultsTests.cs)
-- `DeployMinionButton` (BattleLogTests.cs, EndScreenTests.cs, GameplayTests.cs, ShortcutAndSettingsTests.cs)
+- `DeployMinionButton` (BattleLogTests.cs, EndScreenTests.cs, GameplayTests.cs, ScreenFitPlayTests.cs, ShortcutAndSettingsTests.cs)
 - `DetailBackButton` (RecordsMenuTests.cs)
 - `DifficultyButton` (OptionsPanelTests.cs, ShortcutAndSettingsTests.cs)
 - `EffectsLabel` (OptionsPanelTests.cs)
@@ -140,7 +144,9 @@ Sprawdzane automatycznie przy każdym commicie: nazwa, w których testach jest u
 - `FilterButton` (RecordsMenuTests.cs)
 - `LanguageButton` (OptionsPanelTests.cs)
 - `MainMenuPanel` (OptionsPanelTests.cs)
+- `MapShadow` (GridPlacementTests.cs, ScreenFitPlayTests.cs)
 - `MusicSlider` (OptionsPanelTests.cs)
+- `Name` (GameplayTests.cs)
 - `OptionsPanel` (OptionsPanelTests.cs)
 - `PlayAgainButton` (EndScreenTests.cs)
 - `QuitGameButton` (EndScreenTests.cs)
@@ -150,14 +156,13 @@ Sprawdzane automatycznie przy każdym commicie: nazwa, w których testach jest u
 - `Row1` (RecordsMenuTests.cs)
 - `SettingsButton` (EndScreenTests.cs, ShortcutAndSettingsTests.cs)
 - `SettingsPanel` (EndScreenTests.cs, ShortcutAndSettingsTests.cs)
-- `SummaryPanel` (AttackAnimationTests.cs, EndScreenTests.cs)
+- `SummaryPanel` (AttackAnimationTests.cs, EndScreenTests.cs, ResultsTests.cs)
 - `TabLEADERBOARD` (OptionsPanelTests.cs)
 - `Text` (OptionsPanelTests.cs)
-- `TimerBackgroundImage` (BattleLogTests.cs, ScreenFitPlayTests.cs)
 - `Title` (OptionsPanelTests.cs)
 - `UnitButton1` (GameplayTests.cs)
 - `UnitButton5` (GameplayTests.cs)
-- `WinnerBackgroundImage` (AttackAnimationTests.cs, EndScreenTests.cs, ResultsTests.cs)
+- `WinnerBackgroundImage` (AttackAnimationTests.cs, EndScreenTests.cs)
 - `YesButton` (ResultsTests.cs)
 - `optionsButton` (OptionsPanelTests.cs)
 - `playButton` (RecordsMenuTests.cs)
@@ -188,12 +193,13 @@ Reguły są w `Tests/tools/tests-map.json` (dodaj tam wpis dla nowego obszaru).
 | `Assets/Scripts/UI/RecordsController.cs`<br>`Assets/Scripts/UI/MainMenuController.cs`<br>`Assets/Scripts/UI/HoverTint.cs`<br>`Assets/Scenes/MenuScene.unity` | RecordsMenuTests, OptionsPanelTests, SoundAssetTests | Panele menu głównego: Wyniki (ranking, historia, statystyki, czyszczenie) i Options (ten sam układ i rozmiar tekstu co Wyniki, różowy kolor i pasek pod wierszem po najechaniu), oraz dźwięk tik przypisany w scenie menu. |
 | `Assets/Scripts/SoundController.cs`<br>`Assets/Sounds/Tick.wav` | SoundAssetTests | Dźwięk tik w ostatnich 10 s tury musi istnieć i być przypisany w SoundController sceny menu. |
 | `Assets/Scripts/UI/ScreenFit.cs`<br>`Assets/Scripts/UI/ScreenCover.cs`<br>`Assets/Scripts/UI/WorldBackdrop.cs`<br>`Assets/Scripts/UI/CameraAspectFit.cs` | ScreenFitTests, ScreenFitPlayTests | Układ 16:9 zostaje bez zmian na każdym ekranie: kamera pokazuje całą ramkę 16:9, a tła i przyciemnienie rosną i wypełniają ekran; dekoracje planszy nie zależą od skali kanwy. |
+| `Assets/Scripts/GridPlacement.cs`<br>`Assets/Scripts/BoardGrid.cs`<br>`Assets/Scripts/Tiles/TileController.cs`<br>`Assets/Scripts/Units/HealthController.cs` | GridPlacementTests | Obiekt GridPosition (skala i przesunięcie planszy): plansza, cień, jednostki i ich punkty życia idą razem, klikanie trafia w pola tam, gdzie są narysowane, a jednostka chodzi po pomniejszonej planszy. |
 <!-- AUTO:MAP:END -->
 
 ## Lista testów
 
 <!-- AUTO:TESTS:START -->
-Razem: **122** testów w 20 plikach.
+Razem: **129** testów w 21 plikach.
 
 - `Tests/unity/EditMode/BoardGridTests.cs` (5): EveryCellOfTheLayoutBecomesATile, TilesOutsideTheBoardDoNotExist, CommandersStartOnWalkableCornerTiles, PathGoesAroundObstaclesInTheShortestWay, PathToAnObstacleDoesNotExist
 - `Tests/unity/EditMode/GameResultTests.cs` (4): AGameAgainstTheComputerIsScoredWithTheDifficulty, ThePlayersTeamCanBeTheSecondOne, AGameOfTwoPlayersHasNoDifficultyAndNoHumanTeam, TheHighScoreIsThePlaceOne
@@ -205,14 +211,15 @@ Razem: **122** testów w 20 plikach.
 - `Tests/unity/EditMode/SoundAssetTests.cs` (2): TheTickSoundExists, TheMenuSceneGivesTheTickToTheSoundController
 - `Tests/unity/PlayMode/AiSoakTests.cs` (3): TheComputerWinsAgainstAPassingPlayerOnNormal, TheComputerWinsAgainstAPassingPlayerOnHard, TheComputerCanPlayTheOtherSideToo
 - `Tests/unity/PlayMode/AttackAnimationTests.cs` (4): TheDeathAnimationStartsRightAfterTheAttackAnimationHasEnded, TheSameHoldsForAUnitThatWasCalled, ADamageThatIsNotAnAttackKillsAtOnce, TheVictimGoesFromTheIdleFramesStraightIntoTheDeathFramesWithoutAJumpBack
-- `Tests/unity/PlayMode/BattleLogTests.cs` (6): TheLogListsTheLatestActionsUnderTheTurnHeader, TheLogRemembersMoreThanItShows, ScrollingStaysInsideTheContent, ANewEntryScrollsBackToTheLatest, TheLogSitsUnderTheTimerWithTheSameWidth, CallAndEndTurnTogetherAreAsWideAsTheTimer
-- `Tests/unity/PlayMode/EndScreenTests.cs` (8): KillingACommanderEndsTheGameAndShowsTheEndScreen, TheBannerIsAsWideAsTheSettingsPanelAndTheButtonsAsTheBanner, SettingsReplacesTheButtonsAndBackBringsThemBack, PlayAgainStartsANewDraftInTheSameMode, BackToMenuLoadsTheMenu, EscapeOpensThePauseMenuAndStopsTheGame, EscapeInTheSettingsGoesBackToTheButtonsFirst, PausingStopsTheTurnTimer
-- `Tests/unity/PlayMode/GameplayTests.cs` (12): TheGameStartsInTheFirstTurnWithBothCommandersOnTheBoard, TheHudButtonsAreWired, CallPutsAUnitNextToTheCommanderAndUsesUpTheCall, CancellingCallKeepsItAvailable, PickingACardToCallDoesNotOfferAnAbility, EndingTheTurnPassesItAndMovesTheControlsToTheOtherSide, TheTurnEndsWhenTheTimerRunsOut, TheInfoPanelIsClearedWhenTheTurnChanges, RangeHintsAreShownOnlyForTheTeamThatIsPlaying, KilledUnitsKeepTheirSmallCardsAfterTheTurnChanges, AUnitThatHasMovedShowsNoMoveRangeFromItsNewPlace, AUnitThatHasPlayedShowsNoRanges
+- `Tests/unity/PlayMode/BattleLogTests.cs` (6): TheLogListsTheLatestActionsUnderTheTurnHeader, TheLogRemembersMoreThanItShows, ScrollingStaysInsideTheContent, ANewEntryScrollsBackToTheLatest, TheLogSitsUnderTheButtonsWithTheSameWidth, CallAndEndTurnTogetherAreAsWideAsTheLog
+- `Tests/unity/PlayMode/EndScreenTests.cs` (8): KillingACommanderEndsTheGameAndShowsTheEndScreen, TheBannerIsAsWideAsTheSummaryAndTheButtonsAsTheBanner, SettingsReplacesTheButtonsAndBackBringsThemBack, PlayAgainStartsANewDraftInTheSameMode, BackToMenuLoadsTheMenu, EscapeOpensThePauseMenuAndStopsTheGame, EscapeInTheSettingsGoesBackToTheButtonsFirst, PausingStopsTheTurnTimer
+- `Tests/unity/PlayMode/GameplayTests.cs` (13): TheGameStartsInTheFirstTurnWithBothCommandersOnTheBoard, TheHudButtonsAreWired, CallPutsAUnitNextToTheCommanderAndUsesUpTheCall, CancellingCallKeepsItAvailable, PickingACardToCallDoesNotOfferAnAbility, EndingTheTurnPassesItAndMovesTheControlsToTheOtherSide, TheTurnEndsWhenTheTimerRunsOut, TheInfoPanelIsClearedWhenTheTurnChanges, TheDetailsOfAUnitDoNotListWhatItsTileDoes, RangeHintsAreShownOnlyForTheTeamThatIsPlaying, KilledUnitsKeepTheirGreyedOutStruckCardsAndSayDeadAfterTheTurnChanges, AUnitThatHasMovedShowsNoMoveRangeFromItsNewPlace, AUnitThatHasPlayedShowsNoRanges
+- `Tests/unity/PlayMode/GridPlacementTests.cs` (6): TheBoardIsWhereItWasMadeAtScaleOneAndNoOffset, TheScaleChangesTheSizeOfTheWholeBoardAroundItsMiddle, TheOffsetMovesTheWholeBoardAndItsShadowTogether, UnitsStandOnTheirTilesAtAnyScale, ClicksFindTheTilesAndUnitsWhereTheyAreDrawn, AUnitCanMoveOnASmallBoard
 - `Tests/unity/PlayMode/HintsAndWarningTests.cs` (4): TheFirstTurnShowsAHintThatFollowsTheStepsOfTheTurn, EachPlayerGetsHintsInTheFirstTurnAndNotLater, TheComputersTurnHasNoHints, TheLastSecondsAreShownInTheWarningColor
 - `Tests/unity/PlayMode/OptionsPanelTests.cs` (7): TheRowsHaveTheTextSizeOfTheRecordsTabs, TheTitleAndTheBackButtonShareTheLeftEdgeLikeInRecords, EveryRowTurnsPinkUnderTheMouseAndBringsTheBarToItsHeight, TheSlidersAreAPartOfTheirRow, ClosingThePanelWithTheMouseOverARowDoesNotLeaveItPink, ResetSettingsIsWhereClearResultsIsInRecords, ResetSettingsHalvesTheVolumesAndRestoresNormalAndTheNativeResolutionButKeepsTheLanguage
 - `Tests/unity/PlayMode/PauseAndSummaryTests.cs` (9): PlayAgainInThePauseMenuAsksFirst, SayingNoGoesBackToThePauseMenu, EscapeInTheQuestionMeansNo, SayingYesLeavesTheGame, TheEndScreenDoesNotAsk, TheSummaryCountsTurnsCallsAndKills, TheSummaryIsNotInThePauseMenu, RematchWithSwappedSidesIsOnlyAgainstTheComputer, RematchSwapsTheSidesAgainstTheComputer
 - `Tests/unity/PlayMode/RecordsMenuTests.cs` (7): TheRecordsButtonOpensThePanelAndBackClosesIt, WithoutGamesThePanelSaysSo, TheLeaderboardListsTheBestWinsFirstAndCanBeFilteredByDifficulty, TheHistoryShowsTheLatestTenAndTheDetailsOfAGame, TheStatisticsShowTheWinRateAndTheBestScore, ClearingTheResultsTakesTwoClicks, SwitchingTabsForgetsAClearThatWasStarted
-- `Tests/unity/PlayMode/ResultsTests.cs` (8): AWonGameAgainstTheComputerIsSavedWithItsScoreAndPlace, TheSavedScoreFollowsTheFormula, ALostGameIsSavedButIsNotOnTheLeaderboard, AGameOfTwoPlayersIsOnlyInTheHistory, AGoodScoreTakesAPlaceOnTheLeaderboard, TheSavedGameHasTheUnitsOfBothTeamsAndTheBattleLog, AGameThatIsLeftIsNotSaved, TheSummaryLinesUpWithTheNameOfTheWinner
+- `Tests/unity/PlayMode/ResultsTests.cs` (8): AWonGameAgainstTheComputerIsSavedWithItsScoreAndPlace, TheSavedScoreFollowsTheFormula, ALostGameIsSavedButIsNotOnTheLeaderboard, AGameOfTwoPlayersIsOnlyInTheHistory, AGoodScoreTakesAPlaceOnTheLeaderboard, TheSavedGameHasTheUnitsOfBothTeamsAndTheBattleLog, AGameThatIsLeftIsNotSaved, TheSummaryHasTheTeamNumbersInTwoColumnsInsideItsPanel
 - `Tests/unity/PlayMode/ScreenFitPlayTests.cs` (5): TheCameraKeepsTheWholeSixteenByNineFrameInView, TheBackgroundsFillTheScreenOfAnyShape, TheShadowOfTheBoardStaysWhereItIsWhateverTheScreen, TheHudSticksToTheCornersAndEdgesOfTheScreen, TheControlsOfThePlayerWithTheTurnStickToHisCornerAndFollowTheTurn
 - `Tests/unity/PlayMode/ShortcutAndSettingsTests.cs` (8): SpaceEndsTheTurn, CStartsCallAndPressingItAgainCancelsIt, CDoesNothingOnceTheCallIsUsedUp, TheShortcutsAreOffInThePauseMenu, TheShortcutsAreOffAfterTheGame, TheShortcutsAreOffInTheComputersTurn, TheSettingsOfThePauseMenuHaveTheDifficultyThatCyclesAndIsKept, TheSettingsAfterTheGameHaveTheDifficultyToo
 <!-- AUTO:TESTS:END -->
@@ -222,6 +229,7 @@ Razem: **122** testów w 20 plikach.
 Wpis dodaje się przy każdym commicie, który zmienia pliki z tabeli powyżej (najnowsze na górze, ostatnie 15).
 
 <!-- AUTO:LOG:START -->
+- 2026-10-01: `Assets/Scripts/UI/WorldBackdrop.cs` → sprawdź: ScreenFitTests, ScreenFitPlayTests · **bez testów:** `Assets/Scripts/UI/BackgroundMotion.cs`, `Assets/Scripts/UI/HideWhileActive.cs`
 - 2026-09-30: `Assets/Scenes/MainScene.unity`, `Assets/Scripts/UI/BattleLogController.cs`, `Assets/Scripts/UI/ScreenFit.cs`, `Assets/Scripts/UI/UIController.cs` → sprawdź: LocalizationTests, GameplayTests, BattleLogTests, EndScreenTests, PauseAndSummaryTests, HintsAndWarningTests, ShortcutAndSettingsTests, ResultsTests, ScreenFitTests, ScreenFitPlayTests · **bez testów:** `Assets/Scripts/UI/ScreenCorner.cs`, `Assets/Scripts/UI/ScreenCorners.cs`
 - 2026-09-30: `Assets/Scenes/MainScene.unity`, `Assets/Scenes/MenuScene.unity`, `Assets/Scripts/UI/CameraAspectFit.cs`, `Assets/Scripts/UI/MainMenuController.cs`, `Assets/Scripts/UI/ScreenCover.cs`, `+2 więcej` → sprawdź: LocalizationTests, GameplayTests, BattleLogTests, EndScreenTests, PauseAndSummaryTests, HintsAndWarningTests, ShortcutAndSettingsTests, ResultsTests, RecordsMenuTests, OptionsPanelTests, SoundAssetTests, ScreenFitTests, ScreenFitPlayTests
 - 2026-09-30: `Assets/Resources/Localization/Polish.txt`, `Assets/Scenes/MainScene.unity`, `Assets/Scenes/MenuScene.unity`, `Assets/Scripts/BeginTurnState.cs`, `Assets/Scripts/GameController.cs`, `+20 więcej` → sprawdź: LocalizationTests, GameplayTests, BattleLogTests, EndScreenTests, PauseAndSummaryTests, HintsAndWarningTests, ShortcutAndSettingsTests, ResultsTests, RecordsMenuTests, OptionsPanelTests, SoundAssetTests, GameStatsTests, ScoreCalculatorTests, RecordStoreTests, GameResultTests, AiSoakTests, AttackAnimationTests
