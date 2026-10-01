@@ -66,7 +66,7 @@ PrefabInstance:
     - target: {fileID: 6772823374680011127, guid: 73353b8f86c09054a9c26c5810d071a8,
         type: 3}
       propertyPath: m_Name
-      value: unitPrefab Variant2K
+      value: UnitPrefabVariant2K
       objectReference: {fileID: 0}
     - target: {fileID: 8681854827919751523, guid: 73353b8f86c09054a9c26c5810d071a8,
         type: 3}
@@ -152,5 +152,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _attackBonus: 1
   _healthBonus: 2
-  _description: 'SPY [+1 attack strength and +2 HP when on opponent''s starting side
-    of the battlefield]'
+  _description: 'SPY [+1 attack strength and +2 HP on the enemy''s half of the board]'

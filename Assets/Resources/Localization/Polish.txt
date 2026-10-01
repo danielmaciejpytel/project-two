@@ -20,9 +20,9 @@ Hard	Trudny
 Resolution: {0}	Rozdzielczość: {0}
 (native)	(natywna)
 Language: {0}	Język: {0}
-Choose Doppelgangers and build a team to defeat the opposing Superior.\n\nPLAYER VS PLAYER - two players on one screen.\nPLAY VS AI - you lead Super Hot, the computer leads Super Cold.\n\nClick a unit to see where it can move and attack, then click a tile or an enemy. Use Call to bring a Doppelganger next to your Superior. Hover over a tile to read its effect. The Battle log shows the latest actions.\n\nWhich side will you fight for? Super Hot or Super Cold?	Wybierz sobowtóry i zbuduj drużynę, która pokona dowódcę przeciwnika.\n\nGRACZ KONTRA GRACZ - dwie osoby przy jednym ekranie.\nGRACZ KONTRA AI - prowadzisz Super Hot, a komputer prowadzi Super Cold.\n\nKliknij jednostkę, aby zobaczyć, gdzie może się ruszyć i atakować, a potem kliknij pole lub wroga. Przyciskiem Wezwij sprowadzisz sobowtóra obok swojego dowódcy. Najedź na pole, aby przeczytać jego efekt. Dziennik walki pokazuje ostatnie akcje.\n\nPo której stronie staniesz do walki? Super Hot czy Super Cold?
+<color=#D72E66>GOAL</color>\nDefeat the enemy Superior. Each team has a Superior and four Doppelgangers.\n\n<color=#D72E66>MODES</color>\nPLAYER VS PLAYER - two players on one screen.\nPLAY VS AI - you lead Super Hot against the computer.\n\n<color=#D72E66>YOUR TURN</color>\n- Click one of your units to choose it. The highlighted tiles show where it can move and whom it can attack.\n- Click a highlighted tile to move, then click an enemy in range to attack.\n- Every unit moves and attacks once per turn. End Turn passes the turn, the bar at the top shows your time.\n\n<color=#D72E66>CALLING</color>\nCall brings a Doppelganger from your reserve next to your Superior. Pick a card, then click a flashing tile. You can call once per turn, and a new unit waits a turn before it acts.\n\n<color=#D72E66>READING THE BOARD</color>\n- Hover over a unit or a tile to read its details in the bottom left corner.\n- Icons mark special abilities. Special tiles, like Cover or Dead Zone, change a fight.\n- The Battle log shows the latest actions.\n\n<color=#D72E66>KEYS</color>\nSpace - end turn, C - call, Q - unit ability, Esc - pause.\n\n<color=#D72E66>TIPS</color>\nGuard your Superior and use cover. Win fast and with your units alive for a higher score. The best games are in RECORDS.	<color=#D72E66>CEL</color>\nPokonaj dowódcę przeciwnika. Każda ekipa ma dowódcę i czterech sobowtórów.\n\n<color=#D72E66>TRYBY</color>\nGRACZ KONTRA GRACZ - dwie osoby przy jednym ekranie.\nGRACZ KONTRA AI - prowadzisz Super Hot przeciwko komputerowi.\n\n<color=#D72E66>TWOJA TURA</color>\n- Kliknij swoją jednostkę, aby ją wybrać. Podświetlone pola pokazują, gdzie może się ruszyć i kogo zaatakować.\n- Kliknij podświetlone pole, aby się ruszyć, a potem wroga w zasięgu, aby zaatakować.\n- Każda jednostka rusza się i atakuje raz na turę. Koniec tury oddaje turę, pasek u góry pokazuje Twój czas.\n\n<color=#D72E66>WEZWANIE</color>\nWezwij sprowadza sobowtóra z rezerwy obok dowódcy. Wybierz kartę, potem kliknij migające pole. Wzywasz raz na turę, a nowa jednostka czeka turę, zanim zacznie działać.\n\n<color=#D72E66>PLANSZA</color>\n- Najedź na jednostkę lub pole, aby przeczytać jego szczegóły w lewym dolnym rogu.\n- Ikony oznaczają specjalne zdolności. Pola specjalne, jak Osłona czy Strefa śmierci, zmieniają przebieg walki.\n- Dziennik walki pokazuje ostatnie akcje.\n\n<color=#D72E66>KLAWISZE</color>\nSpacja - koniec tury, C - wezwij, Q - zdolność jednostki, Esc - pauza.\n\n<color=#D72E66>WSKAZÓWKI</color>\nChroń dowódcę i korzystaj z osłon. Wygrywaj szybko i bez strat, aby zdobyć więcej punktów. Najlepsze partie są w WYNIKACH.
 <line-height=2.375em>CODE<pos=3.125em><color=#D72E66>KAROL ŁAWICKI</color>\nART<pos=3.125em><color=#D72E66>DANIEL PYTEL</color>\nDESIGN<pos=4.0625em><color=#D72E66>MATT MATUSZEWSKI</color><line-height=1.1875em>\n<pos=4.0625em><color=#D72E66>MATEUSZ NIZIOŁEK</color>	<line-height=2.375em>KOD<pos=5em><color=#D72E66>KAROL ŁAWICKI</color>\nGRAFIKA<pos=5em><color=#D72E66>DANIEL PYTEL</color>\nPROJEKT<pos=5em><color=#D72E66>MATT MATUSZEWSKI</color><line-height=1.1875em>\n<pos=5em><color=#D72E66>MATEUSZ NIZIOŁEK</color>
-End Turn	Zakończ
+End Turn	Koniec tury
 Call	Wezwij
 Quit	Wyjdź
 Turn ends in:	Koniec tury za:
@@ -100,12 +100,12 @@ RECOVERY [heals 1 HP/Turn]	REGENERACJA [leczy 1 HP na turę]
 RECOVERY [heals 1 HP/turn]	REGENERACJA [leczy 1 HP na turę]
 IMPAIR [attacked units takes additional +1 damage for 2 turns]	OSŁABIENIE [zaatakowane jednostki dostają dodatkowo +1 obrażeń przez 2 tury]
 ZEAL [+1 attack strength and +1 HP when adjacent to Superior]	GORLIWOŚĆ [+1 do siły ataku i +1 HP, gdy stoi obok dowódcy]
-SPY [+1 attack strength and +2 HP when on opponent's starting side of the battlefield]	SZPIEG [+1 do siły ataku i +2 HP po stronie startowej przeciwnika]
+SPY [+1 attack strength and +2 HP on the enemy's half of the board]	SZPIEG [+1 do siły ataku i +2 HP na połowie planszy przeciwnika]
 IMPALE (gives enemy 1 damage for 2 turns)	PRZEBODZENIE (zadaje wrogowi 1 obrażenie przez 2 tury)
-PROVOKE [nearby enemies can select only this unit as an attack target and cannot move]	PROWOKACJA [pobliscy wrogowie mogą atakować tylko tę jednostkę i nie mogą się ruszać]
+PROVOKE [nearby enemies can only attack this unit and cannot move]	PROWOKACJA [pobliscy wrogowie atakują tylko tę jednostkę i nie mogą się ruszać]
 BACKSTAB [+2 attack strength when attacking from behind]	CIOS W PLECY [+2 do siły ataku przy ataku od tyłu]
-Teleporter (can move friendly unit up to 2 tiles)	Teleporter (może przenieść sojuszniczą jednostkę o maksymalnie 2 pola)
-Confuser (selected enemy has one attack fewer until your next turn, every other turn)	Dezorientator (wybrany wróg ma o jeden atak mniej do Twojej następnej tury, co drugą turę)
+Teleporter (can move friendly unit up to 2 tiles)	Teleporter (może przenieść sojusznika o maksymalnie 2 pola)
+Confuser (chosen enemy has 1 attack fewer next turn, every other turn)	Dezorientator (wybrany wróg ma o 1 atak mniej w swojej turze, co drugą turę)
 Caller [can call Doppelgangers]	Przywoływacz [może przywoływać sobowtóry]
 TOUGH [reduce received damage by 1]	TWARDY [zmniejsza otrzymywane obrażenia o 1]
 GUNMAN [range of attack extended by 2 tiles in a straight line]	STRZELEC [zasięg ataku większy o 2 pola w linii prostej]
@@ -120,8 +120,8 @@ Long reach (+1 attack range in a straight line)	Daleki zasięg (+1 do zasięgu a
 Implaled (1 damage/turn)	Przebity (1 obrażenie na turę)
 Impaled (1 damage/turn)	Przebity (1 obrażenie na turę)
 Covered (Reduce received damage by 1)	Osłonięty (zmniejsza otrzymywane obrażenia o 1)
-TEAM RED	DRUŻYNA CZERWONA
-TEAM BLUE	DRUŻYNA NIEBIESKA
+TEAM RED	EKIPA CZERWONA
+TEAM BLUE	EKIPA NIEBIESKA
 CHOOSE <color=#D72E66>DOPPELGANGER</color>	WYBIERZ <color=#D72E66>SOBOWTÓRA</color>
 YOUR	SWOJĄ
 PICK {0} CREW {1} OF {2}	WYBIERZ {0} EKIPĘ {1} Z {2}
@@ -146,9 +146,9 @@ Rematch: swap sides	Rewanż: zamiana stron
 Score: {0}	Wynik: {0}
 New high score!	Nowy rekord!
 Leaderboard place {0}	Miejsce w rankingu: {0}
-Click one of your units to choose it. Call (C) brings a new Doppelganger next to your Superior.	Kliknij jedną ze swoich jednostek, aby ją wybrać. Wezwij (C) przywołuje nowego sobowtóra obok Twojego dowódcy.
-Click a highlighted tile to move, or an enemy in range to attack. End Turn (Space) passes the turn.	Kliknij podświetlone pole, aby się poruszyć, albo wroga w zasięgu, aby zaatakować. Zakończ (spacja) oddaje turę.
-Pick a card below, then click a tile next to your Superior. Press Call (C) again to cancel.	Wybierz kartę poniżej, potem kliknij pole obok swojego dowódcy. Naciśnij Wezwij (C) ponownie, aby anulować.
+Click one of your units to choose it.\nCall (C) brings a new Doppelganger.	Kliknij jedną ze swoich jednostek, aby ją wybrać.\nWezwij (C) przywołuje nowego sobowtóra.
+Click a highlighted tile to move, or an enemy in range to attack.	Kliknij podświetlone pole, aby się ruszyć, albo wroga w zasięgu, aby zaatakować.
+Pick a card from the reserve, then click a flashing tile next to your Superior. Press Call (C) again to cancel.	Wybierz kartę z rezerwy, potem kliknij migające pole obok dowódcy. C anuluje.
 All	Wszystkie
 Click again to remove all results	Kliknij ponownie, aby usunąć wszystkie wyniki
 Clear results	Wyczyść wyniki
@@ -173,3 +173,40 @@ HISTORY	HISTORIA
 STATS	STATYSTYKI
 Scroll with the mouse wheel	Przewijaj kółkiem myszy
 Reset settings	Przywróć ustawienia
+
+# Gameplay HUD of the mockup (uppercase texts)
+TURN {0}	TURA {0}
+TURN ENDS IN	KONIEC TURY
+COMPUTER	KOMPUTER
+THINKING...	MYŚLI...
+HINT	WSKAZÓWKA
+SPACE	SPACJA
+IN PLAY {0}/{1}	W GRZE {0}/{1}
+CALL	WEZWIJ
+RESERVE	REZERWA
+DEAD	MARTWY
+NEW	NOWY
+MOVED	RUCH
+MOVE	RUCH
+STRENGTH	SIŁA
+RANGE	ZASIĘG
+Tile	Pole
+DETAILS	SZCZEGÓŁY
+Hover over a unit or tile, or click a card below.	Najedź na jednostkę lub pole, albo kliknij kartę u dołu.
+A unit that enters this tile has a smaller move range this turn.	Jednostka, która wejdzie na to pole, ma mniejszy zasięg ruchu w tej turze.
+Pause	Pauza
+Resume	Wznów
+ESC - Resume the game	ESC · Wznów grę
+C	C
+Q	Q
+PIERCING: NO COVER	PRZEBICIE: BEZ OSŁONY
+COVER: -{0}	OSŁONA: -{0}
+No unit can enter this tile.	Żadna jednostka nie może wejść na to pole.
+A unit that ends its turn here takes 1 less damage.	Jednostka, która kończy tu turę, otrzymuje o 1 mniej obrażeń.
+A unit that enters this tile deals 1 more damage.	Jednostka, która wejdzie na to pole, zadaje o 1 więcej obrażeń.
+A unit that enters this tile can attack 1 tile further.	Jednostka, która wejdzie na to pole, atakuje o 1 pole dalej.
+A unit that ends its turn here loses 1 HP.	Jednostka, która kończy tu turę, traci 1 HP.
+A unit that ends its turn here heals 1 HP.	Jednostka, która kończy tu turę, leczy 1 HP.
+Open Ground	Otwarty teren
+No effect	Brak efektu
+Units can walk and stand here freely.	Jednostki mogą tu swobodnie chodzić i stać.

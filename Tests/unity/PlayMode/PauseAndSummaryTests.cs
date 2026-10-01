@@ -128,9 +128,9 @@ public class PauseAndSummaryTests
         Assert.AreEqual(0, Game.Stats.KilledBy(player));
         string text = GetPrivate<TMPro.TMP_Text>(EndScreen(), "_summaryText").text;
         // The numbers are placed with <pos>, so the readable text has no space between the label and the number.
-        StringAssert.IsMatch(@"Turns played:\s*2", GetPrivate<TMPro.TMP_Text>(EndScreen(), "_summaryText").GetParsedText());
-        StringAssert.Contains("Units called:", text);
-        StringAssert.Contains("Units killed:", text);
+        StringAssert.IsMatch(@"Turns played\s*2", GetPrivate<TMPro.TMP_Text>(EndScreen(), "_summaryText").GetParsedText());
+        StringAssert.Contains("Units called", text);
+        StringAssert.Contains("Units killed", text);
         Assert.IsTrue(Shown(EndScreen(), "Buttons/SummaryPanel"));
     }
 

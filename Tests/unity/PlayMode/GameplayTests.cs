@@ -143,6 +143,39 @@ public class GameplayTests
     }
 
     [UnityTest]
+    public IEnumerator TheDetailsOfAUnitDoNotListWhatItsTileDoes()
+    {
+        yield return StartGame();
+        int player = Game.ActivePlayer;
+        UnitController unit = UnitToCall(player);
+        Game.DeployAction();
+        EventManager.Instance.UnitClicked(unit);
+        EventManager.Instance.TileClicked(FreeTileNextToCommander(player));
+        yield return null;
+        UnitTilePanelController panel = GetPrivate<UnitTilePanelController>(Game.GetUI(), "_myInfoPanel");
+
+        Game.GetUI().DisplayUnit(unit);
+        int plain = ShownRows(panel).Count;
+        unit.gameObject.AddComponent<EffectIncreaseMoveRange>().InitializeEffect(-1, "-1 Move Range");
+        Game.GetUI().DisplayUnit(unit);
+        Assert.AreEqual(plain, ShownRows(panel).Count, "An effect of the tile is not listed in the details of the unit");
+
+        unit.gameObject.AddComponent<EffectBurn>().InitializeEffect(1, 2, "Burning [takes damage]");
+        Game.GetUI().DisplayUnit(unit);
+        Assert.AreEqual(plain + 1, ShownRows(panel).Count, "What the unit carries itself (burn) is listed");
+    }
+
+    private static System.Collections.Generic.List<string> ShownRows(UnitTilePanelController panel)
+    {
+        System.Collections.Generic.List<string> names = new System.Collections.Generic.List<string>();
+        foreach (GameObject row in GetPrivate<System.Collections.Generic.List<GameObject>>(panel, "_rows"))
+        {
+            if (row.activeSelf) names.Add(row.transform.Find("Name").GetComponent<TMPro.TMP_Text>().text);
+        }
+        return names;
+    }
+
+    [UnityTest]
     public IEnumerator RangeHintsAreShownOnlyForTheTeamThatIsPlaying()
     {
         yield return StartGame();
@@ -162,7 +195,7 @@ public class GameplayTests
     }
 
     [UnityTest]
-    public IEnumerator KilledUnitsKeepTheirSmallCardsAfterTheTurnChanges()
+    public IEnumerator KilledUnitsKeepTheirGreyedOutStruckCardsAndSayDeadAfterTheTurnChanges()
     {
         yield return StartGame();
         int player = Game.ActivePlayer;
@@ -183,7 +216,10 @@ public class GameplayTests
         {
             if (GetPrivate<UnitController>(card, "_myUnit") != unit) continue;
             found = true;
-            Assert.AreEqual(0.6f, card.transform.localScale.x, 0.01f, "The card of a killed unit is shown small");
+            Assert.AreEqual(1.0f, card.transform.localScale.x, 0.01f, "The card of a killed unit keeps its size");
+            Assert.IsTrue(GetPrivate<UnityEngine.UI.Image>(card, "_killedImage").enabled, "The card of a killed unit is struck out");
+            Assert.Less(GetPrivate<UnityEngine.UI.Image>(card, "_cardImage").color.a, 0.5f, "The card of a killed unit is greyed out like the reserve");
+            Assert.AreEqual(Loc.T("DEAD"), GetPrivate<TMPro.TMP_Text>(card, "_unitText").text, "A killed unit says DEAD below its card, like the reserve says RESERVE");
         }
         Assert.IsTrue(found, "The killed unit has a card");
     }

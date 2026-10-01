@@ -74,11 +74,16 @@ public class ScreenFitPlayTests
             yield return ShowAs(aspect);
             Rect view = View(camera);
             int covering = 0;
+            // The background is one object (BackgroundAnimation) whose base picture and dimming are its children.
             foreach (WorldBackdrop backdrop in Resources.FindObjectsOfTypeAll<WorldBackdrop>())
             {
                 if (!backdrop.FillScreen || !backdrop.gameObject.activeInHierarchy) continue;
-                AssertCovers(backdrop.GetComponent<SpriteRenderer>().bounds, view, backdrop.name + " at aspect " + aspect);
-                covering++;
+                foreach (SpriteRenderer renderer in backdrop.GetComponentsInChildren<SpriteRenderer>())
+                {
+                    if (renderer.name != "BackgroundBase" && renderer.name != "BackgroundDim") continue;
+                    AssertCovers(renderer.bounds, view, renderer.name + " at aspect " + aspect);
+                    covering++;
+                }
             }
             Assert.GreaterOrEqual(covering, 2, "The background art and the dimming");
         }
@@ -88,23 +93,17 @@ public class ScreenFitPlayTests
     public IEnumerator TheShadowOfTheBoardStaysWhereItIsWhateverTheScreen()
     {
         yield return StartGame();
-        Bounds before = default;
-        foreach (WorldBackdrop backdrop in Resources.FindObjectsOfTypeAll<WorldBackdrop>())
+        SpriteRenderer shadow = Find<SpriteRenderer>("MapShadow");
+        yield return ShowAs(ScreenFit.ReferenceAspect);
+        Bounds before = shadow.bounds;
+        foreach (float aspect in new[] { Wide, Tall, Square })
         {
-            if (backdrop.FillScreen || backdrop.name != "MapShadow") continue;
-            yield return ShowAs(ScreenFit.ReferenceAspect);
-            before = backdrop.GetComponent<SpriteRenderer>().bounds;
-            foreach (float aspect in new[] { Wide, Tall, Square })
-            {
-                yield return ShowAs(aspect);
-                Bounds now = backdrop.GetComponent<SpriteRenderer>().bounds;
-                Assert.AreEqual(before.center.x, now.center.x, 0.01f, "Aspect " + aspect);
-                Assert.AreEqual(before.center.y, now.center.y, 0.01f, "Aspect " + aspect);
-                Assert.AreEqual(before.size.x, now.size.x, 0.01f, "Aspect " + aspect);
-            }
-            yield break;
+            yield return ShowAs(aspect);
+            Bounds now = shadow.bounds;
+            Assert.AreEqual(before.center.x, now.center.x, 0.01f, "Aspect " + aspect);
+            Assert.AreEqual(before.center.y, now.center.y, 0.01f, "Aspect " + aspect);
+            Assert.AreEqual(before.size.x, now.size.x, 0.01f, "Aspect " + aspect);
         }
-        Assert.Fail("The shadow of the board is not a WorldBackdrop");
     }
 
     private static void AssertOffset(string corner, float x, float y, float aspect)
@@ -141,7 +140,7 @@ public class ScreenFitPlayTests
         for (int turn = 0; turn < 2; turn++)
         {
             string corner = Game.ActivePlayer == 1 ? "CornerTopLeft" : "CornerTopRight";
-            foreach (string control in new[] { "EndTurnButton", "TimerBackgroundImage", "BattleLogCanvas" })
+            foreach (string control in new[] { "EndTurnButton", "DeployMinionButton", "BattleLogCanvas" })
             {
                 Assert.AreEqual(corner, Find<Transform>(control).parent.name, control + " in the turn of player " + Game.ActivePlayer);
             }

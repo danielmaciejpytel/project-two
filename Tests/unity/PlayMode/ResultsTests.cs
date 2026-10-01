@@ -35,6 +35,9 @@ public class ResultsTests
 
     private static string SummaryText() => GetPrivate<TMPro.TMP_Text>(EndScreen(), "_summaryText").text;
 
+    // The record of the game (a new high score, the place on the leaderboard) is written under the summary.
+    private static string RecordText() => GetPrivate<TMPro.TMP_Text>(EndScreen(), "_recordText").text;
+
     [UnityTest]
     public IEnumerator AWonGameAgainstTheComputerIsSavedWithItsScoreAndPlace()
     {
@@ -53,8 +56,8 @@ public class ResultsTests
         Assert.GreaterOrEqual(record.HumanScore, ScoreCalculator.WinPoints, "A win is worth at least the points for the win");
         Assert.AreEqual(1, Game.Result.LeaderboardPlace);
         string text = SummaryText();
-        StringAssert.Contains("Score:", text);
-        StringAssert.Contains("New high score!", text);
+        StringAssert.Contains("Score", text);
+        StringAssert.Contains("New high score!", RecordText());
     }
 
     [UnityTest]
@@ -86,9 +89,9 @@ public class ResultsTests
         Assert.AreEqual(0, Game.Result.LeaderboardPlace);
         Assert.IsEmpty(RecordStore.Leaderboard());
         string text = SummaryText();
-        StringAssert.Contains("Score:", text);
-        StringAssert.DoesNotContain("high score", text);
-        StringAssert.DoesNotContain("Leaderboard place", text);
+        StringAssert.Contains("Score", text);
+        StringAssert.DoesNotContain("high score", RecordText());
+        StringAssert.DoesNotContain("Leaderboard place", RecordText());
     }
 
     [UnityTest]
@@ -103,7 +106,7 @@ public class ResultsTests
         Assert.AreEqual("", record.difficulty);
         Assert.IsEmpty(RecordStore.Leaderboard());
         Assert.AreEqual(0, Game.Result.LeaderboardPlace);
-        StringAssert.Contains("Score:", SummaryText());
+        StringAssert.Contains("Score", SummaryText());
     }
 
     [UnityTest]
@@ -117,8 +120,8 @@ public class ResultsTests
 
         int place = Game.Result.LeaderboardPlace;
         Assert.AreEqual(2, place, "Between the 99999 and the 50");
-        StringAssert.Contains("Leaderboard place 2", SummaryText());
-        StringAssert.DoesNotContain("New high score!", SummaryText());
+        StringAssert.Contains("Leaderboard place 2", RecordText());
+        StringAssert.DoesNotContain("New high score!", RecordText());
     }
 
     [UnityTest]
@@ -179,40 +182,31 @@ public class ResultsTests
     }
 
     [UnityTest]
-    public IEnumerator TheSummaryLinesUpWithTheNameOfTheWinner()
+    public IEnumerator TheSummaryHasTheTeamNumbersInTwoColumnsInsideItsPanel()
     {
         yield return StartGame();
         yield return KillACommanderAndWait(1);
         TMPro.TMP_Text summary = GetPrivate<TMPro.TMP_Text>(EndScreen(), "_summaryText");
-        TMPro.TMP_Text winner = EndScreen().transform.Find("WinnerBackgroundImage").GetComponentInChildren<TMPro.TMP_Text>();
-        winner.ForceMeshUpdate();
-        Bounds bounds = winner.textBounds;
-        float winnerLeft = winner.transform.TransformPoint(bounds.min).x;
-        float winnerRight = winner.transform.TransformPoint(bounds.max).x;
+        RectTransform panel = (RectTransform)EndScreen().transform.Find("Buttons/SummaryPanel");
         summary.ForceMeshUpdate();
         Assert.GreaterOrEqual(summary.textInfo.lineCount, 4);
-        Assert.GreaterOrEqual(summary.fontSize, 24.0f, "The summary is larger than before");
+        // World distances grow with the size of the Game view, the tolerances are in canvas units.
+        float unit = summary.canvas.rootCanvas.scaleFactor;
+        Vector3[] corners = new Vector3[4];
+        panel.GetWorldCorners(corners);
 
-        float[] firstNumbers = new float[3];
-        for (int line = 1; line <= 3; line++)
+        float[] labelStarts = new float[4];
+        float[] secondEnds = new float[3];
+        for (int line = 0; line < 4; line++)
         {
             LineEnds(summary, line, out float left, out float right);
-            Assert.AreEqual(winnerLeft, left, 3.0f, "The label of line " + line + " starts at the left edge of the winner's name");
-            Assert.AreEqual(winnerRight, right, 3.0f, "The second number of line " + line + " ends at the right edge of the winner's name");
-            TMPro.TMP_LineInfo info = summary.textInfo.lineInfo[line];
-            // The first number: the first visible character after the label, found by its color (Super Hot's).
-            for (int i = info.firstVisibleCharacterIndex; i <= info.lastVisibleCharacterIndex; i++)
-            {
-                TMPro.TMP_CharacterInfo c = summary.textInfo.characterInfo[i];
-                if (c.isVisible && c.color.r > 200 && c.color.g < 100)
-                {
-                    firstNumbers[line - 1] = summary.transform.TransformPoint(c.bottomLeft).x;
-                    break;
-                }
-            }
+            labelStarts[line] = left;
+            Assert.Greater(left, corners[0].x, "Inside the panel, line " + line);
+            Assert.Less(right, corners[2].x, "Inside the panel, line " + line);
+            if (line > 0) secondEnds[line - 1] = right;
         }
-        Assert.AreEqual(firstNumbers[0], firstNumbers[1], 1.0f, "The first numbers are in one column");
-        Assert.AreEqual(firstNumbers[0], firstNumbers[2], 1.0f, "The first numbers are in one column");
-        Assert.Greater(firstNumbers[0], winnerLeft + 50.0f, "After the labels");
+        for (int line = 1; line < 4; line++) Assert.AreEqual(labelStarts[0], labelStarts[line], 1.0f * unit, "The labels start at one edge");
+        Assert.AreEqual(secondEnds[0], secondEnds[1], 1.0f * unit, "The second numbers end at one edge");
+        Assert.AreEqual(secondEnds[0], secondEnds[2], 1.0f * unit, "The second numbers end at one edge");
     }
 }

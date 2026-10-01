@@ -49,17 +49,14 @@ public class EndScreenTests
     }
 
     [UnityTest]
-    public IEnumerator TheBannerIsAsWideAsTheSettingsPanelAndTheButtonsAsTheBanner()
+    public IEnumerator TheBannerIsAsWideAsTheSummaryAndTheButtonsAsTheBanner()
     {
         yield return EndTheGame();
         EndGameController screen = EndScreen();
         RectTransform banner = (RectTransform)screen.transform.Find("WinnerBackgroundImage");
-        RectTransform settings = (RectTransform)screen.transform.Find("SettingsPanel");
         RectTransform again = (RectTransform)screen.transform.Find("Buttons/PlayAgainButton");
         RectTransform menu = (RectTransform)screen.transform.Find("Buttons/BackToMenuButton");
 
-        // The settings panel image has a transparent margin, so the banner is a little narrower than its rect.
-        Assert.AreEqual(settings.rect.width * 792.0f / 812.0f, banner.rect.width, 1.0f);
         float left = again.anchoredPosition.x - again.rect.width / 2.0f;
         float right = menu.anchoredPosition.x + menu.rect.width / 2.0f;
         Assert.AreEqual(banner.rect.width, right - left, 1.5f, "The two button columns span the banner");

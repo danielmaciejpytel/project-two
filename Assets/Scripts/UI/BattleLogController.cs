@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Text;
 using TMPro;
 using UnityEngine;
@@ -25,32 +25,35 @@ public class BattleLogController : MonoBehaviour
     [SerializeField] private TMP_Text _entriesText;
     [SerializeField] private Button _toggleButton;
     [SerializeField] private TMP_Text _toggleLabel;
-    [Tooltip("On the left side the panel lines up with the left edge of this rect (the info panel).")]
-    [SerializeField] private RectTransform _leftAlignReference;
-    [SerializeField] private float _leftAlignInset = 6.0f;
+    [Tooltip("The ability button: when it is shown, the log sits one row lower and is shorter by that row.")]
+    [SerializeField] private GameObject _abilityButton;
+    [Tooltip("Background of the log: the full one, the shorter one under the ability button and the one of the collapsed log.")]
+    [SerializeField] private Sprite _fullSprite;
+    [SerializeField] private Sprite _shortSprite;
+    [SerializeField] private Sprite _collapsedSprite;
     [Tooltip("How many actions are remembered; older ones can be scrolled to with the mouse wheel over the log.")]
     [SerializeField] private int _maxEntries = 60;
     [Tooltip("Lines moved by one notch of the mouse wheel.")]
     [SerializeField] private int _wheelLines = 2;
     [Tooltip("Height of the panel when collapsed to the title bar.")]
     [SerializeField] private float _collapsedHeight = 44.0f;
-    [Tooltip("Position of the toggle button in the title bar when collapsed.")]
-    [SerializeField] private Vector2 _collapsedButtonPosition = new Vector2(-10.0f, -8.0f);
-    [SerializeField] private Color _hotColor = new Color32(0xE8, 0x17, 0x3F, 0xFF);
-    [SerializeField] private Color _coldColor = new Color32(0x10, 0xBF, 0xD3, 0xFF);
+    [Tooltip("Height of one line of the log, also of the turn headers.")]
+    [SerializeField] private float _lineHeight = 24.0f;
+    [SerializeField] private Color _hotColor = new Color32(0xFF, 0x1B, 0x47, 0xFF);
+    [SerializeField] private Color _coldColor = new Color32(0x14, 0xC8, 0xD8, 0xFF);
     [SerializeField] private Color _hotNameColor = new Color32(0xFF, 0xD0, 0xDA, 0xFF);
     [SerializeField] private Color _coldNameColor = new Color32(0xC6, 0xF5, 0xFA, 0xFF);
     [SerializeField] private Color _healColor = new Color32(0xC9, 0xF2, 0xD4, 0xFF);
+    [Tooltip("Color of the turn headers.")]
+    [SerializeField] private Color _headerColor = new Color32(0xA3, 0xA3, 0xA3, 0xFF);
 
     private readonly List<Entry> _entries = new List<Entry>();
     private readonly StringBuilder _builder = new StringBuilder();
     private int _turn;
     private int _turnPlayer;
     private RectTransform _rect;
-    private RectTransform _buttonRect;
-    private float _expandedHeight;
-    private Vector2 _expandedButtonPosition;
-    private float _sideMargin;
+    private Image _panelImage;
+    private bool _abilityRow;
     private float _scroll;
     private RectTransform _entriesRect;
     private ScreenCorners _corners;
@@ -69,10 +72,7 @@ public class BattleLogController : MonoBehaviour
         _entriesRect.sizeDelta = new Vector2(0.0f, _entriesRect.rect.height);
         _entriesRect.anchoredPosition = Vector2.zero;
         if (!_body.TryGetComponent(out RectMask2D _)) _body.AddComponent<RectMask2D>();
-        _buttonRect = (RectTransform)_toggleButton.transform;
-        _expandedHeight = _rect.sizeDelta.y;
-        _expandedButtonPosition = _buttonRect.anchoredPosition;
-        _sideMargin = Mathf.Abs(_rect.anchoredPosition.x);
+        _panelImage = _panel.GetComponent<Image>();
         // The label must catch clicks too, otherwise a button without a visible background can't be pressed.
         _toggleLabel.raycastTarget = true;
         _toggleButton.onClick.AddListener(ToggleBody);
@@ -109,6 +109,13 @@ public class BattleLogController : MonoBehaviour
         events.OnUnitKilled -= OnUnitKilled;
     }
 
+    private void LateUpdate()
+    {
+        // The ability button comes and goes with the chosen unit; the log makes room for it.
+        bool abilityRow = _abilityButton != null && _abilityButton.activeSelf;
+        if (abilityRow != _abilityRow) ApplyLayout();
+    }
+
     private void Update()
     {
         Mouse mouse = Mouse.current;
@@ -136,27 +143,24 @@ public class BattleLogController : MonoBehaviour
         SetExpanded(!_body.activeSelf);
     }
 
-    // Follows the other turn controls: left edge for Super Hot, right edge for Super Cold.
+    // Follows the other turn controls: the left column for Super Hot, the right column for Super Cold, under the buttons.
     private void MoveToPlayerSide(int playerId)
     {
         // The canvas of the log (as big as the layout) sticks to the top corner on that side of the screen.
         if (_corners != null && _rect.parent.parent != _corners.TurnSide(playerId)) _rect.parent.SetParent(_corners.TurnSide(playerId), false);
-        float side = playerId == 1 ? 0.0f : 1.0f;
-        _rect.anchorMin = new Vector2(side, _rect.anchorMin.y);
-        _rect.anchorMax = new Vector2(side, _rect.anchorMax.y);
-        _rect.pivot = new Vector2(side, _rect.pivot.y);
-        _rect.anchoredPosition = new Vector2(playerId == 1 ? LeftMargin() : -_sideMargin, _rect.anchoredPosition.y);
+        ApplyLayout();
     }
 
-    // Distance from the left edge of the parent to where the panel starts on the left side.
-    private float LeftMargin()
+    // Place and size of the log in the layout of the mockup, and the background that fits them.
+    private void ApplyLayout()
     {
-        if (_leftAlignReference == null) return _sideMargin;
-        RectTransform parent = (RectTransform)_rect.parent;
-        Vector3[] corners = new Vector3[4];
-        _leftAlignReference.GetWorldCorners(corners);
-        float scale = parent.lossyScale.x;
-        return parent.InverseTransformPoint(new Vector3(corners[0].x + _leftAlignInset * scale, 0.0f, 0.0f)).x - parent.rect.xMin;
+        _abilityRow = _abilityButton != null && _abilityButton.activeSelf;
+        float top = HudLayout.LogY + (_abilityRow ? HudLayout.RowStep : 0.0f);
+        float height = _body.activeSelf ? HudLayout.LogHeight - (_abilityRow ? HudLayout.RowStep : 0.0f) : _collapsedHeight;
+        HudLayout.Place(_rect, HudLayout.ColumnX(_turnPlayer), top, HudLayout.ColumnWidth, height);
+        if (_panelImage == null) return;
+        Sprite sprite = !_body.activeSelf ? _collapsedSprite : _abilityRow ? _shortSprite : _fullSprite;
+        if (sprite != null) _panelImage.sprite = sprite;
     }
 
     // Collapsed: only the "Battle log" title with "Show" on its right.
@@ -164,8 +168,7 @@ public class BattleLogController : MonoBehaviour
     {
         _body.SetActive(expanded);
         if (expanded && _entriesRect != null) Refresh();
-        _rect.sizeDelta = new Vector2(_rect.sizeDelta.x, expanded ? _expandedHeight : _collapsedHeight);
-        _buttonRect.anchoredPosition = expanded ? _expandedButtonPosition : _collapsedButtonPosition;
+        ApplyLayout();
         _toggleLabel.text = Loc.T(expanded ? "Hide" : "Show");
     }
 
@@ -267,6 +270,8 @@ public class BattleLogController : MonoBehaviour
     private void Build(int firstEntry)
     {
         _builder.Clear();
+        // Every line, also a header, is the same height.
+        _builder.Append("<line-height=").Append(_lineHeight.ToString("0.#", System.Globalization.CultureInfo.InvariantCulture)).Append('>');
         int shownTurn = -1;
         for (int i = firstEntry; i < _entries.Count; i++)
         {
@@ -287,7 +292,7 @@ public class BattleLogController : MonoBehaviour
     {
         if (_builder.Length > 0) _builder.Append('\n');
         _builder.Append(isOld ? "<alpha=#8C>" : "<alpha=#FF>");
-        _builder.Append("<size=85%>").Append(Loc.F("Turn {0} - {1}", turn, PlayerName(playerId))).Append("</size>\n");
+        _builder.Append("<color=#").Append(ColorUtility.ToHtmlStringRGB(_headerColor)).Append('>').Append(Loc.F("Turn {0} - {1}", turn, PlayerName(playerId))).Append("</color>\n");
     }
 
     private void AppendEntry(Entry entry, bool isOld, bool isNewest)
@@ -299,7 +304,7 @@ public class BattleLogController : MonoBehaviour
         Color dot = entry.actorPlayer == 1 ? _hotColor : entry.actorPlayer == 2 ? _coldColor : new Color(1f, 1f, 1f, 0.6f);
         _builder.Append("<color=#").Append(ColorUtility.ToHtmlStringRGBA(dot)).Append(">|</color> ");
         _builder.Append(entry.text);
-        if (!string.IsNullOrEmpty(entry.value)) _builder.Append("<pos=88%>").Append(entry.value);
+        if (!string.IsNullOrEmpty(entry.value)) _builder.Append("<pos=90%>").Append(entry.value);
         if (entry.kind == EntryKind.Kill || isNewest) _builder.Append("</mark>");
         _builder.Append('\n');
     }

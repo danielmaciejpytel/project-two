@@ -23,7 +23,8 @@ public class MainMenuController : MonoBehaviour
     [SerializeField] private Button _backButton;
     [SerializeField] private Image _barImage;
     [SerializeField] private Image _creditsImage;
-    [SerializeField] private TMP_Text _instructionText;
+    [Tooltip("The instructions: the text in a scrolling view with a scrollbar.")]
+    [SerializeField] private GameObject _instructionPanel;
     [SerializeField] private GameObject _optionsPanel;
     [SerializeField] private Slider _soundSlider;
     [SerializeField] private Slider _musicSlider;
@@ -133,7 +134,7 @@ public class MainMenuController : MonoBehaviour
         SetMainButtonsActive(true);
         _backButton.gameObject.SetActive(false);
         _creditsImage.gameObject.SetActive(false);
-        _instructionText.gameObject.SetActive(false);
+        _instructionPanel.SetActive(false);
         HideBar();
     }
 
@@ -178,7 +179,7 @@ public class MainMenuController : MonoBehaviour
         SoundController.Instance?.PlayClick();
         SetMainButtonsActive(false);
         _backButton.gameObject.SetActive(true);
-        _instructionText.gameObject.SetActive(true);
+        _instructionPanel.SetActive(true);
         HideBar();
     }
 

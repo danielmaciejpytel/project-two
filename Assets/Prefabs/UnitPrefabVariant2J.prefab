@@ -66,7 +66,7 @@ PrefabInstance:
     - target: {fileID: 6772823374680011127, guid: 73353b8f86c09054a9c26c5810d071a8,
         type: 3}
       propertyPath: m_Name
-      value: unitPrefab Variant2J
+      value: UnitPrefabVariant2J
       objectReference: {fileID: 0}
     - target: {fileID: 8681854827919751523, guid: 73353b8f86c09054a9c26c5810d071a8,
         type: 3}
@@ -154,8 +154,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1303056864539e047b3d0ab270a83eca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _description: 'PROVOKE [nearby enemies can select only this unit as an attack target
-    and cannot move]'
+  _description: 'PROVOKE [nearby enemies can only attack this unit and cannot move]'
   _effectDescription: 'Provoked [cannot move and can only attack Provoker]'
 --- !u!114 &-2829039138333319930
 MonoBehaviour:

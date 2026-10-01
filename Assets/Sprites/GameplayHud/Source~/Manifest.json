@@ -1,0 +1,530 @@
+[
+ {
+  "category": "Bars",
+  "name": "BarBodyRed",
+  "w": 398,
+  "h": 96,
+  "scale": 2,
+  "note": ""
+ },
+ {
+  "category": "Bars",
+  "name": "BarBodyBlue",
+  "w": 398,
+  "h": 96,
+  "scale": 2,
+  "note": ""
+ },
+ {
+  "category": "Bars",
+  "name": "BarStripeRed",
+  "w": 57,
+  "h": 96,
+  "scale": 2,
+  "note": ""
+ },
+ {
+  "category": "Bars",
+  "name": "BarStripeBlue",
+  "w": 57,
+  "h": 96,
+  "scale": 2,
+  "note": ""
+ },
+ {
+  "category": "Bars",
+  "name": "BarCommanderRed",
+  "w": 620,
+  "h": 96,
+  "scale": 2,
+  "note": ""
+ },
+ {
+  "category": "Bars",
+  "name": "BarCommanderBlue",
+  "w": 620,
+  "h": 96,
+  "scale": 2,
+  "note": ""
+ },
+ {
+  "category": "Bars",
+  "name": "PipCommanderOn",
+  "w": 14,
+  "h": 14,
+  "scale": 2,
+  "note": ""
+ },
+ {
+  "category": "Bars",
+  "name": "PipCommanderOff",
+  "w": 14,
+  "h": 14,
+  "scale": 2,
+  "note": ""
+ },
+ {
+  "category": "Bars",
+  "name": "TimerBarTrack",
+  "w": 488,
+  "h": 8,
+  "scale": 2,
+  "note": ""
+ },
+ {
+  "category": "Bars",
+  "name": "TimerBarFill",
+  "w": 488,
+  "h": 8,
+  "scale": 2,
+  "note": ""
+ },
+ {
+  "category": "Panels",
+  "name": "PanelBanner",
+  "w": 540,
+  "h": 112,
+  "scale": 2,
+  "note": ""
+ },
+ {
+  "category": "Panels",
+  "name": "PanelHint",
+  "w": 800,
+  "h": 72,
+  "scale": 2,
+  "note": ""
+ },
+ {
+  "category": "Panels",
+  "name": "PanelLog",
+  "w": 384,
+  "h": 216,
+  "scale": 2,
+  "note": ""
+ },
+ {
+  "category": "Panels",
+  "name": "PanelLogShort",
+  "w": 384,
+  "h": 140,
+  "scale": 2,
+  "note": "battle log when the ability button sits above it"
+ },
+ {
+  "category": "Panels",
+  "name": "PanelLogCollapsed",
+  "w": 384,
+  "h": 44,
+  "scale": 2,
+  "note": "battle log collapsed to its title"
+ },
+ {
+  "category": "Panels",
+  "name": "PanelSettings",
+  "w": 840,
+  "h": 500,
+  "scale": 2,
+  "note": "settings of the pause menu and the end screen"
+ },
+ {
+  "category": "Panels",
+  "name": "PanelConfirm",
+  "w": 840,
+  "h": 280,
+  "scale": 2,
+  "note": "the question \"Are you sure?\" of the pause menu"
+ },
+ {
+  "category": "Panels",
+  "name": "PanelCallout",
+  "w": 340,
+  "h": 126,
+  "scale": 2,
+  "note": ""
+ },
+ {
+  "category": "Panels",
+  "name": "PanelWinner",
+  "w": 760,
+  "h": 112,
+  "scale": 2,
+  "note": ""
+ },
+ {
+  "category": "Panels",
+  "name": "PanelSummary",
+  "w": 760,
+  "h": 240,
+  "scale": 2,
+  "note": ""
+ },
+ {
+  "category": "Panels",
+  "name": "PanelInfo",
+  "w": 872,
+  "h": 208,
+  "scale": 2,
+  "note": ""
+ },
+ {
+  "category": "Panels",
+  "name": "PanelTeam",
+  "w": 872,
+  "h": 208,
+  "scale": 2,
+  "note": ""
+ },
+ {
+  "category": "Buttons",
+  "name": "ButtonPrimaryRed",
+  "w": 244,
+  "h": 64,
+  "scale": 2,
+  "note": ""
+ },
+ {
+  "category": "Buttons",
+  "name": "ButtonPrimaryBlue",
+  "w": 244,
+  "h": 64,
+  "scale": 2,
+  "note": ""
+ },
+ {
+  "category": "Buttons",
+  "name": "ButtonCall",
+  "w": 128,
+  "h": 64,
+  "scale": 2,
+  "note": ""
+ },
+ {
+  "category": "Buttons",
+  "name": "ButtonCallActive",
+  "w": 128,
+  "h": 64,
+  "scale": 2,
+  "note": "call mode: Cancel"
+ },
+ {
+  "category": "Buttons",
+  "name": "ButtonAbility",
+  "w": 384,
+  "h": 64,
+  "scale": 2,
+  "note": ""
+ },
+ {
+  "category": "Menu",
+  "name": "ButtonMenu",
+  "w": 372,
+  "h": 72,
+  "scale": 2,
+  "note": ""
+ },
+ {
+  "category": "Menu",
+  "name": "ButtonMenuSelected",
+  "w": 372,
+  "h": 72,
+  "scale": 2,
+  "note": "first or hovered button, pink text"
+ },
+ {
+  "category": "Menu",
+  "name": "ButtonMenuWide",
+  "w": 760,
+  "h": 72,
+  "scale": 2,
+  "note": "settings rows: resolution and difficulty"
+ },
+ {
+  "category": "Menu",
+  "name": "SliderTrack",
+  "w": 460,
+  "h": 8,
+  "scale": 2,
+  "note": ""
+ },
+ {
+  "category": "Menu",
+  "name": "SliderFill",
+  "w": 460,
+  "h": 8,
+  "scale": 2,
+  "note": ""
+ },
+ {
+  "category": "Menu",
+  "name": "SliderHandle",
+  "w": 16,
+  "h": 32,
+  "scale": 2,
+  "note": ""
+ },
+ {
+  "category": "Menu",
+  "name": "ScrollbarTrack",
+  "w": 8,
+  "h": 480,
+  "scale": 2,
+  "note": ""
+ },
+ {
+  "category": "Menu",
+  "name": "ScrollbarHandle",
+  "w": 16,
+  "h": 64,
+  "scale": 2,
+  "note": ""
+ },
+ {
+  "category": "Menu",
+  "name": "OverlayDim",
+  "w": 1920,
+  "h": 1080,
+  "scale": 2,
+  "note": "full screen dimming under the pause menu and the end screen"
+ },
+ {
+  "category": "Slots",
+  "name": "SlotFrame",
+  "w": 90,
+  "h": 114,
+  "scale": 2,
+  "note": ""
+ },
+ {
+  "category": "Slots",
+  "name": "SlotFrameSelectedRed",
+  "w": 90,
+  "h": 114,
+  "scale": 2,
+  "note": "selected card or card to call"
+ },
+ {
+  "category": "Slots",
+  "name": "SlotFrameSelectedBlue",
+  "w": 90,
+  "h": 114,
+  "scale": 2,
+  "note": ""
+ },
+ {
+  "category": "Slots",
+  "name": "SlotFrameReserve",
+  "w": 90,
+  "h": 114,
+  "scale": 2,
+  "note": "reserve: dashed frame"
+ },
+ {
+  "category": "Slots",
+  "name": "SlotCrossOut",
+  "w": 90,
+  "h": 114,
+  "scale": 2,
+  "note": "killed unit: struck out card"
+ },
+ {
+  "category": "Slots",
+  "name": "PipSmallRed",
+  "w": 5,
+  "h": 5,
+  "scale": 2,
+  "note": ""
+ },
+ {
+  "category": "Slots",
+  "name": "PipSmallBlue",
+  "w": 5,
+  "h": 5,
+  "scale": 2,
+  "note": ""
+ },
+ {
+  "category": "Slots",
+  "name": "PipSmallOff",
+  "w": 5,
+  "h": 5,
+  "scale": 2,
+  "note": ""
+ },
+ {
+  "category": "Elements",
+  "name": "BadgeAccent",
+  "w": 64,
+  "h": 28,
+  "scale": 2,
+  "note": ""
+ },
+ {
+  "category": "Elements",
+  "name": "BadgeMuted",
+  "w": 64,
+  "h": 28,
+  "scale": 2,
+  "note": ""
+ },
+ {
+  "category": "Elements",
+  "name": "Keycap",
+  "w": 64,
+  "h": 28,
+  "scale": 2,
+  "note": ""
+ },
+ {
+  "category": "Elements",
+  "name": "IconFrame",
+  "w": 36,
+  "h": 36,
+  "scale": 2,
+  "note": ""
+ },
+ {
+  "category": "Elements",
+  "name": "LogTickRed",
+  "w": 4,
+  "h": 18,
+  "scale": 2,
+  "note": ""
+ },
+ {
+  "category": "Elements",
+  "name": "LogTickBlue",
+  "w": 4,
+  "h": 18,
+  "scale": 2,
+  "note": ""
+ },
+ {
+  "category": "Elements",
+  "name": "DividerLine",
+  "w": 360,
+  "h": 1,
+  "scale": 2,
+  "note": ""
+ },
+ {
+  "category": "Icons",
+  "name": "IconTagBackstab",
+  "w": 22,
+  "h": 22,
+  "scale": 2,
+  "note": "tag icon, 22 px in the info panel"
+ },
+ {
+  "category": "Icons",
+  "name": "IconTagBinary",
+  "w": 22,
+  "h": 22,
+  "scale": 2,
+  "note": "tag icon, 22 px in the info panel"
+ },
+ {
+  "category": "Icons",
+  "name": "IconTagCaller",
+  "w": 22,
+  "h": 22,
+  "scale": 2,
+  "note": "tag icon, 22 px in the info panel"
+ },
+ {
+  "category": "Icons",
+  "name": "IconTagConfuser",
+  "w": 22,
+  "h": 22,
+  "scale": 2,
+  "note": "tag icon, 22 px in the info panel"
+ },
+ {
+  "category": "Icons",
+  "name": "IconTagGunman",
+  "w": 22,
+  "h": 22,
+  "scale": 2,
+  "note": "tag icon, 22 px in the info panel"
+ },
+ {
+  "category": "Icons",
+  "name": "IconTagImpair",
+  "w": 22,
+  "h": 22,
+  "scale": 2,
+  "note": "tag icon, 22 px in the info panel"
+ },
+ {
+  "category": "Icons",
+  "name": "IconTagImpale",
+  "w": 22,
+  "h": 22,
+  "scale": 2,
+  "note": "tag icon, 22 px in the info panel"
+ },
+ {
+  "category": "Icons",
+  "name": "IconTagPiercing",
+  "w": 22,
+  "h": 22,
+  "scale": 2,
+  "note": "tag icon, 22 px in the info panel"
+ },
+ {
+  "category": "Icons",
+  "name": "IconTagProvoke",
+  "w": 22,
+  "h": 22,
+  "scale": 2,
+  "note": "tag icon, 22 px in the info panel"
+ },
+ {
+  "category": "Icons",
+  "name": "IconTagRecovery",
+  "w": 22,
+  "h": 22,
+  "scale": 2,
+  "note": "tag icon, 22 px in the info panel"
+ },
+ {
+  "category": "Icons",
+  "name": "IconTagSpy",
+  "w": 22,
+  "h": 22,
+  "scale": 2,
+  "note": "tag icon, 22 px in the info panel"
+ },
+ {
+  "category": "Icons",
+  "name": "IconTagSwift",
+  "w": 22,
+  "h": 22,
+  "scale": 2,
+  "note": "tag icon, 22 px in the info panel"
+ },
+ {
+  "category": "Icons",
+  "name": "IconTagTough",
+  "w": 22,
+  "h": 22,
+  "scale": 2,
+  "note": "tag icon, 22 px in the info panel"
+ },
+ {
+  "category": "Icons",
+  "name": "IconTagTeleporter",
+  "w": 22,
+  "h": 22,
+  "scale": 2,
+  "note": "tag icon, 22 px in the info panel"
+ },
+ {
+  "category": "Icons",
+  "name": "IconTagZeal",
+  "w": 22,
+  "h": 22,
+  "scale": 2,
+  "note": "tag icon, 22 px in the info panel"
+ }
+]

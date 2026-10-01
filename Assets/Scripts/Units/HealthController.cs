@@ -20,6 +20,16 @@ public class HealthController : MonoBehaviour
     private bool _isDesignerMode;
     private int _playerId;
 
+    // The point keeps the size it was made with relative to the board: it does not take over the scale of the unit,
+    // but follows the scale of the board the unit stands on.
+    private void AttachToUnit(Transform point)
+    {
+        Vector3 size = point.localScale;
+        Vector3 unitScale = transform.localScale;
+        point.SetParent(transform, false);
+        point.localScale = new Vector3(size.x / unitScale.x, size.y / unitScale.y, size.z / unitScale.z);
+    }
+
     private void CreateHealthBar()
     {
         GameObject newPoint;
@@ -27,13 +37,13 @@ public class HealthController : MonoBehaviour
         for (int i = 0; i < _initialHealthPoints; i++)
         {
             newPoint = Instantiate(_healthPointDesignerPrefab, Vector3.zero, Quaternion.identity);
-            newPoint.transform.SetParent(this.transform);
+            AttachToUnit(newPoint.transform);
             if (i < 5) newPoint.transform.localPosition = new Vector3(-0.3f + 0.2f * i, 0.8f, 0.0f);
             else if (i < 10) newPoint.transform.localPosition = new Vector3(-0.3f + 0.2f * (i - 5), 0.6f, 0.0f);
             else newPoint.transform.localPosition = new Vector3(-0.3f + 0.2f * (i - 10), 0.4f, 0.0f);
             _designerHealthPointsList.Add(newPoint.GetComponent<SpriteRenderer>());
             newPoint = Instantiate(_healthPointPrefab, Vector3.zero, Quaternion.identity);
-            newPoint.transform.SetParent(this.transform);
+            AttachToUnit(newPoint.transform);
             pointRenderer = newPoint.GetComponent<SpriteRenderer>();
             if (_playerId == 1)
             {

@@ -38,6 +38,7 @@ public class AttackSelectedState : IGameState
             myGrid.HideHighlight();
             _activeUnit.SetReticle(false);
             clickedUnit.StopShowingPotentialDamage();
+            ui.HideDamagePreview();
             _activeUnit.AttackUnit(clickedUnit);
             if (_activeUnit.FreeAttacksCount < 1) attackEndsTurn = true;
             else attackEndsTurn = false;
@@ -74,13 +75,16 @@ public class AttackSelectedState : IGameState
         // Ranges are shown only for the units of the team that is playing; an enemy in reach shows the damage it would take.
         if (_activeUnit.IsTargetValid(hoveredUnit) && myGrid.IsTileInAttackRange(_activeUnit, hoveredUnit.CurrentTile) && _activeUnit.FreeAttacksCount > 0)
         {
-            hoveredUnit.ShowPotentialDamage(_activeUnit.GetCalculatedAttack(hoveredUnit));
+            int attack = _activeUnit.GetCalculatedAttack(hoveredUnit);
+            hoveredUnit.ShowPotentialDamage(attack);
+            ui.ShowDamagePreview(_activeUnit, hoveredUnit, attack);
         }
         return null;
     }
 
     public IGameState UnitUnhovered(GameController myGameController, UnitController unhoveredUnit)
     {
+        myGameController.GetUI().HideDamagePreview();
         //clear board
         BoardGrid myGrid;
         UIController ui;

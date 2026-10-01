@@ -373,7 +373,8 @@ public class GameController : MonoBehaviour
             Debug.LogError($"Board layout not found: {configFilePath}");
             return;
         }
-        _myGrid = new BoardGrid(File.ReadAllLines(configFilePath), _tilePrefabs, _designerTileSize, _tileWidth, _tileHeight);
+        _myGrid = new BoardGrid(File.ReadAllLines(configFilePath), _tilePrefabs, _designerTileSize, _tileWidth, _tileHeight, GridPlacement.BoardParent);
+        if (GridPlacement.Instance != null) GridPlacement.Instance.SetPivot(_myGrid.CenterPosition);
         if (_randomStartingPlayer) _startingPlayer = UnityEngine.Random.Range(1, 3);
         _myGameState = new BeginTurnState(_startingPlayer);
         SpawnUnits(_unitPrefabsPlayer1, _myGrid.GetTile(0, _myGrid.GetBoardHeight() - 1));
@@ -397,7 +398,8 @@ public class GameController : MonoBehaviour
     {
         foreach (GameObject unitPrefab in unitPrefabs)
         {
-            UnitController newUnit = Instantiate(unitPrefab, new Vector3(100.0f, 100.0f, 0.0f), Quaternion.identity).GetComponent<UnitController>();
+            UnitController newUnit = Instantiate(unitPrefab, GridPlacement.BoardParent).GetComponent<UnitController>();
+            newUnit.transform.localPosition = new Vector3(100.0f, 100.0f, 0.0f);
             newUnit.InitializeUnit();
             if (newUnit.IsKing()) newUnit.DeployUnit(commanderTile);
             _units.Add(newUnit);

@@ -35,12 +35,27 @@ public class TileController : MonoBehaviour, IClickable, IHoverable
     private SpriteRenderer _mySpriteRenderer;
     private GridPosition _gridPosition;
     private Color _previousColor;
+    // The deployment zone (where a called unit can stand) pulses between a faint and a strong tone of its color, like in the HUD mockup.
+    private bool _deploymentZone;
+    private bool _hovered;
+    private const float DeploymentPulseSeconds = 1.1f;
+    private const float DeploymentPulseMin = 0.15f;
+    private const float DeploymentPulseMax = 0.95f;
     private ITileBehaviour _myBehaviour;
     private BoardGrid _myBoard;
     private Sprite _previousMarker;
     private bool _isDesignerMode;
     private PolygonCollider2D _myCollider;
     private BoxCollider2D _myDesignerCollider;
+
+    private void Update()
+    {
+        if (!_deploymentZone || _hovered || IsOccupied) return;
+        float wave = 0.5f - 0.5f * Mathf.Cos(Time.time * 2.0f * Mathf.PI / DeploymentPulseSeconds);
+        Color color = _deploymentZoneColor;
+        color.a = Mathf.Lerp(DeploymentPulseMin, DeploymentPulseMax, wave);
+        _overlayColorSpriteRenderer.color = color;
+    }
 
     public void PointerEnter()
     {
@@ -50,6 +65,7 @@ public class TileController : MonoBehaviour, IClickable, IHoverable
 
     public void PointerExit()
     {
+        _hovered = false;
         if (IsOccupied) EventManager.Instance.UnitUnhovered(Unit);
         else
         {
@@ -114,6 +130,8 @@ public class TileController : MonoBehaviour, IClickable, IHoverable
 
     public void ClearTile()
     {
+        _deploymentZone = false;
+        _hovered = false;
         _overlayColorSpriteRenderer.color = new Color(1.0f, 1.0f, 1.0f, 0.0f);
         _overlayMarkerSpriteRenderer.sprite = null;
         _previousColor = new Color(1.0f, 1.0f, 1.0f, 0.0f);
@@ -130,6 +148,7 @@ public class TileController : MonoBehaviour, IClickable, IHoverable
         {
             if (!IsOccupied && _tile.isWalkable || IsOccupied && playerId != Unit.GetPlayerId())
             {
+                if (hType != HighlightType.Hover && hType != HighlightType.Deployment) _deploymentZone = false;
                 _previousColor = _overlayColorSpriteRenderer.color;
                 _previousMarker = _overlayMarkerSpriteRenderer.sprite;
                 switch (hType)
@@ -142,6 +161,7 @@ public class TileController : MonoBehaviour, IClickable, IHoverable
                         _overlayColorSpriteRenderer.color = _pathColor;
                         break;
                     case HighlightType.Hover:
+                        _hovered = true;
                         _overlayColorSpriteRenderer.color = _hoverColor;
                         AnimateHighlight();
                         break;
@@ -152,6 +172,7 @@ public class TileController : MonoBehaviour, IClickable, IHoverable
                     case HighlightType.Deployment:
                         if (!IsOccupied)
                         {
+                            _deploymentZone = true;
                             _overlayColorSpriteRenderer.color = _deploymentZoneColor;
                             if (!_isDesignerMode)
                             {
@@ -242,10 +263,11 @@ public class TileController : MonoBehaviour, IClickable, IHoverable
             _myDesignerCollider.enabled = false;
             _myCollider.enabled = true;
         }
-        transform.position = newPosition;
+        // The position is in the layout of the board (local to the GridPosition object).
+        transform.localPosition = newPosition;
         if (IsOccupied)
         {
-            Unit.ChangePosition(newPosition);
+            Unit.ChangePosition(transform.position);
             Unit.ChangeMode(newMode);
         }
     }

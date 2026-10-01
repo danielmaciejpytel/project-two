@@ -61,7 +61,7 @@ PrefabInstance:
     - target: {fileID: 6772823374680011127, guid: 73353b8f86c09054a9c26c5810d071a8,
         type: 3}
       propertyPath: m_Name
-      value: unitPrefab Variant2F
+      value: UnitPrefabVariant2F
       objectReference: {fileID: 0}
     - target: {fileID: 8681854827919751523, guid: 73353b8f86c09054a9c26c5810d071a8,
         type: 3}
@@ -146,8 +146,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _myButtonDescription: Confuse
-  _myDescription: Confuser (selected enemy has one attack fewer until your next turn,
-    every other turn)
+  _myDescription: Confuser (chosen enemy has 1 attack fewer next turn, every other
+    turn)
   _myEffectDescription: Confused (one attack fewer this turn)
   _mySound: {fileID: 8300000, guid: 9c6e89e0b1c985e45a75ce0b15e479e9, type: 3}
   _cooldownTurns: 2

@@ -73,7 +73,7 @@ public class UnitController : MonoBehaviour, IClickable, IHoverable, IEndturnabl
 
         CurrentTile.Unit = null;
         CurrentTile.IsOccupied = false;
-        if (!_isDesignerMode) shift = _spriteShift;
+        if (!_isDesignerMode) shift = SpriteShift;
         else shift = Vector3.zero;
         while (movePath.Count > 0)
         {
@@ -81,7 +81,8 @@ public class UnitController : MonoBehaviour, IClickable, IHoverable, IEndturnabl
 
             while (Vector3.Distance(currentNode.transform.position + shift, transform.position) > 0.001f)
             {
-                step = _unit.moveSpeed * Time.deltaTime;
+                // The speed is in board units, so a smaller or larger board is crossed in the same time.
+                step = _unit.moveSpeed * GridPlacement.Scale * Time.deltaTime;
                 transform.position = Vector3.MoveTowards(transform.position, currentNode.transform.position + shift, step);
                 yield return 0;
             }
@@ -192,6 +193,9 @@ public class UnitController : MonoBehaviour, IClickable, IHoverable, IEndturnabl
         Debug.Log("Kliknięta jednostka: " + _unit.name);
         EventManager.Instance.UnitClicked(this);
     }
+
+    // Where the unit stands in relation to the middle of its tile, in world units (follows the size of the board).
+    private Vector3 SpriteShift => _spriteShift * GridPlacement.Scale;
 
     public GridPosition GetGridPosition()
     {
@@ -528,7 +532,7 @@ public class UnitController : MonoBehaviour, IClickable, IHoverable, IEndturnabl
         {
             _isDesignerMode = false;
             _mySpriteRenderer.sprite = unitSprite;
-            transform.position = CurrentTile.transform.position + _spriteShift;
+            transform.position = CurrentTile.transform.position + SpriteShift;
             _myDesignerCollider.enabled = false;
             _myCollider.enabled = true;
             _myHealth.SetMode("player");

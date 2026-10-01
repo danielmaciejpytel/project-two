@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(UnitController))]
-public class EffectIncreaseArmor : MonoBehaviour, IArmorModifier, IEnterTile, IEffect
+public class EffectIncreaseArmor : MonoBehaviour, IArmorModifier, IEnterTile, ITileEffect
 {
     private int _increaseAmount;
     private string _description;

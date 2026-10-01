@@ -157,5 +157,17 @@
             "ScreenFitPlayTests"
         ],
         "why": "Układ 16:9 zostaje bez zmian na każdym ekranie: kamera pokazuje całą ramkę 16:9, a tła i przyciemnienie rosną i wypełniają ekran; dekoracje planszy nie zależą od skali kanwy."
+    },
+    {
+        "paths": [
+            "Assets/Scripts/GridPlacement.cs",
+            "Assets/Scripts/BoardGrid.cs",
+            "Assets/Scripts/Tiles/TileController.cs",
+            "Assets/Scripts/Units/HealthController.cs"
+        ],
+        "tests": [
+            "GridPlacementTests"
+        ],
+        "why": "Obiekt GridPosition (skala i przesunięcie planszy): plansza, cień, jednostki i ich punkty życia idą razem, klikanie trafia w pola tam, gdzie są narysowane, a jednostka chodzi po pomniejszonej planszy."
     }
 ]

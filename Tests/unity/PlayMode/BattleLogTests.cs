@@ -82,30 +82,33 @@ public class BattleLogTests
     }
 
     [UnityTest]
-    public IEnumerator TheLogSitsUnderTheTimerWithTheSameWidth()
+    public IEnumerator TheLogSitsUnderTheButtonsWithTheSameWidth()
     {
         yield return StartGame();
 
         RectTransform log = (RectTransform)Log().transform;
-        RectTransform timer = (RectTransform)Find<Image>("TimerBackgroundImage").transform;
+        RectTransform call = (RectTransform)Button("DeployMinionButton").transform;
+        RectTransform endTurn = (RectTransform)Button("EndTurnButton").transform;
 
-        Assert.AreEqual(timer.rect.width, log.rect.width, 0.5f, "Same width as \"Turn ends in\"");
+        Assert.AreEqual(HudLayout.ColumnWidth, log.rect.width, 0.5f, "As wide as the column of the buttons");
+        Assert.AreEqual(endTurn.anchoredPosition.x - endTurn.rect.width / 2.0f, log.anchoredPosition.x - log.rect.width / 2.0f, 1.0f, "Same left edge as the main button");
+        Assert.Less(log.anchoredPosition.y, call.anchoredPosition.y, "Under the buttons");
         yield return null;
     }
 
     [UnityTest]
-    public IEnumerator CallAndEndTurnTogetherAreAsWideAsTheTimer()
+    public IEnumerator CallAndEndTurnTogetherAreAsWideAsTheLog()
     {
         yield return StartGame();
-        RectTransform timer = (RectTransform)Find<Image>("TimerBackgroundImage").transform;
+        RectTransform log = (RectTransform)Log().transform;
         RectTransform call = (RectTransform)Button("DeployMinionButton").transform;
         RectTransform endTurn = (RectTransform)Button("EndTurnButton").transform;
 
         float left = Mathf.Min(call.anchoredPosition.x - call.rect.width / 2.0f, endTurn.anchoredPosition.x - endTurn.rect.width / 2.0f);
         float right = Mathf.Max(call.anchoredPosition.x + call.rect.width / 2.0f, endTurn.anchoredPosition.x + endTurn.rect.width / 2.0f);
 
-        Assert.AreEqual(timer.rect.width, right - left, 1.0f);
-        Assert.AreEqual(timer.anchoredPosition.x, (left + right) / 2.0f, 1.0f, "Centred on the timer");
+        Assert.AreEqual(log.rect.width, right - left, 1.0f);
+        Assert.AreEqual(log.anchoredPosition.x, (left + right) / 2.0f, 1.0f, "Centred on the log");
         yield return null;
     }
 }

@@ -15,7 +15,8 @@ public class BoardGrid
     private readonly TileController[,] _gridArray;
     private bool _isDesignerMode;
 
-    public BoardGrid(string[] gridInfo, GameObject[] tilePrefabs, float tileSize, float tileWidth, float tileHeight)
+    // The tiles are created under parent (the GridPosition object), so the board can be moved and scaled as a whole.
+    public BoardGrid(string[] gridInfo, GameObject[] tilePrefabs, float tileSize, float tileWidth, float tileHeight, Transform parent = null)
     {
         _height = gridInfo.Length;
         _width = (gridInfo[0].Length + 1) / 2;
@@ -43,13 +44,25 @@ public class BoardGrid
                     continue;
                 }
                 GridPosition position = new GridPosition(x, y);
-                TileController tile = Object.Instantiate(prefab, GetWorldPosition(position), Quaternion.identity).GetComponent<TileController>();
+                TileController tile = Object.Instantiate(prefab, parent).GetComponent<TileController>();
+                tile.transform.localPosition = GetWorldPosition(position);
                 tile.InitializeTile(position, this);
                 _gridArray[x, y] = tile;
             }
         }
     }
 
+    // The middle of the board in the layout of the tiles (before the board is moved or scaled).
+    public Vector3 CenterPosition
+    {
+        get
+        {
+            float centerX = (_width - 1) * 0.5f, centerY = (_height - 1) * 0.5f;
+            return new Vector3((centerX - centerY) * _tileWidth / 2, -(centerX + centerY - 2.0f) * _tileHeight / 2, 0.0f);
+        }
+    }
+
+    // A position in the layout of the tiles, which is the local position of a tile under the board.
     private Vector3 GetWorldPosition(GridPosition gp)
     {
         if (_isDesignerMode) return new Vector3(gp.x * _designerTileSize - 3.5f, gp.y * -_designerTileSize, 0.0f);
