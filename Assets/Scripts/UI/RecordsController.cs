@@ -11,6 +11,10 @@ public class RecordsController : MonoBehaviour
     public enum Tab { Leaderboard = 0, History = 1, Stats = 2 }
 
     private const int Rows = 10;
+    // Column offsets of a line in the list of latest games; the date takes ~245 px, "Super Cold won" ~245 px, "Two players" ~190 px.
+    private const int HistoryResultX = 280;
+    private const int HistoryModeX = 540;
+    private const int HistoryScoreX = 760;
     private static readonly string[] Difficulties = { "", "Easy", "Normal", "Hard" };
 
     [SerializeField] private Button[] _tabButtons;
@@ -214,7 +218,7 @@ public class RecordsController : MonoBehaviour
         string result = game.IsVsComputer ? Loc.T(game.HumanWon ? "Won" : "Lost") : Loc.F("{0} won", Team(game.winner));
         string mode = game.IsVsComputer ? Difficulty(game) : Loc.T("Two players");
         string score = game.IsVsComputer ? game.HumanScore.ToString() : "-";
-        return DateText(game) + "<pos=250>" + result + "<pos=490>" + mode + "<pos=690>" + score;
+        return DateText(game) + "<pos=" + HistoryResultX + ">" + result + "<pos=" + HistoryModeX + ">" + mode + "<pos=" + HistoryScoreX + ">" + score;
     }
 
     private string DetailsText(GameRecord game)

@@ -455,8 +455,8 @@ public static class GameplayHudBuilder
             GameObject text = bar.transform.Find(red ? "RedCommanderText" : "BlueCommanderText").gameObject;
             // The name stays inside the body of the bar (about 350 px wide at its height).
             HudLayout.PlaceIn(Rt(text), red ? 20 : 250, 10, 350, 48);
-            SetText(text, red ? "TEAM RED" : "TEAM BLUE", 48, Color.white, red ? TextAlignmentOptions.MidlineLeft : TextAlignmentOptions.MidlineRight, true);
-            SetKey(text, red ? "TEAM RED" : "TEAM BLUE");
+            SetText(text, red ? "Team Red" : "Team Blue", 48, Color.white, red ? TextAlignmentOptions.MidlineLeft : TextAlignmentOptions.MidlineRight, true);
+            SetKey(text, red ? "Team Red" : "Team Blue");
             SetFloat(Get<FitTextSize>(text), "_maxSize", 48.0f);
 
             // The health points start at the left edge of the red bar and at the right edge of the blue one, 68 px from the top.
@@ -487,7 +487,7 @@ public static class GameplayHudBuilder
 
         GameObject name = banner.transform.Find("EndGameText").gameObject;
         HudLayout.PlaceIn(Rt(name), 26, 34, 300, 48);
-        SetText(name, "Super Cold", 48, Color.white, TextAlignmentOptions.MidlineLeft);
+        SetText(name, "Team Blue", 48, Color.white, TextAlignmentOptions.MidlineLeft);
 
         GameObject turn = Child(banner.transform, "TurnLabel");
         HudLayout.PlaceIn(Rt(turn), 26, 12, 300, 16);

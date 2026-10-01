@@ -324,11 +324,11 @@ public class UIController : MonoBehaviour
         HudLayout.Place(controls[2], x, HudLayout.ButtonsY + HudLayout.RowStep, HudLayout.ColumnWidth, HudLayout.ButtonHeight);
     }
 
-    // Player name in the team color, e.g. "Super Cold" in cyan.
+    // Team name in the team color, e.g. "Team Blue" in cyan.
     private string PlayerLabel(int playerId)
     {
         Color color = TeamColor(playerId);
-        string name = playerId == 1 ? "Super Hot" : "Super Cold";
+        string name = Loc.T(playerId == 1 ? "Team Red" : "Team Blue");
         return $"<color=#{ColorUtility.ToHtmlStringRGB(color)}>{name}</color>";
     }
 
