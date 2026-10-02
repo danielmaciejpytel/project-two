@@ -1,5 +1,5 @@
 // Counts what happened during one game, for the summary on the end screen.
-// Players are numbered like everywhere else: 1 = Super Hot, 2 = Super Cold.
+// Players are numbered like everywhere else: 1 = Red Boss, 2 = Blue Boss.
 public class GameStats
 {
     private readonly int[] _called = new int[3];

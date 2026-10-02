@@ -253,7 +253,7 @@ public class EndGameController : MonoBehaviour
         _buttons.gameObject.SetActive(!show);
     }
 
-    // The summary in the panel: the labels on the left, the numbers of Super Hot and Super Cold in two columns in their colors (right-aligned),
+    // The summary in the panel: the labels on the left, the numbers of Red Boss and Blue Boss in two columns in their colors (right-aligned),
     // the number of turns between the two columns. Under the panel, the record.
     private void FillSummary(GameResult result)
     {

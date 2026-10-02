@@ -168,7 +168,7 @@ public class ButtonUnitController : MonoBehaviour
         _killedImage.enabled = killed;
 
         // Below the card the reserve says RESERVE (or CALL) and a killed unit says DEAD, both in the muted color.
-        _unitText.text = reserve ? Loc.T(_callMode ? "CALL" : "RESERVE") : killed ? Loc.T("DEAD") : unit.GetUnitName();
+        _unitText.text = reserve ? Loc.T(_callMode ? "CALL" : "RESERVE") : killed ? Loc.T("DEAD") : unit.GetShortUnitName();
         _unitText.color = chosen ? team : reserve || killed ? _mutedColor : Color.white;
 
         if (_badgeImage != null)

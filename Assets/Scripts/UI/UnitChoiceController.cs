@@ -4,8 +4,8 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-// The unit choice screen: the two teams choose four doppelgangers in turn (Super Hot, Super Cold, Super Hot,
-// Super Cold). Choosing one also gives the other team its counterpart, and the chosen kind leaves the list.
+// The unit choice screen: the two teams choose four doppelgangers in turn (Red Boss, Blue Boss, Red Boss,
+// Blue Boss). Choosing one also gives the other team its counterpart, and the chosen kind leaves the list.
 public class UnitChoiceController : MonoBehaviour
 {
     private const int Picks = 4;

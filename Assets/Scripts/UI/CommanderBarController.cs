@@ -25,7 +25,7 @@ public class CommanderBarController : MonoBehaviour
     {
         // Work in the bar's local (canvas) space, so spacing and scale follow the Canvas Scaler.
         Vector3 firstPoint = transform.InverseTransformPoint(_healthPointPoint.transform.position);
-        // Super Cold's bar is mirrored: its points start at the right edge and grow to the left.
+        // Blue Boss's bar is mirrored: its points start at the right edge and grow to the left.
         float step = playerId == 1 ? _step : -_step;
 
         _healthPoints = new List<Image>();

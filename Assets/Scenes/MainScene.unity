@@ -4832,7 +4832,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Super Cold
+  m_text: Team Name
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 53c8a1715de5b2c40922ad4538045d95, type: 2}
   m_sharedMaterial: {fileID: 5656722732583235556, guid: 53c8a1715de5b2c40922ad4538045d95,

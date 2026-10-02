@@ -253,7 +253,7 @@ public class UIController : MonoBehaviour
         _myUnitsPanel.InitializePanel(units, startingPlayer);
         _timeLimit = timeLimit;
         _turnStartTime = Time.time;
-        // The scene is laid out for Super Cold; move the turn controls if Super Hot starts.
+        // The scene is laid out for Blue Boss; move the turn controls if Red Boss starts.
         MoveActivePlayerControls(startingPlayer == 1 ? -1.0f : 1.0f);
         ShowBanner(startingPlayer);
         StartHints(startingPlayer, true);
@@ -304,7 +304,7 @@ public class UIController : MonoBehaviour
         SoundController.Instance?.PlayEndTurn();
     }
 
-    // Moves the turn controls to the active player's side: left column for Super Hot, right column for Super Cold
+    // Moves the turn controls to the active player's side: left column for Red Boss, right column for Blue Boss
     // (the main button and Call in a row, the ability button under them; the battle log follows in BattleLogController).
     private void MoveActivePlayerControls(float direction)
     {

@@ -11,7 +11,7 @@ public class RecordsController : MonoBehaviour
     public enum Tab { Leaderboard = 0, History = 1, Stats = 2 }
 
     private const int Rows = 10;
-    // Column offsets of a line in the list of latest games; the date takes ~245 px, "Super Cold won" ~245 px, "Two players" ~190 px.
+    // Column offsets of a line in the list of latest games; the date takes ~245 px, "Blue Boss won" ~245 px, "Two players" ~190 px.
     private const int HistoryResultX = 280;
     private const int HistoryModeX = 540;
     private const int HistoryScoreX = 760;
@@ -192,7 +192,7 @@ public class RecordsController : MonoBehaviour
 
     // ---- texts
 
-    private string Team(int team) => $"<color=#{ColorUtility.ToHtmlStringRGB(team == 1 ? _superHotColor : _superColdColor)}>{(team == 1 ? "Super Hot" : "Super Cold")}</color>";
+    private string Team(int team) => $"<color=#{ColorUtility.ToHtmlStringRGB(team == 1 ? _superHotColor : _superColdColor)}>{(team == 1 ? "Red Boss" : "Blue Boss")}</color>";
 
     private string BothTeams(int hot, int cold) => $"{Team(1)} {hot}   {Team(2)} {cold}";
 

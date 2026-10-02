@@ -143,7 +143,7 @@ public class BattleLogController : MonoBehaviour
         SetExpanded(!_body.activeSelf);
     }
 
-    // Follows the other turn controls: the left column for Super Hot, the right column for Super Cold, under the buttons.
+    // Follows the other turn controls: the left column for Red Boss, the right column for Blue Boss, under the buttons.
     private void MoveToPlayerSide(int playerId)
     {
         // The canvas of the log (as big as the layout) sticks to the top corner on that side of the screen.
@@ -317,5 +317,5 @@ public class BattleLogController : MonoBehaviour
 
     private static string Colored(string text, Color color) => $"<color=#{ColorUtility.ToHtmlStringRGB(color)}>{text}</color>";
 
-    private static string PlayerName(int playerId) => playerId == 1 ? "Super Hot" : "Super Cold";
+    private static string PlayerName(int playerId) => playerId == 1 ? "Red Boss" : "Blue Boss";
 }

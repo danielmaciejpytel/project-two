@@ -75,7 +75,7 @@ public class ChoiceSlotView : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         _rightArrow.gameObject.SetActive(arrows);
         if (unit != null)
         {
-            _name.text = unit.GetUnitName();
+            _name.text = unit.GetShortUnitName();
             _name.color = NameColor;
             _fill.enabled = true;
             _fill.color = superior ? Color.Lerp(SuperiorBase, team, 0.18f) : FilledFill;

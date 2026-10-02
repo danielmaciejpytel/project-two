@@ -435,6 +435,14 @@ public class UnitController : MonoBehaviour, IClickable, IHoverable, IEndturnabl
         return Loc.T(_unit.unitName);
     }
 
+    // The Superior's name is "Red Boss" / "Czerwony Szef"; where the role is already shown, the label keeps only the colour.
+    public string GetShortUnitName()
+    {
+        string name = GetUnitName();
+        int space = name.LastIndexOf(' ');
+        return IsKing() && space > 0 ? name.Substring(0, space) : name;
+    }
+
     public int GetHP()
     {
         return _myHealth.GetCurrentHealth();

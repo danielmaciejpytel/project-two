@@ -6,7 +6,7 @@ Zaktualizowana i ulepszona wersja projektu stworzonego pierwotnie przez Team 13 
 Wszystkie zmiany od pierwszego wydania wprowadził Daniel Pytel.
 
 Turowy pojedynek taktyczny na izometrycznej planszy. Drużyna Czerwona, prowadzona przez Superiora
-Super Hot, walczy z Drużyną Niebieską, prowadzoną przez Super Cold. Przed bitwą gracze wybierają
+Czerwonego Szefa, walczy z Drużyną Niebieską, prowadzoną przez Niebieskiego Szefa. Przed bitwą gracze wybierają
 Doppelgangerów parami. W trakcie bitwy przyzywają je obok swojego Superiora, poruszają nimi
 i atakują. Pola planszy leczą, ranią, dają osłonę, spowalniają albo zwiększają zasięg. Wygrywa
 ten, kto pierwszy pokona Superiora przeciwnika, a każda zakończona partia jest punktowana
@@ -80,8 +80,8 @@ przygotowanym przez cały Team 13. Od tego czasu Daniel Pytel wprowadził:
   punktacji i wyników, menu oraz ekranu końca, więc zmianę można sprawdzić bez ręcznego grania
   każdej partii. W [Tests/TestsUpdate.md](Tests/TestsUpdate.md) jest opisane, jak je uruchomić
   i jak je zmieniać, gdy zmienia się gra.
-- **Przeciwnik komputerowy.** Nowy tryb PLAY VS AI (w menu PLAY) pozwala poprowadzić Super Hot przeciwko Super
-  Cold sterowanemu przez komputer. Komputer wybiera jednostki, przyzywa posiłki, porusza się,
+- **Przeciwnik komputerowy.** Nowy tryb PLAY VS AI (w menu PLAY) pozwala poprowadzić Czerwonego Szefa przeciwko
+  Niebieskiemu Szefowi sterowanemu przez komputer. Komputer wybiera jednostki, przyzywa posiłki, porusza się,
   atakuje i używa Confuse oraz Teleport. W opcjach można wybrać trzy poziomy trudności:
   - **Easy** gra niezdarnie i częściowo losowo.
   - **Normal** gra solidnie.

@@ -9,6 +9,6 @@ public class ScreenCorners : MonoBehaviour
     public Transform TopLeft => _topLeft;
     public Transform TopRight => _topRight;
 
-    // The controls of the player who has the turn sit in his top corner: left for Super Hot, right for Super Cold.
+    // The controls of the player who has the turn sit in his top corner: left for Red Boss, right for Blue Boss.
     public Transform TurnSide(int playerId) => playerId == 1 ? _topLeft : _topRight;
 }

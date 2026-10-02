@@ -5,8 +5,8 @@
 An updated and improved version of the project initially created by Team 13 during Game Dev School in 2021.
 All updates since the initial release are by Daniel Pytel.
 
-A turn-based tactics duel on an isometric board. Team Red, led by the Superior Super Hot, faces
-Team Blue, led by Super Cold. Before the battle the players draft their Doppelgangers in pairs.
+A turn-based tactics duel on an isometric board. Team Red, led by the Superior Red Boss, faces
+Team Blue, led by Blue Boss. Before the battle the players draft their Doppelgangers in pairs.
 During the battle they call units in next to their Superior, move them and attack. Board tiles
 heal, damage, give cover, slow units down or extend their range. The first player to defeat the
 opposing Superior wins, and every finished game is scored and saved.
@@ -78,8 +78,8 @@ by the whole Team 13. Since then Daniel Pytel has added:
   the scoring and the records, the menus and the end screen, so a change can be checked without
   playing every game by hand. See [Tests/TestsUpdate.md](Tests/TestsUpdate.md) (in Polish) for
   how to run them and how to update them when the game changes.
-- **Computer opponent.** The new PLAY VS AI mode (under PLAY) lets you lead Super Hot against a computer-led
-  Super Cold. The computer drafts its units, calls reinforcements, moves, attacks and uses
+- **Computer opponent.** The new PLAY VS AI mode (under PLAY) lets you lead Red Boss against a computer-led
+  Blue Boss. The computer drafts its units, calls reinforcements, moves, attacks and uses
   Confuse and Teleport. Three difficulty levels can be chosen in Options:
   - **Easy** makes clumsy, partly random moves.
   - **Normal** plays a solid game.

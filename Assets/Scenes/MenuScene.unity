@@ -9506,8 +9506,8 @@ MonoBehaviour:
     PLAYER
     VS PLAYER - two players on one screen.
 
-    PLAY VS AI - you lead Super Hot,
-    the computer leads Super Cold.
+    PLAY VS AI - you lead Red Boss,
+    the computer leads Blue Boss.
 
 
     Click a unit to see where it can move and
@@ -9516,7 +9516,7 @@ MonoBehaviour:
     the latest actions.
 
 
-    Which side will you fight for? Super Hot or Super Cold?'
+    Which side will you fight for? Red Boss or Blue Boss?'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 53c8a1715de5b2c40922ad4538045d95, type: 2}
   m_sharedMaterial: {fileID: 5656722732583235556, guid: 53c8a1715de5b2c40922ad4538045d95,
@@ -9612,7 +9612,7 @@ MonoBehaviour:
     PLAYER
     VS PLAYER - two players on one screen.
 
-    PLAY VS AI - you lead Super Hot against
+    PLAY VS AI - you lead Red Boss against
     the computer.
 
 
