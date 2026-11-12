@@ -32,7 +32,7 @@ poziomach trudności.
 Pierwsze wydanie było prototypem z Game Dev School 2021 na Unity 2019.4, do gry we dwoje na jednym ekranie,
 przygotowanym przez cały Team 13. Od tego czasu Daniel Pytel wprowadził:
 
-- **Unity 6.** Projekt działa na Unity 6000.3.23f1. Sterowanie obsługuje wyłącznie pakiet Input
+- **Unity 6.** Projekt działa na Unity 6000.3.28f1. Sterowanie obsługuje wyłącznie pakiet Input
   System, więc działa zarówno mysz, jak i dotyk. Usunięto nieużywaną wtyczkę GitHub for Unity.
 - **Poprawki błędów.**
   - Zakończenie tury podczas rozstawiania nie wywołuje już błędów.
@@ -109,7 +109,7 @@ przygotowanym przez cały Team 13. Od tego czasu Daniel Pytel wprowadził:
 
 ## Uruchomienie
 
-1. Otwórz projekt w Unity 6000.3.23f1.
+1. Otwórz projekt w Unity 6000.3.28f1.
 2. Otwórz `Assets/Scenes/MenuScene.unity` i naciśnij Play.
 3. Wybierz **PLAY**, a potem **PLAYER VS PLAYER**, aby zagrać we dwoje na jednym ekranie, albo
    **PLAY VS AI**, aby zagrać z komputerem. Poziom trudności AI zmienisz w **Options**,

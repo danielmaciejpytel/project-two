@@ -30,7 +30,7 @@ Two players can play on one screen, or one player can face the computer on three
 The initial release was the 2021 Game Dev School prototype for two players on one screen, built in Unity 2019.4
 by the whole Team 13. Since then Daniel Pytel has added:
 
-- **Unity 6.** The project runs on Unity 6000.3.23f1. Input is handled only by the Input System
+- **Unity 6.** The project runs on Unity 6000.3.28f1. Input is handled only by the Input System
   package, and mouse and touch are both supported. The unused GitHub for Unity plugin is gone.
 - **Bug fixes.**
   - Ending a turn during deployment no longer throws errors.
@@ -107,7 +107,7 @@ by the whole Team 13. Since then Daniel Pytel has added:
 
 ## Running the game
 
-1. Open the project in Unity 6000.3.23f1.
+1. Open the project in Unity 6000.3.28f1.
 2. Open `Assets/Scenes/MenuScene.unity` and press Play.
 3. Choose **PLAY**, then **PLAYER VS PLAYER** for two players on one screen or **PLAY VS AI**
    to play against the computer. The AI difficulty can be changed in **Options**, and finished
