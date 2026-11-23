@@ -1,6 +1,21 @@
-# Project Two: Red vs Blue
+<h1 align="center">Project Two: Red vs Blue</h1>
 
-**English** | [Polski](README.pl.md)
+<p align="center"><b>Draft your squad. Defeat the Superior.</b><br>
+A turn-based tactics duel on an isometric board, for two players on one screen or against the computer.</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Unity-6-D62D64?style=for-the-badge&labelColor=2B2B2B" alt="Unity 6">
+  <img src="https://img.shields.io/badge/Windows-x64-F2F2F2?style=for-the-badge&labelColor=2B2B2B" alt="Windows x64">
+  <img src="https://img.shields.io/badge/version-2.0.0-D62D64?style=for-the-badge&labelColor=2B2B2B" alt="Version 2.0.0">
+  <img src="https://img.shields.io/badge/language-EN_%2F_PL-F2F2F2?style=for-the-badge&labelColor=2B2B2B" alt="English and Polish">
+</p>
+
+<p align="center">
+  <a href="README.pl.md">Polski</a> · <b>English</b> ·
+  <a href="#quick-start">Quick start</a> · <a href="#screenshots">Screenshots</a> ·
+  <a href="#what-changed-since-the-initial-release">What changed</a> · <a href="#goals">Goals</a> ·
+  <a href="#running-from-source">Running from source</a> · <a href="#credits">Credits</a>
+</p>
 
 An updated and improved version of the project initially created by Team 13 during Game Dev School in 2021.
 All updates since the initial release are by Daniel Pytel.
@@ -12,6 +27,16 @@ heal, damage, give cover, slow units down or extend their range. The first playe
 opposing Superior wins, and every finished game is scored and saved.
 
 Two players can play on one screen, or one player can face the computer on three difficulty levels.
+
+## Quick start
+
+1. Download **[v2.0.0.Project.Two.Redone.zip](https://github.com/danielmaciejpytel/project-two/releases/download/v2.0.0/v2.0.0.Project.Two.Redone.zip)** from the [v2.0.0 release](https://github.com/danielmaciejpytel/project-two/releases/tag/v2.0.0).
+2. Extract the entire archive to a folder; do not run the game from inside the ZIP.
+3. Launch **`PROJECT TWO.exe`**.
+
+The download is a standalone **Windows 64-bit** build; Unity is not required to play. The unchanged 2021 course
+submission is kept as the separate [v1.0.0 release](https://github.com/danielmaciejpytel/project-two/releases/tag/v1.0.0).
+To open the project in the editor, see [Running from source](#running-from-source).
 
 ## Screenshots
 
@@ -105,7 +130,7 @@ by the whole Team 13. Since then Daniel Pytel has added:
 - **A project that is easy to keep working on.** The game uses a current engine, clear code and
   no leftover plugins.
 
-## Running the game
+## Running from source
 
 1. Open the project in Unity 6000.3.23f1.
 2. Open `Assets/Scenes/MenuScene.unity` and press Play.

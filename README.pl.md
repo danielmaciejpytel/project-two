@@ -1,6 +1,21 @@
-# Project Two: Red vs Blue
+<h1 align="center">Project Two: Red vs Blue</h1>
 
-[English](README.md) | **Polski**
+<p align="center"><b>Dobierz oddział. Pokonaj Superiora.</b><br>
+Turowy pojedynek taktyczny na izometrycznej planszy, dla dwóch osób przy jednym ekranie albo przeciwko komputerowi.</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Unity-6-D62D64?style=for-the-badge&labelColor=2B2B2B" alt="Unity 6">
+  <img src="https://img.shields.io/badge/Windows-x64-F2F2F2?style=for-the-badge&labelColor=2B2B2B" alt="Windows x64">
+  <img src="https://img.shields.io/badge/version-2.0.0-D62D64?style=for-the-badge&labelColor=2B2B2B" alt="Wersja 2.0.0">
+  <img src="https://img.shields.io/badge/language-EN_%2F_PL-F2F2F2?style=for-the-badge&labelColor=2B2B2B" alt="Język angielski i polski">
+</p>
+
+<p align="center">
+  <b>Polski</b> · <a href="README.md">English</a> ·
+  <a href="#szybki-start">Szybki start</a> · <a href="#zrzuty-ekranu">Zrzuty ekranu</a> ·
+  <a href="#co-zmieniło-się-od-pierwszego-wydania">Co się zmieniło</a> · <a href="#cele">Cele</a> ·
+  <a href="#uruchomienie-ze-źródeł">Uruchomienie ze źródeł</a> · <a href="#twórcy">Twórcy</a>
+</p>
 
 Zaktualizowana i ulepszona wersja projektu stworzonego pierwotnie przez Team 13 podczas Game Dev School w 2021 roku.
 Wszystkie zmiany od pierwszego wydania wprowadził Daniel Pytel.
@@ -14,6 +29,16 @@ i zapisywana.
 
 W grę mogą grać dwie osoby przy jednym ekranie albo jedna osoba przeciwko komputerowi na trzech
 poziomach trudności.
+
+## Szybki start
+
+1. Pobierz **[v2.0.0.Project.Two.Redone.zip](https://github.com/danielmaciejpytel/project-two/releases/download/v2.0.0/v2.0.0.Project.Two.Redone.zip)** z [wydania v2.0.0](https://github.com/danielmaciejpytel/project-two/releases/tag/v2.0.0).
+2. Rozpakuj całe archiwum do folderu; nie uruchamiaj gry bezpośrednio z pliku ZIP.
+3. Uruchom **`PROJECT TWO.exe`**.
+
+Paczka to samodzielna wersja dla **64-bitowego systemu Windows**; do gry nie jest potrzebne Unity. Niezmieniona wersja
+oddana na kursie w 2021 roku jest dostępna osobno jako [wydanie v1.0.0](https://github.com/danielmaciejpytel/project-two/releases/tag/v1.0.0).
+Aby otworzyć projekt w edytorze, przejdź do sekcji [Uruchomienie ze źródeł](#uruchomienie-ze-źródeł).
 
 ## Zrzuty ekranu
 
@@ -107,7 +132,7 @@ przygotowanym przez cały Team 13. Od tego czasu Daniel Pytel wprowadził:
 - **Projekt, nad którym łatwo dalej pracować.** Gra korzysta z aktualnego silnika i czytelnego
   kodu, bez pozostałości po nieużywanych wtyczkach.
 
-## Uruchomienie
+## Uruchomienie ze źródeł
 
 1. Otwórz projekt w Unity 6000.3.23f1.
 2. Otwórz `Assets/Scenes/MenuScene.unity` i naciśnij Play.
